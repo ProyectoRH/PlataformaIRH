@@ -129,7 +129,7 @@ SUIT_CONFIG={
 		'sites',
 		{'label': u'Gestión de Usuarios', 'icon': 'icon-user','models':('auth.user','auth.group')},
 		{'label': u'Gestión de Filtros', 'icon': 'icon-search','models':({'label':'Area Tematica','url':'/admin/areatematicas/'},{'label':'Componentes','url':'/admin/componentes/'},{'label':'Sub-Componentes','url':'/admin/subcomponentes/'},{'label':'Factores','url':'/admin/factor/'},)},
-		{'label': u'Gestión de Contenidos', 'icon': 'icon-book','models':({'label':'Ficheros','url':'/admin/documentos/'},{'label':'Crear páginas','url':'/admin/paginas/'},{'label':'Crear Noticias','url':'/admin/noticias/'},{'label':'Crear Eventos','url':'/admin/eventos/'},)},
+		{'label': u'Gestión de Contenidos', 'icon': 'icon-book','models':({'label':'Ficheros','url':'/admin/documentos/'},{'label':'Crear páginas','url':'/admin/pagina/'},{'label':'Crear Noticias','url':'/admin/noticia/'},{'label':'Crear Eventos','url':'/admin/eventos/'},)},
 		{'label': u'Ondas', 'icon': 'icon-volume-up','models':({'label':'Noticias','url':'/admin/notiondas/'},{'label':'Eventos','url':'/admin/eventoondas/'},{'label':'Paginas','url':'/admin/paginaondas/'},)},
 		
 	)
