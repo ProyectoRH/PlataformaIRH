@@ -11,11 +11,11 @@ from documentos_shape.models import DocumentoShape
 
 class DocumentoDigitalInline(admin.StackedInline):
 	model = DocumentoDigital
-	extra = 3
+	extra = 1
 
 class DocumentoShapeInline(admin.StackedInline):
 	model = DocumentoShape
-	extra = 3
+	extra = 1
 
 class LocalizacionAdmin(admin.ModelAdmin):
 	inlines = [DocumentoDigitalInline, DocumentoShapeInline]
