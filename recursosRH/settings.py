@@ -46,14 +46,7 @@ INSTALLED_APPS = (
     'componentes',
     'subcomponentes',
     'factor',
-    'noticias',
     'categorias',
-    'eventos',
-    'paginaondas',
-    'paginas',
-    'notiondas',
-    'eventoondas',
-    'documentos',
     'usuarios',    
 )
 
