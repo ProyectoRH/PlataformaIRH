@@ -7,7 +7,7 @@ class Institucion(models.Model):
 	institucion = models.CharField(max_length=140)
 	nombre_nucleo = models.CharField(max_length=255)
 	descripcion_nucleo = models.TextField()
-	logo_institucion = models.ImageField(upload_to = "static/logo_instituciones")
+	logo_institucion = models.ImageField(upload_to = "static/logo_instituciones", null = True)
 
 	def __unicode__(self):
 		return self.institucion
