@@ -21,7 +21,11 @@ class LocalizacionAdmin(admin.ModelAdmin):
 	inlines = [DocumentoDigitalInline, DocumentoShapeInline]
 
 
+class MiLocalizacion(Localizacion):
+	class Meta:
+		proxy = True
 
 
+
+admin.site.register(MiLocalizacion, LocalizacionAdmin)
 admin.site.register(Localizacion, LeafletGeoAdmin)
-# LocalizacionAdmin
