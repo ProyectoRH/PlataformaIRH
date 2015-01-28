@@ -2,8 +2,11 @@ Django==1.7.4
 Pillow==2.7.0
 argparse==1.2.1
 distribute==0.6.24
+django-geojson==2.6.0
+django-leaflet==0.15.2
 django-smart-selects==1.0.9
 django-suit==0.2.12
 django-wysiwyg-redactor==0.4.4.1
 psycopg2==2.5.4
+six==1.9.0
 wsgiref==0.1.2
