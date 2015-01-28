@@ -23,4 +23,5 @@ class LocalizacionAdmin(admin.ModelAdmin):
 
 
 
-admin.site.register(Localizacion, LeafletGeoAdmin, LocalizacionAdmin)
+admin.site.register(Localizacion, LeafletGeoAdmin)
+# LocalizacionAdmin
