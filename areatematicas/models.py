@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 
-class Areatematica (models.Model):
+class Areatematica(models.Model):
 
 	nombreArea = models.CharField('Nombre del Área',max_length = 100)
 	descripcion = models.TextField('Descripción', max_length = 150)
