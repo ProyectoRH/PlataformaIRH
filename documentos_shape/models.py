@@ -1,6 +1,7 @@
 from django.db import models
 
 from django.contrib.auth.models import User
+from localizacion.models import Localizacion
 
 
 class DocumentoShape(models.Model):
@@ -11,6 +12,7 @@ class DocumentoShape(models.Model):
 	direccion_online = models.URLField(max_length=255)
 	archivo = models.FileField(upload_to = "static/documentos_shape")
 	usuario = models.ForeignKey(User)
+	localizacion = models.ForeignKey(Localizacion)
 
 
 	def __unicode__(self):

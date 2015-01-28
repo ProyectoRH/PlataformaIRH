@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
-
+from localizacion.models import Localizacion
 from usuarios.models import Institucion
 
 
@@ -33,6 +33,7 @@ class DocumentoDigital(models.Model):
 	nivel = models.ForeignKey(Nivel)
 	institucion = models.ForeignKey(Institucion)
 	archivo = models.FileField(upload_to = "static/documentos_digitales/")
+	localizacion = models.ForeignKey(Localizacion)
 
 	def __unicode__(self):
 		return self.titulo
