@@ -26,7 +26,7 @@ class Pagina(models.Model):
 	descripcion = models.TextField()
 	pagina_padre = models.ForeignKey("Pagina", blank=True, null=True, default=None)
 	peso = models.IntegerField(default=0)
-	target = models.CharField(choices=TARGET_CHOICES, default=EXTERNO)
+	target = models.CharField(max_length=140, choices=TARGET_CHOICES, default=EXTERNO)
 	institucion = models.ForeignKey(Institucion)
 
 	def __unicode__(self):
