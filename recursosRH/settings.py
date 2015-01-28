@@ -52,6 +52,10 @@ INSTALLED_APPS = (
     'eventos',
     'noticia',
     'portada',
+    'representacion',
+    'smart_selects',
+    'zona',
+    'localizacion',
 )
 
 MIDDLEWARE_CLASSES = (
