@@ -44,8 +44,8 @@ class UserProfile(models.Model):
 	institucion = models.ForeignKey(Institucion, null=True, blank=True)
 	tipo_usuario = models.ForeignKey(TipoUsuario, null=True, blank=True)
 	funcion = models.CharField(max_length=200, blank=True, null=True)
-	pais = models.ForeignKey(Pais)
-	ciudad = models.ForeignKey(Ciudad)
+	pais = models.ForeignKey(Pais, null=True)
+	ciudad = models.ForeignKey(Ciudad, null=True)
 	
 
 
