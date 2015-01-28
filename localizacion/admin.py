@@ -9,11 +9,11 @@ from documentos_shape.models import DocumentoShape
 
 
 
-class DocumentoDigitalInline(admin.TabularInline):
+class DocumentoDigitalInline(admin.StackedInline):
 	model = DocumentoDigital
 	extra = 3
 
-class DocumentoShapeInline(admin.TabularInline):
+class DocumentoShapeInline(admin.StackedInline):
 	model = DocumentoShape
 	extra = 3
 
@@ -27,5 +27,5 @@ class MiLocalizacion(Localizacion):
 
 
 
-admin.site.register(MiLocalizacion, LocalizacionAdmin)
 admin.site.register(Localizacion, LeafletGeoAdmin)
+admin.site.register(MiLocalizacion, LocalizacionAdmin)
