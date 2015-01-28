@@ -37,3 +37,7 @@ class DocumentoDigital(models.Model):
 
 	def __unicode__(self):
 		return self.titulo
+
+	class Meta:
+		verbose_name = "Documento Digital"
+		verbose_name_plural = "Documentos Digitales"

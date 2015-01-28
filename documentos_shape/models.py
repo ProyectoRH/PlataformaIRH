@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from django.db import models
 
 from django.contrib.auth.models import User
@@ -17,3 +18,7 @@ class DocumentoShape(models.Model):
 
 	def __unicode__(self):
 		return self.nombre
+
+	class Meta:
+		verbose_name = "Documento Geográfico"
+		verbose_name_plural = "Documentos Geográficos"
