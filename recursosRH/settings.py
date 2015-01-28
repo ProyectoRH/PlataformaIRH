@@ -47,7 +47,11 @@ INSTALLED_APPS = (
     'subcomponentes',
     'factor',
     'categorias',
-    'usuarios',    
+    'usuarios',
+    'pagina',
+    'eventos',
+    'noticia',
+    'portada',
 )
 
 MIDDLEWARE_CLASSES = (
