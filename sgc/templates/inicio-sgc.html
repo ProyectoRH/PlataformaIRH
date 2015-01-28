@@ -1,0 +1,88 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>SGC</title>
+
+	<link rel="stylesheet" href="{% static 'sgc/css/bootstrap.css' %}">
+		
+	<style>
+		#input-buscador {border-radius: 12px;width: 400px;}
+		.barra-superior {background-color: #01527C;}
+		.formulario {margin: 12px 50px 0 0; position: relative;}
+		.formulario .btn-submit {border:none; background-color: transparent;position: absolute; right: 6px;top:6px;}
+		.navbar-brand img {max-width: 180px;}
+		.menu-lista li a {background-color: #F3F7F7;padding: 40px 20px;display: inline-block;}
+		.borde-stripe {height:2px;background-image: url('{% static "sgc/img/stripe.png" %}');background-repeat: repeat-x;}
+	</style>
+
+</head>
+<body>
+	<div class="row">
+		<div class="col-xs-12 barra-superior">
+			<form action="" class="formulario pull-right">
+      			<div class="form-group">
+      				<input type="text" id="input-buscador" class="form-control" placeholder="search" />
+      			</div>
+      			<button type="submit" name="submit" class="btn-submit"><i class="glyphicon glyphicon-search"></i></button>
+      		</form>
+		</div>
+	</div>
+	<div class="row">
+		<nav class="navbar navbar-default">
+		  	<div class="container">
+			    <!-- Brand and toggle get grouped for better mobile display -->
+			    <div class="navbar-header">
+			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			      </button>
+			      <a class="navbar-brand" href="#">
+			        <img alt="Brand" src="{% static 'sgc/img/otrologo.png' %}">
+			      </a>
+			    </div>
+
+		    	<!-- Collect the nav links, forms, and other content for toggling -->
+		    	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      		<ul class="nav navbar-nav navbar-right menu-lista">
+				        <li><a href="#">Inicio</a></li>
+						
+						<li><a href="#">Boton 1</a></li>
+						<li><a href="#">Boton 2</a></li>
+						<li><a href="#">Boton 3</a></li>
+						<li><a href="#">Boton 4</a></li>
+
+
+				        <!--<li class="dropdown">
+				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+				          <ul class="dropdown-menu" role="menu">
+				            <li><a href="#">Action</a></li>
+				            <li><a href="#">Another action</a></li>
+				            <li><a href="#">Something else here</a></li>
+				            <li class="divider"></li>
+				            <li><a href="#">Separated link</a></li>
+				          </ul>
+				        </li>-->
+				    </ul>
+		      		
+
+		      		
+		    	</div><!-- /.navbar-collapse -->
+		  	</div><!-- /.container-fluid -->
+		</nav>
+		<div class="borde-stripe"></div>
+
+		<div class="container-fluid">
+			
+		</div>
+	</div>
+	<script src="{% static 'sgc/js/jquery-2.1.3.js' %}"></script>
+	<script src="{% static 'sgc/js/bootstrap.min.js' %}"></script>
+
+
+</body>
+</html>
