@@ -44,7 +44,7 @@ pip install psycopg2
 echo "*********************************************************************"
 sudo apt-get install git
 echo "Descargando Repositorio"
-git clone https://github.com/ProyectoRH/Plataforma.git
+git clone https://github.com/ProyectoRH/PlataformaIRH.git
 echo "Instalando paquetes necesarios para el entorno de trabajo de la plataforma."
 pip install pillow
 pip install django-suit-redactor
