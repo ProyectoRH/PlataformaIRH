@@ -117,6 +117,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+LEAFLET_CONFIG = {
+'DEFAULT_CENTER': (10.98, -74.78),
+'DEFAULT_ZOOM': 9,
+'MIN_ZOOM': 3,
+'MAX_ZOOM': 18,
+}
+
 REDACTOR_OPTIONS = {'lang': 'es'}
 REDACTOR_UPLOAD = '/static/uploads/'
 # Static files (CSS, JavaScript, Images)
