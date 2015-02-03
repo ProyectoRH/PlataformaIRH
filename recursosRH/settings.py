@@ -143,12 +143,12 @@ TEMPLATE_DIRS = ('templates',)
 
 
 SUIT_CONFIG={
-	'ADMIN_NAME': 'PLATAFORMA DE RECURSOS HIDRICOS DEL ATLANTICO',
+	'ADMIN_NAME': 'PLATAFORMA DE INFORMACIÓN DE RECURSOS HIDRICOS DEL ATLANTICO',
 	'MENU':(
 		'sites',
 		{'label': u'Gestión de Usuarios', 'icon': 'icon-user','models':('auth.user','auth.group')},
 		{'label': u'Gestión de Filtros', 'icon': 'icon-search','models':({'label':'Area Tematica','url':'/admin/areatematicas/'},{'label':'Componentes','url':'/admin/componentes/'},{'label':'Sub-Componentes','url':'/admin/subcomponentes/'},{'label':'Factores','url':'/admin/factor/'},{'label':'Documentos Digitales','url':'/admin/documentos_digitales/'},{'label':'Documentos Geográficos','url':'/admin/documentos_shape/'},{'label':'Localización','url':'/admin/localizacion/'},{'label':'Zona','url':'/admin/zona/'},{'label':'Representacion','url':'/admin/representacion/'},)},
-		{'label': u'Gestión de Contenidos', 'icon': 'icon-book','models':({'label':'Ficheros','url':'/admin/documentos/'},{'label':'Crear páginas','url':'/admin/pagina/'},{'label':'Crear Noticias','url':'/admin/noticia/'},{'label':'Crear Eventos','url':'/admin/eventos/'},)},
+		{'label': u'Gestión de Contenidos', 'icon': 'icon-book','models':({'label':'Crear páginas','url':'/admin/pagina/'},{'label':'Crear Noticias','url':'/admin/noticia/'},{'label':'Crear Eventos','url':'/admin/eventos/'},)},
 		{'label': u'Ondas', 'icon': 'icon-volume-up','models':({'label':'Noticias','url':'/admin/notiondas/'},{'label':'Eventos','url':'/admin/eventoondas/'},{'label':'Paginas','url':'/admin/paginaondas/'},)},
 		
 	)

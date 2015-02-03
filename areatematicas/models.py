@@ -12,4 +12,5 @@ class Areatematica(models.Model):
 		verbose_name = "Área temática"
 		verbose_name_plural = "Áreas temáticas"
 	
-	
+	def __unicode__(self):
+		return self.nombreArea

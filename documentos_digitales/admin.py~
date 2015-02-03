@@ -1,0 +1,9 @@
+from django.contrib import admin
+from documentos_digitales.models import DocumentoDigital
+
+class DocumentoDigitalInline(admin.StackedInline):
+	model = DocumentoDigital
+	extra = 1
+
+admin.site.register(DocumentoDigital, DocumentoDigitalInline)
+# Register your models here.

@@ -18,5 +18,5 @@ class Localizacion(models.Model):
 
 
 	def __unicode__(self):
-		return self.titulo
+		return self.area_tematica
 

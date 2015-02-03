@@ -1,3 +1,4 @@
+#encoding:utf-8
 """
 Django settings for recursosRH project.
 
@@ -31,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'suit',
+    'redactor',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,9 +44,22 @@ INSTALLED_APPS = (
     'sgc',
     'areatematicas',
     'componentes',
-
-
-    
+    'subcomponentes',
+    'factor',
+    'categorias',
+    'usuarios',
+    'pagina',
+    'eventos',
+    'noticia',
+    'portada',
+    'representacion',
+    'smart_selects',
+    'zona',
+    'localizacion',
+    'documentos_digitales',
+    'documentos_shape',
+    'leaflet',
+    'djgeojson',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -55,6 +71,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
 
 ROOT_URLCONF = 'recursosRH.urls'
 
@@ -85,6 +102,8 @@ DATABASES = {
         }
     }
 
+POSTGIS_VERSION = (2, 0, 3)
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
@@ -98,14 +117,40 @@ USE_L10N = True
 
 USE_TZ = True
 
+LEAFLET_CONFIG = {
+'DEFAULT_CENTER': (10.98, -74.78),
+'DEFAULT_ZOOM': 9,
+'MIN_ZOOM': 3,
+'MAX_ZOOM': 18,
+}
 
+REDACTOR_OPTIONS = {'lang': 'es'}
+REDACTOR_UPLOAD = '/static/uploads/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2] + ['media'])
+STATIC_ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2] + ['content'])
 
 STATICFILES_DIRS = (
    os.path.join(BASE_DIR, 'static'),
 )
 
 TEMPLATE_DIRS = ('templates',)
+
+
+SUIT_CONFIG={
+	'ADMIN_NAME': 'PLATAFORMA DE RECURSOS HIDRICOS DEL ATLANTICO',
+	'MENU':(
+		'sites',
+		{'label': u'Gestión de Usuarios', 'icon': 'icon-user','models':('auth.user','auth.group')},
+		{'label': u'Gestión de Filtros', 'icon': 'icon-search','models':({'label':'Area Tematica','url':'/admin/areatematicas/'},{'label':'Componentes','url':'/admin/componentes/'},{'label':'Sub-Componentes','url':'/admin/subcomponentes/'},{'label':'Factores','url':'/admin/factor/'},{'label':'Documentos Digitales','url':'/admin/documentos_digitales/'},{'label':'Documentos Geográficos','url':'/admin/documentos_shape/'},{'label':'Localización','url':'/admin/localizacion/'},{'label':'Zona','url':'/admin/zona/'},{'label':'Representacion','url':'/admin/representacion/'},)},
+		{'label': u'Gestión de Contenidos', 'icon': 'icon-book','models':({'label':'Crear páginas','url':'/admin/pagina/'},{'label':'Crear Noticias','url':'/admin/noticia/'},{'label':'Crear Eventos','url':'/admin/eventos/'},)},
+		{'label': u'Ondas', 'icon': 'icon-volume-up','models':({'label':'Noticias','url':'/admin/notiondas/'},{'label':'Eventos','url':'/admin/eventoondas/'},{'label':'Paginas','url':'/admin/paginaondas/'},)},
+		
+	)
+
+}

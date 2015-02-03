@@ -1,0 +1,7 @@
+from django.contrib import admin
+from documentos_shape.models import DocumentoShape
+class DocumentoShapeInline(admin.StackedInline):
+	model = DocumentoShape
+	extra = 1
+
+# Register your models here.
