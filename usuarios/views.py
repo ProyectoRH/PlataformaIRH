@@ -10,15 +10,15 @@ def iniciarSesion(request):
 	
 	if request.user.is_authenticated():
 		if request.user.is_staff:
-			HttpResponseRedirect('/admin/')
+			return HttpResponseRedirect('/admin/')
 		return HttpResponseRedirect('/')
 
 	if form.is_valid():
 		login(request, form.getUser())
 		if request.user.is_staff:
-			HttpResponseRedirect('/admin/')
-
-		return HttpResponseRedirect('/')
+			return HttpResponseRedirect('/admin/')
+		else:
+			return HttpResponseRedirect('/')
 	
 	
 	return render(request, 'login-sgc.html', {
