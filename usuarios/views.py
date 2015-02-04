@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .forms import IniciarSesion
 from django.http import HttpResponseRedirect
 
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, authenticate
 
 # Create your views here.
 def iniciarSesion(request):
