@@ -33,7 +33,7 @@ class DocumentoDigital(models.Model):
 	nivel = models.ForeignKey(Nivel)
 	institucion = models.ForeignKey(Institucion)
 	archivo = models.FileField(upload_to = "static/documentos_digitales/")
-	localizacion = models.ForeignKey(Localizacion)
+	localizacion = models.ForeignKey(Localizacion, null=True)
 
 	def __unicode__(self):
 		return self.titulo

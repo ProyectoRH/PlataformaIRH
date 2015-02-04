@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .forms import IniciarSesion
+from django.http import HttpResponseRedirect
 
 from django.contrib.auth import login, logout, authenticate
 

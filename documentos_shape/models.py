@@ -13,7 +13,7 @@ class DocumentoShape(models.Model):
 	direccion_online = models.URLField(max_length=255)
 	archivo = models.FileField(upload_to = "static/documentos_shape")
 	usuario = models.ForeignKey(User)
-	localizacion = models.ForeignKey(Localizacion)
+	localizacion = models.ForeignKey(Localizacion, null=True)
 
 
 	def __unicode__(self):
