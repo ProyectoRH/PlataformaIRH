@@ -20,6 +20,6 @@ def iniciarSesion(request):
 		return HttpResponseRedirect('/')
 	
 	
-	return render(request, 'iniciar-sesion.html', {
+	return render(request, 'login-sgc.html', {
 		'form': form,
 	})

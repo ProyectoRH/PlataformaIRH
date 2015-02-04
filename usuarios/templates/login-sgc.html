@@ -1,0 +1,113 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Inicio Recursos Hídricos</title>
+	
+
+	<!-- Bootstrap-->
+	<link rel="stylesheet" href="{% static 'sgc/css/bootstrap.css' %}" />
+
+	<!-- Bootstrap theme  -->
+	<link rel="stylesheet" href="{% static 'sgc/css/bootstrap-theme.css' %}" />
+	
+</head>
+<body>
+	<div class="container-fluid before-header">
+		<div class="form-search">
+
+			<div class="col-md-5 col-md-offset-7">
+				<div class="col-md-4 text-right">
+
+				</div>
+				<div class="col-md-8">
+					<form action="">
+						
+						<input type="text" class="form-control" placeholder="Buscar" />
+						<button type="submit" class="btn-search">
+							<i class="glyphicon glyphicon-search"></i>
+						</button>
+					</form>	
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				
+				<img src="{% static 'sgc/img/logo-main-page.png' %}" alt="" class="navbar-brand" />
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="{% url 'sgc.views.home' %}">Inicio</a></li>
+					
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+
+	<div class="container-fluid">
+		<div class="container">
+			<div class="col-lg-12">
+				<div class="col-md-4 col-md-offset-4">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<form action="#">
+								<div class="form-group">
+									<label for="nombre">Usuario:</label>
+									<input type="text" name="nombre" id="nombre" class="form-control" />
+								</div>
+								<div class="form-group">
+									<label for="password">Contraseña:</label>
+									<input type="password" name="password" id="password" class="form-control" />
+								</div>
+
+								<div class="form-group">
+									<input type="submit" name="submit" id="submit" class="btn btn-success form-control" value="Iniciar Sesión" />
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+
+		<div class="row footer">
+			<div class="container">
+				<div class="col-md-6">
+					<p>Derechos reservados</p>
+				</div>
+				<div class="col-md-6 text-right">
+					<ul class="menu-footer">
+						<li><a href="#">Mapa del sitio</a></li>
+						<li><a href="#">Inicio</a></li>
+						<li><a href="#">Ayuda</a></li>
+						<li><a href="#">Soporte</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>	
+
+	<!-- Jquery Library -->
+	<script src="{% static 'sgc/js/jquery-2.1.3.js' %}"></script>
+
+	<!-- Bootstrap Library -->
+	<script src="{% static 'sgc/js/bootstrap.js' %}"></script>
+</body>
+</html>

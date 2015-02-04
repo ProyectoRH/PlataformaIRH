@@ -5,10 +5,15 @@ from django.shortcuts import render
 def home(request):
     return render(request,'index.html',{})
 
+def login_sgc(request):
+	return render(request, 'login-sgc.html', {});
+
 def nosotros(request):
 	return render(request,'nosotros.html',{})	
 def noticias(request):
 	return render(request,'noticias.html',{})
+
+
 def noticias_historicas(request):
 	return render(request,'historicas.html',{})
 # def ondas(request):
