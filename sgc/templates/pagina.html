@@ -1,0 +1,30 @@
+{% extends 'base_template.html' %}
+
+{% load staticfiles %}
+
+{% block cuerpo %}
+	<div class="container-fluid">
+		<div class="container">
+			<h2 class="block-title regular-title text-center">Título de página</h2>
+			
+		</div>
+
+		
+
+		<div class="row footer">
+			<div class="container">
+				<div class="col-md-6">
+					<p>Derechos reservados</p>
+				</div>
+				<div class="col-md-6 text-right">
+					<ul class="menu-footer">
+						<li><a href="#">Mapa del sitio</a></li>
+						<li><a href="#">Inicio</a></li>
+						<li><a href="#">Ayuda</a></li>
+						<li><a href="#">Soporte</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock cuerpo %}

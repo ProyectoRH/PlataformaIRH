@@ -30,4 +30,4 @@ def noticias_historicas(request):
 
 
 def mapas(request):
-    return render(request,'inicio-mapas.html',{})
+    return render(request,'index-mapa.html',{})

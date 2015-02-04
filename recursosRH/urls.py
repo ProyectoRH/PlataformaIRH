@@ -10,6 +10,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('sgc.urls')),
-    url(r'^mapas/', 'sgc.views.mapas', name='home'),
     url(r'^redactor/', include('redactor.urls')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

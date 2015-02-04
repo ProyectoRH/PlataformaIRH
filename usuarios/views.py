@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import IniciarSesion
+from .forms import IniciarSesion, CrearUsuario, CrearPerfil
 from django.http import HttpResponseRedirect
 
 from django.contrib.auth import login, authenticate
@@ -39,7 +39,7 @@ def crearUsuario(request):
 		perfil.usuario = usuario
 		perfil.save()
 
-	return render(request, 'crear-usuario.html', {
+	return render(request, 'registro-sgc.html', {
 		'crear_usuario': crear_usuario,
 		'crear_perfil': crear_perfil,
 	})
