@@ -1,0 +1,10 @@
+#!/bin/bash
+
+read -r "El nombre de la base de datos: " dbname
+sudo echo "export dbname=$dbname">> /etc/profile
+read -r "El nombre del usuario postgres:" usname
+sudo echo "export usname=$usname">> /etc/profile
+read -r "La contraseña del usuario postgres:" uscontra
+sudo echo "export uscontra=$uscontra">> /etc/profile
+read -r "La ip o nombre del servidor postgres:" ipdir
+sudo echo "export ipdir=$ipdir">> /etc/profile

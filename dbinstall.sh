@@ -1,0 +1,14 @@
+echo "Instalando Postgres y Postgis..."
+sudo apt-get install postgresql postgresql-contrib postgis postgresql-9.3-postgis-2.1
+echo "*********************************************************************"
+#sudo su - postgres
+#createdb recursosdb;
+#createuser -P recursosrh;
+#clave para el usuario recursosrh: "nmveaviieotf"
+#psql "GRANT ALL PRIVILEGES ON DATABASE recursosdb TO recursosrh;"
+#psql -d recursosdb -c "CREATE EXTENSION postgis;"
+#psql -d recursosdb -c "CREATE EXTENSION postgis_topology;"
+#psql -d recursosdb -c "CREATE EXTENSION fuzzystrmatch;"
+#psql -d recursosdb -c "CREATE EXTENSION postgis_tiger_geocoder;"
+#^D
+
