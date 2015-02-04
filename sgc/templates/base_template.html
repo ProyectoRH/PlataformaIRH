@@ -19,7 +19,7 @@
 
 			<div class="col-md-5 col-md-offset-7">
 				<div class="col-md-4 text-right">
-					<a href="#"><img src="{% static 'sgc/img/other-icons/iconologin.png' %}" alt="" height="42px"></a>
+					<a href="{% url 'usuarios.views.iniciarSesion' %}"><img src="{% static 'sgc/img/other-icons/iconologin.png' %}" alt="" height="42px"></a>
 					<a href="#"><img src="{% static 'sgc/img/other-icons/iconoregistrarse.png' %}" alt="" height="42px"></a>
 				</div>
 				<div class="col-md-8">
@@ -46,7 +46,7 @@
 					<span class="icon-bar"></span>
 				</button>
 				
-				<img src="{% static 'sgc/img/logo-main-page.png' %}" alt="" class="navbar-brand" />
+				<a href="{% url 'sgc.views.home' %}"><img src="{% static 'sgc/img/logo-main-page.png' %}" alt="" class="navbar-brand" /></a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
