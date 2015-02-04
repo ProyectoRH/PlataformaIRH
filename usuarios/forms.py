@@ -1,6 +1,12 @@
 # -*- encoding:utf-8 -*-
 from django import forms
 from django.contrib.auth import authenticate
+from django.contrib.auth.forms import UserCreationForm
+
+from django.contrib.auth.models import User
+from .models import UserProfile, Institucion
+
+
 
 
 class IniciarSesion(forms.Form):
@@ -26,3 +32,25 @@ class IniciarSesion(forms.Form):
 
 	def getUser(self):
 		return self.user_cache
+
+
+
+class CrearPerfil(ModelForm):
+	class Meta:
+		model = UserProfile
+		exclude = ('usuario', 'institucion', 'tipo_usuario', 'funcion', 'pais', 'ciudad', )
+
+
+
+class CrearUsuario(UserCreationForm):
+	email = forms.EmailField(max_length=255)
+	class Meta:
+		model = User
+		fields = ('first_name', 'last_name', 'username', 'email', )
+
+	def clean_email(self):
+		email = self.cleaned_data.get('email')
+		username = self.cleaned_data.get('username')
+		if email and User.objects.filter(email=email).exclude(username=username).count():
+			raise forms.ValidationError(u'Este email ya se encuentra registrado.')
+		return email

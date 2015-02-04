@@ -24,3 +24,22 @@ def iniciarSesion(request):
 	return render(request, 'login-sgc.html', {
 		'form': form,
 	})
+
+
+
+def crearUsuario(request):
+	crear_usuario = CrearUsuario(request.POST or None, prefix = "usuario")
+	crear_perfil = CrearPerfil(request.POST or None, prefix = "perfil")
+
+	if crear_usuario.is_valid() and crear_perfil.is_valid():
+		usuario = crear_usuario.save()
+
+		perfil = crear_perfil.save(commit = False)
+
+		perfil.usuario = usuario
+		perfil.save()
+
+	return render(request, 'crear-usuario.html', {
+		'crear_usuario': crear_usuario,
+		'crear_perfil': crear_perfil,
+	})
