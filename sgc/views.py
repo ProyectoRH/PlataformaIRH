@@ -6,16 +6,11 @@ def home(request):
     return render(request,'index.html',{})
 
 def login_sgc(request):
-	return render(request, 'login-sgc.html', {});
+	return render(request, 'login-sgc.html', {})
 
 def nosotros(request):
-	return render(request,'nosotros.html',{})	
-def noticias(request):
-	return render(request,'noticias.html',{})
+	return render(request,'nosotros.html',{})
 
-
-def noticias_historicas(request):
-	return render(request,'historicas.html',{})
 # def ondas(request):
 # 	return render(request,'ondas.html',{})
 

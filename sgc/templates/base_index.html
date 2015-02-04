@@ -1,0 +1,304 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block page_title %}{% endblock %}</title>
+	
+
+	<!-- Bootstrap-->
+	<link rel="stylesheet" href="{% static 'sgc/css/bootstrap.css' %}" />
+
+	<!-- Bootstrap theme  -->
+	<link rel="stylesheet" href="{% static 'sgc/css/bootstrap-theme.css' %}" />
+	
+</head>
+<body>
+	<div class="container-fluid before-header">
+		<div class="form-search">
+
+			<div class="col-md-5 col-md-offset-7">
+				<div class="col-md-4 text-right">
+					<a href="{% url 'usuarios.views.iniciarSesion' %}"><img src="{% static 'sgc/img/other-icons/iconologin.png' %}" alt="" height="42px"></a>
+					<a href="{% url 'usuarios.views.crearUsuario' %}"><img src="{% static 'sgc/img/other-icons/iconoregistrarse.png' %}" alt="" height="42px"></a>
+				</div>
+				<div class="col-md-8">
+					<form action="">
+						
+						<input type="text" class="form-control" placeholder="Buscar" />
+						<button type="submit" class="btn-search">
+							<i class="glyphicon glyphicon-search"></i>
+						</button>
+					</form>	
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				
+				<a href="{% url 'sgc.views.home' %}"><img src="{% block img_logo %}{% endblock %}" alt="" class="navbar-brand" /></a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="{% url 'sgc.views.home' %}">Inicio</a></li>
+					<li><a href="{% url 'sgc.views.nosotros' %}">Nosotros</a></li>
+					<li><a href="{% url 'noticia.views.noticias' %}">Noticias</a></li>
+					<li><a href="{% url 'noticia.views.noticias_historicas' %}">Históricas</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Separated link</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+	
+	<div class="container-fluid">
+		<div class="container">
+			<div class="jumbotron main-banner" style="background-image: url({% block img_banner %}{% endblock %});">
+				<div class="col-sm-4 col-sm-offset-8 text-center">
+					<!--<h3>Lorem Ipsum</h3>
+					<p>Vivamus tincidunt, urna quis consectetur venenatis.</p>-->
+					<p><a class="btn btn-primary btn-lg" href="{% url 'sgc.views.mapas' %}" role="button">Plataforma de recursos<br />hídricos</a></p>
+				</div> 
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container-fluid">
+		<div class="container">
+			<div class="col-md-12">
+				<div class="col-md-6 container-rel">
+					<h2 class="block-title block-title__left"><a href="#">Últimas noticias</a></h2>
+					<ul class="list">
+						<li>
+							<h4><a href="#">Noticia</a></h4>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+						<li>
+							<h4><a href="#">Noticia</a></h4>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+						<li>
+							<h4><a href="#">Noticia</a></h4>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-6">
+					<img src="http://placehold.it/555x370" alt="" data-selector="img" width="555px" />
+				</div>
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="divider"></div>	
+			</div>
+			<div class="col-md-12" id="block_nucleos">
+				<h2 class="text-center"><a href="#">PROGRAMA RED DE CIENCIA, TECNOLOGÍA E INNOVACIÓN DE RECURSOS HÍDRICOS DEL CARIBE</a></h2>
+				
+				<div class="col-sm-3 text-center">
+					<img src="{% static 'sgc/img/images-nucleos/marinocostero.png' %}" alt="">
+					<h4 class="text-center"><a href="#">Núcleo de tal cosa</a></h4>
+					<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lacinia quam. Fusce quis nulla tincidunt, interdum magna vitae, viverra est. </p>
+
+				</div>
+				<div class="col-sm-3 text-center">
+					<img src="{% static 'sgc/img/images-nucleos/hidraulico.png' %}" alt="">
+					<h4 class="text-center"><a href="#">Núcleo de tal cosa</a></h4>
+					<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lacinia quam. Fusce quis nulla tincidunt, interdum magna vitae, viverra est. </p>
+
+				</div>
+				<div class="col-sm-3 text-center">
+					<img src="{% static 'sgc/img/images-nucleos/hidrobiologico.png' %}" alt="">
+					<h4 class="text-center"><a href="#">Núcleo de tal cosa</a></h4>
+					<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lacinia quam. Fusce quis nulla tincidunt, interdum magna vitae, viverra est. </p>
+
+				</div>
+				<div class="col-sm-3 text-center">
+					<img src="{% static 'sgc/img/images-nucleos/socioeconomico.png' %}" alt="">
+					<h4 class="text-center"><a href="#">Núcleo de tal cosa</a></h4>
+					<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lacinia quam. Fusce quis nulla tincidunt, interdum magna vitae, viverra est. </p>
+
+				</div>
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+			
+			
+
+			<div class="col-md-12">
+				<a href="#"><img src="{% block ondas_banner %}{% endblock %}" alt="" width="100%" /></a>
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+
+			<div class="col-md-12">
+				<div class="col-md-3"><img src="http://placehold.it/1110x740" alt="" data-selector="img" width="100%"></div>
+				<div class="col-md-3"><img src="http://placehold.it/1110x740" alt="" data-selector="img" width="100%"></div>
+				<div class="col-md-3"><img src="http://placehold.it/1110x740" alt="" data-selector="img" width="100%"></div>
+				<div class="col-md-3"><img src="http://placehold.it/1110x740" alt="" data-selector="img" width="100%"></div>
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="divider"></div>	
+			</div>
+
+			<div class="col-md-12">
+				<div class="col-md-6">
+					<h2 class="block-title block-title__left"><a href="#">Eventos</a></h2>
+					<ul class="list">
+						<li>
+							<a href="#">Noticia</a>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+						<li>
+							<a href="#">Noticia</a>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+						<li>
+							<a href="#">Noticia</a>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-6">
+					<h2 class="block-title block-title__left"><a href="#">Histórico de Eventos</a></h2>
+					<ul class="list">
+						<li>
+							<a href="#">Noticia</a>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+						<li>
+							<a href="#">Noticia</a>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+						<li>
+							<a href="#">Noticia</a>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="divider"></div>	
+			</div>
+
+			<div class="col-md-12">
+				<div class="col-md-6">
+					<img src="http://placehold.it/555x370" alt="" data-selector="img" width="100%" />
+				</div>
+				<div class="col-md-6">
+					<img src="http://placehold.it/555x370" alt="" data-selector="img" width="100%" />
+				</div>
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="divider"></div>	
+			</div>
+
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+			<div class="col-md-12 logos-allies text-center">
+				<img src="{% static 'sgc/img/logos-aliados/Logocolciencias.jpg' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/logocra.png' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/Logocuc.png' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/Logoescuelanaval.png' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/Logogobernacion.jpg' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/Logoondas.jpg' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/logosgr.png' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/Logouniatlantico.png' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/Logouninorte.jpg' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/logounisimon.jpg' %}" alt="" />
+			</div>
+		</div>
+
+		
+
+		<div class="row footer">
+			<div class="container">
+				<div class="col-md-6">
+					<p>Derechos reservados</p>
+				</div>
+				<div class="col-md-6 text-right">
+					<ul class="menu-footer">
+						<li><a href="#">Mapa del sitio</a></li>
+						<li><a href="#">Inicio</a></li>
+						<li><a href="#">Ayuda</a></li>
+						<li><a href="#">Soporte</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+		<!-- Jquery Library -->
+	<script src="{% static 'sgc/js/jquery-2.1.3.js' %}"></script>
+
+	<!-- Bootstrap Library -->
+	<script src="{% static 'sgc/js/bootstrap.js' %}"></script>
+</body>
+</html>
