@@ -66,6 +66,7 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<form action="" method="post" id="formulario">
+								{% csrf_token %}
 								<div class="form-group">
 									<label for="nombre">Usuario:</label>
 									{{ form.username }}
