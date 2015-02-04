@@ -48,7 +48,7 @@ INSTALLED_APPS = (
     'factor',
     'categorias',
     'usuarios',
-    'pagina',
+    #'pagina',
     'eventos',
     'noticia',
     'portada',
@@ -143,7 +143,7 @@ TEMPLATE_DIRS = ('templates',)
 
 
 SUIT_CONFIG={
-	'ADMIN_NAME': 'PLATAFORMA DE RECURSOS HIDRICOS DEL ATLANTICO',
+	'ADMIN_NAME': 'PLATAFORMA DE INFORMACIÓN DE RECURSOS HIDRICOS DEL ATLANTICO',
 	'MENU':(
 		'sites',
 		{'label': u'Gestión de Usuarios', 'icon': 'icon-user','models':('auth.user','auth.group')},
