@@ -1,332 +1,224 @@
-{% extends 'template_base.html' %}
+{% extends 'base_template.html' %}
+
 {% load staticfiles %}
 
-{% block titulo_pagina %} Inicio SGC {% endblock %}
-
-{% block contenido_pagina %}
-		<div class="space"></div>
-		<div class="block" id="feature2">
-            <div class="container">
-			<div class="space space--hg">
-                    <div style="background-image:url({% static 'sgc-resources/images/banner_mapa.jpg' %});background-size:cover;background-position:100% 0%;width:100%;height:350px;">
-                        <div class="info-banner" style="float: right;
-margin-right: 60px;text-align:center;">
-                            <h3 style="font-size:30px;"><strong>Lorem Ipsum Ipsum</strong></h3>
-							<h2 style="font-size:15px;">Phasellus accumsan mi ultricies lorem feugiat<h2>
-                            <a href="#" style="background-color: rgb(79, 141, 253);padding: 10px 5px;display: block;width: 250px;font-size: 20px;text-align: center;font-weight: bolder;font-family: Helvetica;color:white;">PLATAFORMA DE RECURSOS HIDRICOS</a>        
-                        </div>
-                    
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <h4 class="block-title block-title--left" data-selector="h4" style=""><a href= "noticias-lista.html"><strong>Ultimas Noticias</strong></a></h4>
-
-                        <ul class="list list--expanded list--expanded--thin">
-                            <li>
-                                <!--<div class="list__step">{1}</div>-->
-                                <div class="editContent" data-selector="Footers">
-                                <h4 class="list__heading" data-selector="h4" style=""><a href= "noticia-detalle.html">Research, sollicitudin eu fringilla eget.</a></h4>
-                                <p class="list__content" data-selector="p" style="">Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. </p>
-                                </div>
-                            </li>
-                            <li>
-                                <!--<div class="list__step">{2}</div>-->
-                                 <div class="editContent" data-selector="Footers">
-                                <h4 class="list__heading" data-selector="h4" style=""><a href= "noticia-detalle.html">Expirience, lorem ipsum dolor sit amet.</a></h4>
-                                <p class="list__content" data-selector="p" style="">Phasellus accumsan mi ultricies lorem feugiat sodales vitae sed turpis. Cras non vehicula mi.  </p>
-                                </div>
-                            </li>
-                            <li class="last-feature">
-                                <!--<div class="list__step">{3}</div>-->
-                                 <div class="editContent" data-selector="Footers">
-                                <h4 class="list__heading" data-selector="h4" style=""><a href= "noticia-detalle.html">Intelligence, consectetur adipiscing elit.</a></h4>
-                                <p class="list__content" data-selector="p" style="">Nam at velit nisl. Aenean vitae est nisl. Cras molestie molestie nisl vel imperdiet. </p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div><!-- end col -->
-
-                    <div class="col-md-6">
-                        <div class="image-container image-container--empty ">
-                            <div class="video-container videoWrapper">
-                                <a href="noticia-detalle.html"><img src="{% static 'sgc-resources/images/fotonoticiaejemplo.jpg' %}" alt="" data-selector="img"></a>
-                                
-                            </div>
-                        </div>
-                    </div><!-- end col -->
-            </div><!-- end row -->
-            </div>
-        </div>
-        <div class="space space--hg"></div>
-        <div class="block" id="service-2">
-            <section class="container">
-                <h4 class="block-title" data-selector="h4" style=""><strong>PROGRAMA RED DE CIENCIA, TECNOLOGÍA E INNOVACIÓN DE RECURSOS HÍDRICOS DEL CARIBE</strong></h4>
-             
-                <div class="row">
-                    <div class="one-column col-xs-6 col-md-3">
-                        <div class="service service--center">
-                                <div class="icon icon icon--shape">
-                                    <a href="{% url 'sgc.views.nucleo_marino' %}"><img src="{% static 'sgc-resources/images/marinocostero.png' %}" width="150px" /></a>
-                                </div>
-                                <a class="service__link" href="{% url 'sgc.views.nucleo_marino' %}">
-                                    <a href="nucleomarino.html"><h3 class="service__heading editContent" data-selector="Footers" style="">Núcleo Gestión Ambiental Marino-Costera</h3>
-                                </a>
-								 <br>
-                                <p class="editContent" data-selector="Footers" style="">Desarrollar proyectos de I+D en Gestión Ambiental Marino-Costera  - Etapa 1: Línea base ambiental de la zona marina costera del Departamento del Atlántico. </p>
-                        </div>
-                    </div><!-- end col -->
-             
-                    <div class="one-column col-xs-6 col-md-3">
-                        <div class="service service--center">
-                                <div class="icon icon icon--shape">
-                                    <a href="{% url 'sgc.views.nucleo_ingHidraulica' %}"/><img src="{% static 'sgc-resources/images/hidraulico.png' %}" width="150px" /></a>
-                                </div>
-                                <a class="service__link" href="{% url 'sgc.views.nucleo_ingHidraulica' %}"/>
-                                    <h3 class="service__heading editContent" data-selector="Footers" style="">Núcleo en Ingeniería Hidráulica, Ambiental y Costera</h3>
-                                </a>
-                                 	
-                                <p class="editContent" data-selector="Footers" style=""> Desarrollar proyectos de I+D en Ing. Hidráulica, Ambiental y Costera para hidrosistemas estratégicos del Dept. del Atlántico - Etapa 1: Modelación Río Magdalena y Alternativas Sostenib. cuencas urbanas.</p>
-                        </div>
-                    </div><!-- end col -->
-             
-                    <div class="clearfix visible-xs"></div>
-             
-                    <div class="one-column col-xs-6 col-md-3">
-                        <div class="service service--center">
-                                <div class="icon icon icon--shape">
-                                    <a href="{% url 'sgc.views.nucleo_hidroBiologico' %}"/><img src="{% static 'sgc-resources/images/hidrobiologico.png' %}" width="150px" /></a>
-                                </div>
-                                <a class="service__link" href="{% url 'sgc.views.nucleo_hidroBiologico' %}"/>
-                                    <h3 class="service__heading editContent" data-selector="Footers" style="">Núcleo en Recursos Hidrobiológicos</h3>
-                                </a>
-                                 
-								 <br>
-                                <p class="editContent" data-selector="Footers" style="">Desarrollar proyectos de I+D en Recursos Hidribiológicos en sistemas hídricos del Dept. del Atlántico - Etapa 1: Caracterizar los recursos hidrobiologicos de las Cienagas del sur del Atlantico y Canal del Dique</p>
-                        </div>
-                    </div><!-- end col -->
-             
-                    <div class="one-column col-xs-6 col-md-3">
-                        <div class="service service--center">
-                            <div class="icon icon icon--shape">
-                                    <a href="{% url 'sgc.views.nucleo_socioEconomico' %}"/><img src="{% static 'sgc-resources/images/socioeconomico.png' %}" width="150px" /></a>
-                                </div>
-                                <a class="service__link" href="{% url 'sgc.views.nucleo_socioEconomico' %}"/>
-                                    <h3 class="service__heading editContent" data-selector="Footers" style="">Núcleo Socio-Económico y Proyectos Productivos</h3>
-                                </a>
-                                 <br>
-                                <p class="editContent" data-selector="Footers" style="">Desarrollar proyectos de I+D en estudios socio-económicos y proyectos productivos - Etapa 1: Acuaponía, Policultivos, Bioindicadores microorganismos para Salud Pública.
-</p>
-                        </div>
-                    </div><!-- end col -->
-                </div><!-- end row -->
-             
-                <div class="devider-brand devider--top-xs"></div>
-            </section><!-- end container -->
-        </div>
-		<div class="space space--hg"></div>
-				<div>
-					<h4 class="block-title"><strong>PROGRAMA ONDAS</strong></h4>
-				</div>
-		<div class="block" id="gallery-4-col">
-            <section class="container">
-                <div class="row">
-                    <div class="gallery-wrapper">
-                        <div class="col-sm-6 col-md-3">
-                            <div class="gallery-item">
-                                <div class="image-container image-container--border-inner image-container--border-small">
-                                    <img src="http://placehold.it/1110x740" alt="" data-selector="img">
-                                </div>
-
-                                <div class="gallery-item__info desktop-small">
-                                    <h3 class="gallery-item__heading editContent" data-selector="Footers">GALERIA DE VIDEOS</h3>
-                                    
-                                    <a class="btn btn-warning btn--decorated gallery-item__link" href="http://placehold.it/1600x1200" data-selector="Footers">Ver màs</a>
-                                </div>
-                            </div>
-                        </div><!-- end col -->
-
-                        <div class="col-sm-6 col-md-3">
-                            <div class="gallery-item">
-                                <div class="image-container image-container--border-inner image-container--border-small">
-                                    <img src="http://placehold.it/1110x740" alt="" data-selector="img" style="">
-                                </div>
-
-                                <div class="gallery-item__info desktop-small">
-                                    <h3 class="gallery-item__heading editContent" data-selector="Footers" style="">GALERIA DE FOTOS</h3>
-                                    
-                                    <a class="btn btn-warning btn--decorated gallery-item__link" href="http://placehold.it/1600x1200" data-selector="Footers" style="">Ver màs</a>
-                                </div>
-                            </div>
-                        </div><!-- end col -->
-
-                        <div class="col-sm-6 col-md-3">
-                            <div class="gallery-item">
-                                <div class="image-container image-container--border-inner image-container--border-small">
-                                    <img src="http://placehold.it/1110x740" alt="" data-selector="img">
-                                </div>
-
-                                <div class="gallery-item__info desktop-small">
-                                    <h3 class="gallery-item__heading editContent" data-selector="Footers" style="">DOCUMENTOS</h3>
-                                    
-                                    <a class="btn btn-warning btn--decorated gallery-item__link" href="ondas.html" data-selector="Footers" style="">Ver màs</a>
-                                </div>
-                            </div>
-                        </div><!-- end col -->
-
-                        <div class="col-sm-6 col-md-3">
-                            <div class="gallery-item">
-                                <div class="image-container image-container--border-inner image-container--border-small">
-                                    <img src="http://placehold.it/1110x740" alt="" data-selector="img">
-                                </div>
-
-                                <div class="gallery-item__info desktop-small">
-                                    <h3 class="gallery-item__heading editContent" data-selector="Footers">NOTICIAS</h3>
-                                    <a class="btn btn-warning btn--decorated gallery-item__link" href="ondas.html" data-selector="Footers">Ver màs</a>
-                                </div>
-                            </div>
-                        </div><!-- end col -->
-                    </div>
-                </div>
-            </section>
-        </div><div class="space space--hg"></div><div class="block" id="feature2">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h4 class="block-title block-title--left" data-selector="h4" style=""><a href="noticias-lista.html"><strong>EVENTOS</strong></a></h4>
-
-                        <ul class="list list--expanded list--expanded--thin">
-                            <li>
-                                
-                                <div class="editContent" data-selector="Footers">
-                                <a href="#"><h4 class="list__heading" data-selector="h4" style="">Primer evento importante.</h4></a>
-                                <p class="list__content" data-selector="p" style="">Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. </p>
-                                </div>
-                            </li>
-                            <li>
-                                
-                                 <div class="editContent" data-selector="Footers">
-                                <a href="#"><h4 class="list__heading" data-selector="h4" style="">Expirience, lorem ipsum dolor sit amet.</h4></a>
-                                <p class="list__content" data-selector="p" style="">Phasellus accumsan mi ultricies lorem feugiat sodales vitae sed turpis. Cras non vehicula mi.  </p>
-                                </div>
-                            </li>
-                            <li class="last-feature">
-                                
-                                 <div class="editContent" data-selector="Footers">
-                                <a href="#"><h4 class="list__heading" data-selector="h4" style="">Intelligence, consectetur adipiscing elit.</h4></a>
-                                <p class="list__content" data-selector="p" style="">Nam at velit nisl. Aenean vitae est nisl. Cras molestie molestie nisl vel imperdiet. </p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div><!-- end col -->
-                    
-                    <div class="col-md-6">
-                        <h4 class="block-title block-title--left" data-selector="h4" style=""><a href="noticias-historicas.html" target=_blank/><strong>NOTICIAS HISTÓRICAS</strong></h4></a>
-						<section>
-												<div>
-													<div class="row">
-														<div class="6u">
-															<ul class="link-list">
-																<li><a href="noticia-detalle.html"/>Sed neque nisi consequat</a></li>
-																<li><a href="noticia-detalle.html">Dapibus sed mattis blandit</a></li>
-																<li><a href="noticia-detalle.html">Quis accumsan lorem</a></li>
-																<li><a href="noticia-detalle.html">Suspendisse varius ipsum</a></li>
-																<li><a href="noticia-detalle.html">Eget et amet consequat</a></li>
-															</ul>
-														</div>
-														<div class="6u">
-															<ul class="link-list">
-																<li><a href="noticia-detalle.html">Quis accumsan lorem</a></li>
-																<li><a href="noticia-detalle.html">Sed neque nisi consequat</a></li>
-																<li><a href="noticia-detalle.html">Eget et amet consequat</a></li>
-																<li><a href="noticia-detalle.html">Dapibus sed mattis blandit</a></li>
-																<li><a href="noticia-detalle.html">Vitae magna sed dolore</a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</section>
-                    </div><!-- end col -->
-				</div><!-- end row -->
-            </div>
-        </div>
-		
-		<div class="space space--hg"></div>
-		<div class="block" id="gallery-2-col">
-            <section class="container">
-                <div class="row">
-                    <div class="gallery-wrapper">
-                        <div class="col-sm-6">
-                            <div class="gallery-item">
-                                
-                                    <div class="video-container">
-                                <iframe src="http://player.vimeo.com/video/18776121?title=0&amp;byline=0&amp;portrait=0" width="100%" height="100%" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
-                                </div><!-- end col -->
-								
-							<div class="btn">                             
-                                    <a class="btn btn-warning btn--decorated gallery-item__link" href="#" data-selector="Footers">Ver más Videos</a>
-                                </div>
-                            </div>
-                        </div><!-- end col -->
-
-                        <div class="col-sm-6">
-                            <div class="gallery-item">
-                                <div class="image-container image-container">
-                                    <img src="http://placehold.it/1110x740" alt="" data-selector="img" style="">
-                                </div>
-
-                                <div class="gallery-item__info">
-                                    <h3 class="gallery-item__heading editContent" data-selector="Footers" style="">GALERIA DE FOTOS</h3>
-                                    <a class="btn btn-warning btn--decorated gallery-item__link" href="#" data-selector="Footers" style="">Ver más</a>
-                                </div>
-                            </div>
-                        </div><!-- end col -->
-                    </div>
-                </div>
-            </section>
-			
-			<div class="space space--hg"></div>
-			<div>
-					<h4 class="block-title"><strong>ENLACES DE INTERES</strong></h4>
-				</div>
-				<div class="space space--hg"></div>
-				<div class="full-width-container block-4">
-				<div class="container"></div>	
-				
-				
-				
-				
-				<div class="devider-brand devider--top-xs"></div>
-                  			
-				
-			
-						<div class="table"> 
-				<table border="0" width= "25%" height="7%" style="margin: 0 auto;">
-					<tbody>
-						<tr>
-							<td><a href="http://www.colciencias.gov.co">
-							<img src="{% static 'sgc-resources/images/Logocolciencias.jpg' %}" width="150px" height="150px"position ="center" style="vertical-align: middle; margin-right: 10px; margin-left: 10px; display: inline;"></a></td>
-							<td><a href="http://www.sgr.gov.co">
-							<img src="{% static 'sgc-resources/images/logosgr.png' %}" width="100px" height="50px" position ="center" style="vertical-align: middle; margin-right: 10px; margin-left: 10px; display: inline;"></a></td>
-							<td><a href="http://www.atlantico.gov.co">
-							<img src="{% static 'sgc-resources/images/Logogobernacion.jpg' %}" width="100px" height="90px" position ="center" style="vertical-align: middle; margin-right: 10px; margin-left: 10px; display: inline;"></a></td>
-							<td><a href="http://www.cuc.edu.co">
-							<img src="{% static 'sgc-resources/images/Logocuc.png' %}" width="100px" height="90px" position ="center" style="vertical-align: middle; margin-right: 10px; margin-left: 10px; display: inline;"></a></td>
-							<td><a href="http://www.unisimon.edu.co">
-							<img src="{% static 'sgc-resources/images/logounisimon.jpg' %}" width="100px" height="70px" position ="center" style="vertical-align: middle; margin-right: 10px; margin-left: 10px; display: inline;"></a></td>
-							<td><a href="http://www.uniatlantico.edu.co">
-							<img src="{% static 'sgc-resources/images/Logouniatlantico.png' %}" width="80px" height="80px" position ="center" style="vertical-align: middle; margin-right: 10px; margin-left: 10px; display: inline;"></a></td>
-							<td><a href="http://www.uninorte.edu.co">
-							<img src="{% static 'sgc-resources/images/Logouninorte.jpg' %}" width="150px" height="75px" position ="center" style="vertical-align: middle; margin-right: 10px; margin-left: 10px; display: inline;"></a></td>
-							<td><a href="http://www.cra.gov.co">
-							<img src="{% static 'sgc-resources/images/logocra.png' %}" width="120px" height="85px" position ="center" style="vertical-align: middle; margin-right: 10px; margin-left: 10px; display: inline;"></a></td>
-							<td><a href="http//www.colciencias.gov.co/programa_estrategia/programa-ondas">
-							<img src="{% static 'sgc-resources/images/Logoondas.jpg' %}" width="80px" height="70px" position ="center" style="vertical-align: middle; margin-right: 10px; margin-left: 10px; display: inline;"></a></td>
-							<td><a href="http://www.escuelanavalsuboficiales.edu.co">
-							<img src="{% static 'sgc-resources/images/Logoescuelanaval.png' %}" width="70px" height="100px" position ="center" style="vertical-align: middle; margin-right: 10px; margin-left: 10px; display: inline;"></a></td>
-							
-						</tr>
-					</tbody>
-				</table>
+{% block cuerpo %}
+	<div class="container-fluid">
+		<div class="container">
+			<div class="jumbotron main-banner">
+				<div class="col-sm-4 col-sm-offset-8 text-center">
+					<!--<h3>Lorem Ipsum</h3>
+					<p>Vivamus tincidunt, urna quis consectetur venenatis.</p>-->
+					<p><a class="btn btn-primary btn-lg" href="#" role="button">Plataforma de recursos<br />hídricos</a></p>
+				</div> 
 			</div>
-{% endblock %}
+		</div>
+	</div>
+	
+
+	<div class="container-fluid">
+		<div class="container">
+			<div class="col-md-12">
+				<div class="col-md-6 container-rel">
+					<h2 class="block-title block-title__left"><a href="#">Últimas noticias</a></h2>
+					<ul class="list">
+						<li>
+							<h4><a href="#">Noticia</a></h4>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+						<li>
+							<h4><a href="#">Noticia</a></h4>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+						<li>
+							<h4><a href="#">Noticia</a></h4>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-6">
+					<img src="http://placehold.it/555x370" alt="" data-selector="img" width="555px" />
+				</div>
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="divider"></div>	
+			</div>
+			<div class="col-md-12" id="block_nucleos">
+				<h2 class="text-center"><a href="#">PROGRAMA RED DE CIENCIA, TECNOLOGÍA E INNOVACIÓN DE RECURSOS HÍDRICOS DEL CARIBE</a></h2>
+				
+				<div class="col-sm-3 text-center">
+					<img src="{% static 'sgc/img/images-nucleos/marinocostero.png' %}" alt="">
+					<h4 class="text-center"><a href="#">Núcleo de tal cosa</a></h4>
+					<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lacinia quam. Fusce quis nulla tincidunt, interdum magna vitae, viverra est. </p>
+
+				</div>
+				<div class="col-sm-3 text-center">
+					<img src="{% static 'sgc/img/images-nucleos/hidraulico.png' %}" alt="">
+					<h4 class="text-center"><a href="#">Núcleo de tal cosa</a></h4>
+					<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lacinia quam. Fusce quis nulla tincidunt, interdum magna vitae, viverra est. </p>
+
+				</div>
+				<div class="col-sm-3 text-center">
+					<img src="{% static 'sgc/img/images-nucleos/hidrobiologico.png' %}" alt="">
+					<h4 class="text-center"><a href="#">Núcleo de tal cosa</a></h4>
+					<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lacinia quam. Fusce quis nulla tincidunt, interdum magna vitae, viverra est. </p>
+
+				</div>
+				<div class="col-sm-3 text-center">
+					<img src="{% static 'sgc/img/images-nucleos/socioeconomico.png' %}" alt="">
+					<h4 class="text-center"><a href="#">Núcleo de tal cosa</a></h4>
+					<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lacinia quam. Fusce quis nulla tincidunt, interdum magna vitae, viverra est. </p>
+
+				</div>
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+			
+			
+
+			<div class="col-md-12">
+				<a href="#"><img src="{% static 'sgc/img/banner-link-ondas.jpg' %}" alt="" width="100%" /></a>
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+
+			<div class="col-md-12">
+				<div class="col-md-3"><img src="http://placehold.it/1110x740" alt="" data-selector="img" width="100%"></div>
+				<div class="col-md-3"><img src="http://placehold.it/1110x740" alt="" data-selector="img" width="100%"></div>
+				<div class="col-md-3"><img src="http://placehold.it/1110x740" alt="" data-selector="img" width="100%"></div>
+				<div class="col-md-3"><img src="http://placehold.it/1110x740" alt="" data-selector="img" width="100%"></div>
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="divider"></div>	
+			</div>
+
+			<div class="col-md-12">
+				<div class="col-md-6">
+					<h2 class="block-title block-title__left"><a href="#">Eventos</a></h2>
+					<ul class="list">
+						<li>
+							<a href="#">Noticia</a>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+						<li>
+							<a href="#">Noticia</a>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+						<li>
+							<a href="#">Noticia</a>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-6">
+					<h2 class="block-title block-title__left"><a href="#">Histórico de Eventos</a></h2>
+					<ul class="list">
+						<li>
+							<a href="#">Noticia</a>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+						<li>
+							<a href="#">Noticia</a>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+						<li>
+							<a href="#">Noticia</a>
+							<p>
+								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
+							</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="divider"></div>	
+			</div>
+
+			<div class="col-md-12">
+				<div class="col-md-6">
+					<img src="http://placehold.it/555x370" alt="" data-selector="img" width="100%" />
+				</div>
+				<div class="col-md-6">
+					<img src="http://placehold.it/555x370" alt="" data-selector="img" width="100%" />
+				</div>
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="divider"></div>	
+			</div>
+
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+			<div class="col-md-12 logos-allies text-center">
+				<img src="{% static 'sgc/img/logos-aliados/Logocolciencias.jpg' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/logocra.png' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/Logocuc.png' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/Logoescuelanaval.png' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/Logogobernacion.jpg' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/Logoondas.jpg' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/logosgr.png' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/Logouniatlantico.png' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/Logouninorte.jpg' %}" alt="" />
+				<img src="{% static 'sgc/img/logos-aliados/logounisimon.jpg' %}" alt="" />
+			</div>
+		</div>
+
+		
+
+		<div class="row footer">
+			<div class="container">
+				<div class="col-md-6">
+					<p>Derechos reservados</p>
+				</div>
+				<div class="col-md-6 text-right">
+					<ul class="menu-footer">
+						<li><a href="#">Mapa del sitio</a></li>
+						<li><a href="#">Inicio</a></li>
+						<li><a href="#">Ayuda</a></li>
+						<li><a href="#">Soporte</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock cuerpo %}
