@@ -7,16 +7,22 @@ from zona.models import Zona, SubZona
 
 from djgeojson.fields import GeometryField
 
+from smart_selects.db_fields import ChainedForeignKey
+
 
 class Localizacion(models.Model):
 	titulo = models.CharField(max_length=200)
 	area_tematica = models.ForeignKey(Areatematica)
 	representacion = models.ForeignKey(Representacion)
-	zona = models.ManyToManyField(Zona)
+	zona = ChainedForeignKey(Zona,
+							chained_field = "representacion", 
+							chained_model_field = "representacion",
+							show_all = False,
+							auto_choose = True)
+	# zona = models.ManyToManyField(Zona)
 	sub_zona = models.ManyToManyField(SubZona)
 	geom = GeometryField(verbose_name='Especifique ubicación')
 
 
 	def __unicode__(self):
 		return self.titulo
-
