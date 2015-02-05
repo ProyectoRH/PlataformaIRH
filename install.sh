@@ -48,9 +48,13 @@ sudo echo "export uscontra=$uscontra">> /etc/profile
 read -p "La ip o nombre del servidor postgres: " ipdir
 export ipdir=$ipdir
 sudo echo "export ipdir=$ipdir">> /etc/profile
-
-echo "OK la instalcion ha terminado...."
+echo "OK la instalación ha terminado...."
 cd ~/myenv/
 source bin/activate
 cd PlataformaIRH
+python manage.py syncdb
+python manage.py makemigrations
+python manage.py migrate
 python manage.py runserver 0.0.0.0:8000
+
+
