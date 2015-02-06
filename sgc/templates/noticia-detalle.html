@@ -2,11 +2,17 @@
 
 {% load staticfiles %}
 
+<span style="display:none;">	
+	{% block img_logo %}
+		{% static 'sgc/img/logo-main-page.png' %}
+	{% endblock img_logo %}
+</span>
+
 {% block cuerpo %}
 	<div class="container-fluid">
 		<div class="container">
 			<div class="col-lg-12">
-				<h2 class="regular-title block-title text-center">Nosotros</h2>
+				<h2 class="regular-title block-title text-center">Noticia tal</h2>
 			</div>
 			<div class="col-lg-12">
 				<p class="col-lg-offset-2 text-justify">

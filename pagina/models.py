@@ -13,8 +13,8 @@ class Pagina(models.Model):
 	EXTERNO = '__blank'
 	INTERNO = ''
 	TARGET_CHOICES = (
-		(INTERNO, 'Enlace Interno'),
-		(EXTERNO, 'Enlace externo'),
+		('1', 'Enlace Interno'),
+		('2', 'Enlace externo'),
 		
 	)
 
@@ -27,8 +27,8 @@ class Pagina(models.Model):
 	descripcion = models.TextField()
 	pagina_padre = models.ForeignKey("Pagina", blank=True, null=True, default=None)
 	peso = models.IntegerField(default=0)
-	target = models.CharField(max_length=140, choices=TARGET_CHOICES, default=INTERNO)
-	url = models.TextField(default=None)
+	target = models.CharField(max_length=140, blank=True, null=True, choices=TARGET_CHOICES, default=1)
+	url = models.TextField(default=None, blank=True, null=True)
 	institucion = models.ForeignKey(Institucion)
 
 	def __unicode__(self):

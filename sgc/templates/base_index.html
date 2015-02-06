@@ -57,6 +57,11 @@
 					<li><a href="{% url 'sgc.views.nosotros' %}">Nosotros</a></li>
 					<li><a href="{% url 'noticia.views.noticias' %}">Noticias</a></li>
 					<li><a href="{% url 'noticia.views.noticias_historicas' %}">Históricas</a></li>
+					
+					
+					{% block menu_items %}{% endblock menu_items %}
+
+
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
@@ -128,25 +133,25 @@
 				
 				<div class="col-sm-3 text-center">
 					<img src="{% static 'sgc/img/images-nucleos/marinocostero.png' %}" alt="">
-					<h4 class="text-center"><a href="#">Núcleo de tal cosa</a></h4>
+					<h4 class="text-center"><a href="#">Núcleo Gestión Ambiental Marino-Costera</a></h4>
 					<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lacinia quam. Fusce quis nulla tincidunt, interdum magna vitae, viverra est. </p>
 
 				</div>
 				<div class="col-sm-3 text-center">
 					<img src="{% static 'sgc/img/images-nucleos/hidraulico.png' %}" alt="">
-					<h4 class="text-center"><a href="#">Núcleo de tal cosa</a></h4>
+					<h4 class="text-center"><a href="#">Núcleo en Ingeniería Hidráulica, Ambiental y Costera</a></h4>
 					<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lacinia quam. Fusce quis nulla tincidunt, interdum magna vitae, viverra est. </p>
 
 				</div>
 				<div class="col-sm-3 text-center">
 					<img src="{% static 'sgc/img/images-nucleos/hidrobiologico.png' %}" alt="">
-					<h4 class="text-center"><a href="#">Núcleo de tal cosa</a></h4>
+					<h4 class="text-center"><a href="#">Núcleo en Recursos Hidrobiológicos</a></h4>
 					<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lacinia quam. Fusce quis nulla tincidunt, interdum magna vitae, viverra est. </p>
 
 				</div>
 				<div class="col-sm-3 text-center">
 					<img src="{% static 'sgc/img/images-nucleos/socioeconomico.png' %}" alt="">
-					<h4 class="text-center"><a href="#">Núcleo de tal cosa</a></h4>
+					<h4 class="text-center"><a href="#">Núcleo Socio-Económico y Proyectos Productivos</a></h4>
 					<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lacinia quam. Fusce quis nulla tincidunt, interdum magna vitae, viverra est. </p>
 
 				</div>

@@ -2,11 +2,24 @@
 
 {% load staticfiles %}
 
+
+{% block page_title %}
+	Inicio de recursos hídricos
+{% endblock page_title %}
+
 <span style="display:none;">	
 	{% block img_logo %}
 		{% static 'sgc/img/logo-main-page.png' %}
 	{% endblock img_logo %}
 </span>
+
+
+{% block menu_items %}
+	{% for pagina in paginas %}
+		<li><a href="{% url 'pagina.views.pagina_detalle' pagina.id %}">{{ pagina.titulo_menu }}</a></li>
+	{% endfor %}
+{% endblock menu_items %}
+
 <span style="display:none;">
 	{% block img_banner %}
 		{% static 'sgc/img/banner_mapa.jpg' %}

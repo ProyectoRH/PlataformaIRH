@@ -1,9 +1,17 @@
 from django.shortcuts import render
-
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from pagina.models import Pagina
 # Create your views here.
 
 def home(request):
-    return render(request,'index.html',{})
+	paginas = Pagina.objects.all()
+	return render_to_response('index.html', {'paginas':paginas}, context_instance=RequestContext(request))
+
+def paginas_hijo(self, pk):
+	paginas_hijo = Pagina.objects.filter(pagina_padre = pk)
+
+	return paginas_hijo
 
 def login_sgc(request):
 	return render(request, 'login-sgc.html', {})

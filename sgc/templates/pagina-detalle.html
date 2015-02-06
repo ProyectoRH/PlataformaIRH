@@ -1,0 +1,49 @@
+{% extends 'base_template.html' %}
+
+{% load staticfiles %}
+
+
+<span style="display:none;">	
+	{% block img_logo %}
+		{% static 'sgc/img/logo-main-page.png' %}
+	{% endblock img_logo %}
+</span>
+
+{% block cuerpo %}
+	<div class="container-fluid">
+		<div class="container">
+			<div class="col-lg-12">
+				<h2 class="regular-title block-title text-center">{{ pagina.titulo_pagina }}</h2>
+			</div>
+			<div class="col-lg-12">
+				<p class="text-justify">
+					{{ pagina.cuerpo_pagina|safe }}
+				</p>
+			</div>
+
+			<div class="col-lg-12">
+				<div class="space"></div>	
+			</div>
+
+			
+		</div>
+
+		
+
+		<div class="row footer">
+			<div class="container">
+				<div class="col-md-6">
+					<p>Derechos reservados</p>
+				</div>
+				<div class="col-md-6 text-right">
+					<ul class="menu-footer">
+						<li><a href="#">Mapa del sitio</a></li>
+						<li><a href="#">Inicio</a></li>
+						<li><a href="#">Ayuda</a></li>
+						<li><a href="#">Soporte</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock cuerpo %}
