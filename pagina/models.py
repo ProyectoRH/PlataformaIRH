@@ -29,7 +29,7 @@ class Pagina(models.Model):
 	peso = models.IntegerField(default=0)
 	target = models.CharField(max_length=140, blank=True, null=True, choices=TARGET_CHOICES, default=1)
 	url = models.TextField(default=None, blank=True, null=True)
-	institucion = models.ForeignKey(Institucion)
+	institucion = models.ForeignKey(Institucion, blank=True, null=True)
 
 	def __unicode__(self):
 		return self.titulo_pagina
