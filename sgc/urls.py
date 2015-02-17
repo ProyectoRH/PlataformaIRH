@@ -12,10 +12,7 @@ urlpatterns = patterns('',
     url(r'^noticias/', include('noticia.urls')),
     url(r'^app/', 'sgc.views.mapas'),
     url(r'^pagina/', include('pagina.urls')),
-    # url(r'^ondas/', 'sgc.views.ondas'),
-    # url(r'^nucleoIngHidraulica/', 'sgc.views.nucleo_ingHidraulica'),
-    # url(r'^nucleoMarino/', 'sgc.views.nucleo_marino'),
-    # url(r'^nucleoHidroBiologico/', 'sgc.views.nucleo_hidroBiologico'),
-    # url(r'^nucleoSocioEconomico/', 'sgc.views.nucleo_socioEconomico'),
+    url(r'^nucleo/(?P<pk>[\d]+)', 'sgc.views.nucleo'),
+    url(r'^ondas/', 'sgc.views.ondas'),
 
 )

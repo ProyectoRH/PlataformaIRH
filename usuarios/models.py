@@ -20,6 +20,7 @@ class Ciudad(models.Model):
 class Institucion(models.Model):
 	institucion = models.CharField(max_length=140)
 	nombre_nucleo = models.CharField(max_length=255)
+	imagen_banner = models.ImageField(upload_to = "static/uploads_nucleos/banner_images", null = True)
 	descripcion_nucleo = models.TextField()
 	logo_institucion = models.ImageField(upload_to = "static/logo_instituciones", null = True)
 

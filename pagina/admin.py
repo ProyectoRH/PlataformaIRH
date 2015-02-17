@@ -9,9 +9,9 @@ from usuarios.models import UserProfile
 class PaginaAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
-		perfil = UserProfile.objects.get(usuario = request.user)
-		obj.institucion = perfil.institucion
-		obj.save()
+    	if not request.user.is_superuser:
+			obj.usuario = request.user
+			obj.save()
 
 
 admin.site.register(Pagina, PaginaAdmin)

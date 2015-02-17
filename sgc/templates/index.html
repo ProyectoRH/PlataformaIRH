@@ -2,6 +2,7 @@
 
 {% load staticfiles %}
 
+{% load sgc_extras %}
 
 {% block page_title %}
 	Inicio de recursos hídricos
@@ -16,7 +17,9 @@
 
 {% block menu_items %}
 	{% for pagina in paginas %}
-		<li><a href="{% url 'pagina.views.pagina_detalle' pagina.id %}">{{ pagina.titulo_menu }}</a></li>
+		{% if user.is_superuser %}
+			<li><a href="{% url 'pagina.views.pagina_detalle' pagina.id %}">{{ pagina.titulo_menu }}</a></li>
+		{% endif %}
 	{% endfor %}
 {% endblock menu_items %}
 
@@ -30,3 +33,17 @@
 		{% static 'sgc/img/banner-link-ondas.jpg' %}
 	{% endblock %}
 </span>
+
+{% block nucleos %}
+	
+	{% for nucleo in nucleos %}
+		<div class="col-sm-3 text-center">
+			<a href="{% url 'sgc.views.nucleo' nucleo.id %}"><img src="media/{{ nucleo.logo_institucion }}" alt=""></a>
+			<h4 class="text-center"><a href="{% url 'sgc.views.nucleo' nucleo.id %}">{{ nucleo.nombre_nucleo }}</a></h4>
+			<p class="text-center">{{ nucleo.descripcion_nucleo }}</p>
+
+		</div>
+	{% endfor %}
+
+	
+{% endblock nucleos %}

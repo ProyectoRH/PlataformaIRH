@@ -469,9 +469,13 @@
 }*/
 
 
-/* Backgrounds */
+/* ------ Backgrounds ------- */
 .bg-dark-blue {
   background-color: #34495E;
+  border: none;
+}
+.bg-light-blue {
+  background-color: #99FFFF;
   border: none;
 }
 
@@ -527,14 +531,21 @@ p {
   top: 4px;
   right: 4px;
 }
-
 .main-banner {
   background-size: cover;
   background-position: 130% 0;
   overflow: hidden;
   height: 350px;
 }
+.main-banner-ondas {
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  height: 460px; 
+  position: relative;
+}
 
+/* ------ Espaciadores ------ */
 .space {
   padding: 20px 0px;
   overflow: hidden;
@@ -544,6 +555,7 @@ p {
   overflow: hidden;
 }
 
+/* ------ Divisores ------ */
 .divider {
   border-bottom: 1px solid #DFE6E7;
 }
@@ -557,6 +569,7 @@ p {
   margin-left: -40px;
   background-color: #85D6DE;
 }
+
 
 #block_nucleos .col-sm-3 img {
   width: 150px;
@@ -573,6 +586,7 @@ p {
   display: inline-block;
 }
 
+/* ------- Footer ------- */
 .footer {
   background-color: #34495E;
   margin-top: 50px;
@@ -600,10 +614,6 @@ p {
   margin: 15px 0;
   overflow: hidden;
 }
-
-
-
-
 .block-title {
   border-bottom: 1px solid #DFE6E7;
   padding-bottom: 10px;
@@ -612,6 +622,8 @@ p {
 .full-wide {
   width: 100%;
 }
+
+/* ------ Listas ------ */
 .list {
   padding-left: 10px;
 }
@@ -624,6 +636,7 @@ p {
   font-style: italic;
 }
 
+/* Lista de links */
 .list-links {
   padding-left: 10px;
 }
@@ -638,8 +651,47 @@ p {
   padding: 8px 0;
   border-bottom: 1px solid #EEE;
 }
+
+/*------ Titulos --------*/
+/* Por color */
 .regular-title {
   color: rgb(52, 73, 94);
+}
+.highlight-title {
+  color: #85d6de;
+}
+.bg-title {
+  background-color: rgb(64, 158, 249);
+  color: white;
+  padding: 6px 0;
+}
+/* Por tamaño */
+.giant-title {
+  font-size: 60pt;
+}
+.big-title {
+  font-size: 40pt;
+}
+.medium-title {
+  font-size: 30pt;
+}
+.small-title {
+  font-size: 20pt;
+}
+.title-no-margin {
+  margin: 0;
+}
+
+/* Estilos de ONDAS */
+.menu-ondas {
+  padding: 0;
+  position: absolute;
+  top: 5%;
+  right: 6%;
+}
+.menu-ondas li {
+  list-style: none;
+  margin: -25px 0;
 }
 
 

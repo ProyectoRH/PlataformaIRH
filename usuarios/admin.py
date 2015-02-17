@@ -8,7 +8,7 @@ from .models import UserProfile, Institucion, TipoUsuario
 # Se define un inline para el admin de UserProfile
 class ProfileInline(admin.StackedInline):
     model = UserProfile
-    fields = ('tipo_usuario', 'institucion', )
+    fields = ('institucion', )
     can_delete = False
     verbose_name = 'Perfil de Usuario'
     verbose_name_plural = 'Perfiles de Usuarios'
@@ -29,7 +29,7 @@ class UserAdmin(UserAdmin):
 
 
 class ProfileAdmin(admin.ModelAdmin):
-	fields = ('usuario', 'institucion', 'tipo_usuario', )
+	fields = ('usuario', 'institucion', )
 
 
 # Re-registra UserAdmin

@@ -4,10 +4,9 @@ from django.db import models
 from redactor.fields import RedactorField
 from usuarios.models import Institucion
 
+from django.contrib.auth.models import User
+
 # Create your models here.
-
-
-
 
 class Pagina(models.Model):
 	EXTERNO = '__blank'
@@ -29,7 +28,8 @@ class Pagina(models.Model):
 	peso = models.IntegerField(default=0)
 	target = models.CharField(max_length=140, blank=True, null=True, choices=TARGET_CHOICES, default=1)
 	url = models.TextField(default=None, blank=True, null=True)
-	institucion = models.ForeignKey(Institucion, blank=True, null=True)
+	#institucion = models.ForeignKey(Institucion, blank=True, null=True)
+	usuario = models.ForeignKey(User)
 
 	def __unicode__(self):
 		return self.titulo_pagina
