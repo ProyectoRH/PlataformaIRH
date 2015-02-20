@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django import template
 from pagina.models import Pagina
+from noticia.models import Noticia
 from usuarios.models import Institucion, UserProfile
 from django.contrib.auth.models import User
 # Create your views here.
@@ -14,10 +15,10 @@ def home(request):
 	# if request.user.username != None:
 	# 	if request.user.is_superuser:
 	nucleos = Institucion.objects.all()
-
+	noticias = Noticia.objects.all()[:3]
+	print noticias
 	
-	
-	return render_to_response('index.html', {'paginas':paginas, 'nucleos': nucleos}, context_instance = RequestContext(request))
+	return render_to_response('index.html', {'paginas':paginas, 'nucleos': nucleos, 'noticias':noticias}, context_instance = RequestContext(request))
 
 def login_sgc(request):
 	return render(request, 'login-sgc.html', {})

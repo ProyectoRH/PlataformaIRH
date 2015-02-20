@@ -8,9 +8,9 @@ from redactor.fields import RedactorField
 # Create your models here.
 
 class Noticia(models.Model):
-	institucion = models.ForeignKey(Institucion, blank=True, null=True)
+	institucion = models.ForeignKey(Institucion, blank=True, default = None)
 	titulo = models.CharField(max_length=255)
-	imagen_banner = models.ImageField(upload_to = "static/uploads_noticias/banner_images", null = True)
+	imagen_banner = models.ImageField(upload_to = "static/uploads_noticias/banner_images", blank = True)
 	cuerpo_noticia = RedactorField(verbose_name='Contenido de noticias', 
 									upload_to='static/uploads_noticias', 
 									allow_file_upload = True, 
