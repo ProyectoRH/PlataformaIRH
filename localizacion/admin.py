@@ -5,35 +5,27 @@ from .models import Localizacion
 
 from documentos_digitales.models import DocumentoDigital
 from documentos_shape.models import DocumentoShape
-from djgeojson.fields import GeometryField
-
 
 
 class DocumentoDigitalInline(admin.StackedInline):
-			
-	model = DocumentoDigital
-	extra = 1
+    model = DocumentoDigital
+    extra = 1
+
 
 class DocumentoShapeInline(admin.StackedInline):
-	model = DocumentoShape
-	extra = 1
+    model = DocumentoShape
+    extra = 1
+
 
 class LocalizacionAdmin(LeafletGeoAdmin):
-	model = Localizacion
-	inlines = [ DocumentoDigitalInline, DocumentoShapeInline]
+    model = Localizacion
+    filter_horizontal = ('zona', 'sub_zona',)
+    inlines = [DocumentoDigitalInline, DocumentoShapeInline]
 
-
-#class LocalizacionAdmin(admin.ModelAdmin):
-	
-#	inlines = [ DocumentoDigitalInline, DocumentoShapeInline]
-	
-   
 
 class MiLocalizacion(Localizacion):
-	class Meta:
-		proxy = True
+    class Meta:
+        proxy = True
 
 
-
-#admin.site.register(Localizacion,LeafletGeoAdmin)
-admin.site.register(MiLocalizacion,LocalizacionAdmin)
+admin.site.register(MiLocalizacion, LocalizacionAdmin)
