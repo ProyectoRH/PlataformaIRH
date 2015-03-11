@@ -1,41 +1,60 @@
 #!/bin/bash
-echo "Paquete de instalación de la plataforma de infromación de recursos hídricos del Atlántico..."
+echo "  ____  _       ____  ______   ____  _____   ___   _____    ___ ___   ____      ____  ____   __ __ " 
+echo " |    \| |     /    ||      | /    ||     | /   \ |      \ |   |   | /    |    |    ||    \ |  |  |"
+echo " |  o  ) |    |  o  ||      ||  o  ||   __||     ||   D   )  _   _ ||  o  |     |  | |  D  )|  |  |"
+echo " |   _/| |___ |     ||_|  |_||     ||  |_  |  O  ||      / |  \_/  ||     |     |  | |    / |  _  |"
+echo " |  |  |     ||  _  |  |  |  |  _  ||   _] |     ||      \ |   |   ||  _  |     |  | |    \ |  |  |"
+echo " |  |  |     ||  |  |  |  |  |  |  ||  |   |     ||   /\  \|   |   ||  |  |     |  | |  .  \|  |  |"
+echo " |__|  |_____||__|__|  |__|  |__|__||__|    \___/ |__|  \_||___|___||__|__|    |____||__|\_||__|__|"
 cd ~/
-echo "*********************************************************************"
-echo "Actualizando el sistema..."
+echo "**************************************************************************************************"
+echo "*********************************"
+echo "Actualizando el sistema...      *"
+echo "*********************************"
 sudo apt-get update
 sudo apt-get upgrade
-echo "*********************************************************************"
-echo "Instalando ambiente virtual para Django"
+echo "*******************************************"
+echo "Instalando ambiente virtual para Django   *"
+echo "*******************************************"
 sudo apt-get install python-virtualenv
-sudo virtualenv myenv
-cd myenv
-echo "*********************************************************************"
-echo "Activando ambiente virtual..."
+sudo virtualenv platformenv
+cd ~/platforenv
+echo "**********************************"
+echo "* Activando ambiente virtual...  *"
+echo "**********************************"
 source bin/activate
-echo "*********************************************************************"
-echo "*********************************************************************"
+echo "*********************************"
+echo "* Instalando Git                *"
+echo "*********************************"
 sudo apt-get install git
-echo "Descargando Repositorio"
+echo "*********************************"
+echo "* Descargando Repositorios      *"
+echo "*********************************"
 git clone https://github.com/ProyectoRH/PlataformaIRH.git
-echo "*********************************************************************"
-echo "Instalando librerias y adaptadores para Python y Postgres..."
+echo "*************************************************************************"
+echo "* Instalando librerias y adaptadores para Python y Postgres...          *"
+echo "*************************************************************************"
 sudo apt-get install libpq-dev python-dev python-psycopg2
-echo "*********************************************************************"
-#pip install -r  requirements.txt --allow-external requirements.txt --allow-unverified requirements.txt
-pip install Django --allow-external Django --allow-unverified Django
-pip install Pillow --allow-external Pillow --allow-unverified Pillow
-pip install argparse --allow-external argparse --allow-unverified argparse
-pip install distribute --allow-external distribute --allow-unverified distribute
-pip install django-geojson  --allow-external django-geojson --allow-unverified django-geojson 
-pip install django-leaflet --allow-external django-leaflet --allow-unverified django-leaflet
-pip install django-smart-selects --allow-external django-smart-selects --allow-unverified django-smart-selects
-pip install django-suit --allow-external django-suit --allow-unverified django-suit
-pip install django-wysiwyg-redactor --allow-external django-wysiwyg-redactor --allow-unverified django-wysiwyg-redactor
-pip install jsonfield --allow-external jsonfield --allow-unverified jsonfield 
-pip install psycopg2 --allow-external psycopg2 --allow-unverified psycopg2
-pip install six --allow-external six --allow-unverified six
-pip install wsgiref --allow-external wsgiref --allow-unverified wsgiref
+sudo apt-get install libgeos-dev
+echo "*************************************************************************"
+echo "* Instalando paquetes necesarios para el administrador de la plataforma *"
+echo "*************************************************************************"
+pip install Django
+pip install Pillow
+pip install argparse
+pip install distribute
+pip install django-geojson 
+pip install django-leaflet
+pip install django-smart-selects
+pip install django-suit
+pip install django-wysiwyg-redactor
+pip install jsonfield 
+pip install psycopg2
+pip install six
+pip install wsgiref
+echo "*************************************************************************"
+echo "* Cargando variables de configuración                                   *"
+echo "*************************************************************************"
 read -p "El nombre de la base de datos: " dbname
 export dbname=$dbname
 sudo echo "export dbname=$dbname">> /etc/profile
@@ -48,13 +67,19 @@ sudo echo "export uscontra=$uscontra">> /etc/profile
 read -p "La ip o nombre del servidor postgres: " ipdir
 export ipdir=$ipdir
 sudo echo "export ipdir=$ipdir">> /etc/profile
-echo "OK la instalación ha terminado...."
-cd ~/myenv/
-source bin/activate
+echo "*******************************"
+echo "* Cargando modelos            *"
+echo "*******************************"
 cd PlataformaIRH
 python manage.py syncdb
 python manage.py makemigrations
 python manage.py migrate
+echo "******************************************"
+echo "* ¡Instalación finalizada correctamente! *"
+echo "******************************************"
+echo "*********************************************"
+echo "* Corriendo servidor de prueba en localhost *"
+echo "*********************************************"
 python manage.py runserver 0.0.0.0:8000
 
 
