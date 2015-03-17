@@ -47,8 +47,6 @@ class UserProfile(models.Model):
 	funcion = models.CharField(max_length=200, blank=True, null=True)
 	pais = models.ForeignKey(Pais, null=True)
 	ciudad = models.ForeignKey(Ciudad, null=True)
-	
-
 
 	def __unicode__(self):
 		return "%s %s - %s" % (self.usuario.first_name, self.usuario.last_name, self.usuario.username)

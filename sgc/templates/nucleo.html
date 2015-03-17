@@ -20,17 +20,17 @@
 		<div class="container">
 			{% if paginas %}
 				<ul class="nav nav-tabs">
-					{% for paginas_arr in paginas %}
+					<!--{% for paginas_arr in paginas %}
 						{% for pagina in paginas_arr %}							
 							{{ contador|count_for }}
 						{% endfor %}						
-					{% endfor %}
+					{% endfor %}-->
 
-					{% for pagina in paginas %}
+					<!--{% for pagina in paginas %}
 						{{ contador|count_for }}
 						<li role="presentation"><a href="#">{{ pagina.0.titulo_menu }}</a></li>		
 						
-					{% endfor %}
+					{% endfor %}-->
 				</ul>
 			{% endif %}
 			<img src="/media/{{ nucleo.imagen_banner }}" alt="">

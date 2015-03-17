@@ -33,7 +33,7 @@
 	<ul class="list">
 		{% for noticia in noticias %}
 			<li>
-				<h4><a href="#">{{ noticia.titulo }}</a></h4>
+				<h4><a href="{% url 'noticia.views.noticia_detalle' noticia.id %}">{{ noticia.titulo }}</a></h4>
 				<p>
 					{{ noticia.cuerpo_noticia|truncatechars:120|safe }}
 				</p>
@@ -42,6 +42,20 @@
 		
 	</ul>
 {% endblock ultimas_noticias %}
+
+{% block historico_noticias %}
+	<ul class="list">
+		{% for noticia in noticias %}
+			<li>
+				<h4><a href="{% url 'noticia.views.noticia_detalle' noticia.id %}">{{ noticia.titulo }}</a></h4>
+				<p>
+					{{ noticia.cuerpo_noticia|truncatechars:120|safe }}
+				</p>
+			</li>
+		{% endfor %}
+		
+	</ul>
+{% endblock historico_noticias %}
 
 <span style="display:none;">
 	{% block ondas_banner %}

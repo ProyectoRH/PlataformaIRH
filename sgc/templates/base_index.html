@@ -19,7 +19,14 @@
 
 			<div class="col-md-5 col-md-offset-7">
 				<div class="col-md-4 text-right">
-					<a href="{% url 'usuarios.views.iniciarSesion' %}"><img src="{% static 'sgc/img/other-icons/iconologin.png' %}" alt="" height="42px"></a>
+					<a href="{% url 'usuarios.views.iniciarSesion' %}">
+						<img src="{% static 'sgc/img/other-icons/iconologin.png' %}" alt="" height="42px">
+						{% if user.is_authenticated %}
+							
+						{% else %}
+							
+						{% endif %}
+					</a>
 					<a href="{% url 'usuarios.views.crearUsuario' %}"><img src="{% static 'sgc/img/other-icons/iconoregistrarse.png' %}" alt="" height="42px"></a>
 				</div>
 				<div class="col-md-8">
@@ -62,7 +69,7 @@
 					{% block menu_items %}{% endblock menu_items %}
 
 
-					<li class="dropdown">
+					<!--<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="#">Action</a></li>
@@ -71,7 +78,7 @@
 							<li class="divider"></li>
 							<li><a href="#">Separated link</a></li>
 						</ul>
-					</li>
+					</li>-->
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
@@ -94,7 +101,7 @@
 		<div class="container">
 			<div class="col-md-12">
 				<div class="col-md-6 container-rel">
-					<h2 class="block-title block-title__left"><a href="#">Últimas noticias</a></h2>
+					<h2 class="block-title block-title__left"><a href="{% url 'noticia.views.noticias' %}">Últimas noticias</a></h2>
 					{% block ultimas_noticias %}
 						
 					{% endblock ultimas_noticias %}
@@ -214,27 +221,10 @@
 					</ul>
 				</div>
 				<div class="col-md-6">
-					<h2 class="block-title block-title__left"><a href="#">Histórico de Eventos</a></h2>
-					<ul class="list">
-						<li>
-							<a href="#">Noticia</a>
-							<p>
-								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
-							</p>
-						</li>
-						<li>
-							<a href="#">Noticia</a>
-							<p>
-								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
-							</p>
-						</li>
-						<li>
-							<a href="#">Noticia</a>
-							<p>
-								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
-							</p>
-						</li>
-					</ul>
+					<h2 class="block-title block-title__left"><a href="{% url 'noticia.views.noticias_historicas' %}">Histórico de Noticias</a></h2>
+					{% block historico_noticias %}
+						
+					{% endblock historico_noticias %}
 				</div>
 			</div>
 			

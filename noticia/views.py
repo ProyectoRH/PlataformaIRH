@@ -3,7 +3,8 @@ from .models import Noticia
 # Create your views here.
 
 def noticias(request):
-	return render(request,'noticias.html',{})
+	noticias = Noticia.objects.all()
+	return render(request,'noticias.html',{'noticias':noticias})
 
 def noticia_detalle(request, pk):
 	noticia = Noticia.objects.get(pk = pk);

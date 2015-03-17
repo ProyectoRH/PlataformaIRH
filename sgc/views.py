@@ -5,6 +5,11 @@ from django import template
 from pagina.models import Pagina
 from noticia.models import Noticia
 from usuarios.models import Institucion, UserProfile
+from DocumentosOndas.models import Documento
+from NoticiasOndas.models import NoticiaOndas
+from PaginasOndas.models import PaginaOndas
+from VideosOndas.models import VideosOndas
+from ImagenesOndas.models import ImagenesOndas
 from django.contrib.auth.models import User
 # Create your views here.
 
@@ -53,7 +58,13 @@ def nucleo(request, pk):
 	return render(request, 'nucleo.html', {'nucleo':nucleo_data, 'paginas':paginas, 'contador':contador})
 
 def ondas(request):
-	return render(request,'ondas.html',{})
+	documentos = Documento.objects.all()[:9]
+	noticias = NoticiaOndas.objects.all()[:3]
+	paginas = PaginaOndas.objects.all()[:4]
+	videos = VideosOndas.objects.all()[:1]
+	imagenes = ImagenesOndas.objects.all()[:1]
+
+	return render(request,'ondas.html',{'documentos':documentos, 'noticias':noticias, 'paginas':paginas, 'imagen':imagenes, 'video':videos})
 
 # def nucleo_hidroBiologico(request):
 # 	return render(request,'nucleorecursoshidrobiologico.html',{})
