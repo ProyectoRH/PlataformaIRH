@@ -2,7 +2,7 @@
 
 {% load staticfiles %}
 
-{% block page_title %} Noticia {% endblock %}
+{% block page_title %}Documentos | Programa Ondas {% endblock %}
 
 <span style="display:none;">	
 	{% block img_logo %}
@@ -17,15 +17,32 @@
 		<div class="container">
 
 			<div class="col-md-12">
-				<h2 class="regular-title block-title text-center">{{ noticia.titulo }}</h2>
+				<h2 class="regular-title block-title text-center">Documentos</h2>
 
 				<div class="space"></div>
 				
-				<div class="jumbotron regular-jumbotron" style="background-image: url(/media/{{ noticia.imagen_banner }});"></div>
-				<p>{{ noticia.fecha_creacion }}</p>
-				<div class="text-justify col-lg-12">
-					{{ noticia.cuerpo_noticia|safe }}
-				</div>
+
+				<table class="table table-bordered" id="tablaDocumentos">
+					<thead>
+						<th></th>
+						<th>Título</th>
+					</thead>
+					<tbody>
+					{% for documento in documentos %}
+						<tr>
+							<td style="width:110px;">
+								<div style="width:100px;height:100px;background-image:url(/media/{{ documento.imagen_portada }});background-size:cover; background-position:center;"></div>
+							</td>
+							<td>
+								<h2 class="small-title title-no-margin"><a href="/media/{{ documento.archivo }}" target="_blank">{{ documento.titulo }}</a></h2>
+								<div style="text-align:justify; padding:5px 0px;">
+									{{ documento.descripcion|truncatechars:150|safe }}
+								</div>
+							</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
 			</div>
 
 			

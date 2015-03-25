@@ -10,6 +10,7 @@ from redactor.fields import RedactorField
 class Noticia(models.Model):
 	institucion = models.ForeignKey(Institucion, blank=True, default = None)
 	titulo = models.CharField(max_length=255)
+	descripcion = models.TextField()
 	imagen_banner = models.ImageField(upload_to = "static/uploads_noticias/banner_images", blank = True)
 	cuerpo_noticia = RedactorField(verbose_name='Contenido de noticias', 
 									upload_to='static/uploads_noticias', 

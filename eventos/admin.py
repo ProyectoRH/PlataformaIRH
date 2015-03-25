@@ -8,8 +8,11 @@ from usuarios.models import UserProfile
 class EventoAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
-		perfil = UserProfile.objects.get(usuario = request.user)
-		obj.institucion = perfil.institucion
+		obj.usuario = request.user
+		if not request.user.is_superuser:
+			perfil = UserProfile.objects.get(usuario = request.user)
+			obj.institucion = perfil.institucion
+			
 		obj.save()
 
 

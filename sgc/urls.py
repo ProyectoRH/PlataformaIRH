@@ -14,5 +14,10 @@ urlpatterns = patterns('',
     url(r'^pagina/', include('pagina.urls')),
     url(r'^nucleo/(?P<pk>[\d]+)', 'sgc.views.nucleo'),
     url(r'^ondas/', 'sgc.views.ondas'),
+    url(r'^documentosOndas/', 'DocumentosOndas.views.todosDocumentos'),
+    url(r'^paginasOndas/', include('PaginasOndas.urls')),
+    url(r'^noticiasOndas/', include('NoticiasOndas.urls')),
+    url(r'^imagenesOndas/', include('ImagenesOndas.urls')),
+    url(r'^videosOndas/', include('VideosOndas.urls')),
 
 )

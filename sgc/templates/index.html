@@ -17,11 +17,18 @@
 
 {% block menu_items %}
 	{% for pagina in paginas %}
-		{% if user.is_superuser %}
+		{% if pagina.pagina_padre == None %}
 			<li><a href="{% url 'pagina.views.pagina_detalle' pagina.id %}">{{ pagina.titulo_menu }}</a></li>
 		{% endif %}
 	{% endfor %}
 {% endblock menu_items %}
+
+{% block ondas_menu %}
+	<li><a href="{% url 'sgc.views.ondas' %}">Inicio Ondas</a></li>
+	{% for pagina in paginas_ondas %}
+			<li><a href="{% url 'PaginasOndas.views.paginaDetalle' pagina.id %}">{{ pagina.titulo_menu }}</a></li>
+	{% endfor %}
+{% endblock ondas_menu %}
 
 <span style="display:none;">
 	{% block img_banner %}
@@ -34,6 +41,7 @@
 		{% for noticia in noticias %}
 			<li>
 				<h4><a href="{% url 'noticia.views.noticia_detalle' noticia.id %}">{{ noticia.titulo }}</a></h4>
+				<p>{{ noticia.fecha_creacion }} por {{ noticia.institucion }}</p>
 				<p>
 					{{ noticia.cuerpo_noticia|truncatechars:120|safe }}
 				</p>
@@ -43,19 +51,73 @@
 	</ul>
 {% endblock ultimas_noticias %}
 
-{% block historico_noticias %}
-	<ul class="list">
+
+
+
+{% block noticias_carousel %}
+	<ol class="carousel-indicators">
+			<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+			<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+			<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+	</ol>
+
+	<!-- Wrapper for slides -->
+	<div class="carousel-inner" role="listbox">
+		<div class="item active full-wide" style="height:380px;background-image:url(/media/{{ noticias.0.imagen_banner }});background-size:cover;background-position:center;">
+			<!--<img src="/media/{{ noticias.0.imagen_banner }}" alt="" width="100%" height="380px">-->
+			<div class="carousel-caption">
+			</div>
+		</div>
 		{% for noticia in noticias %}
-			<li>
-				<h4><a href="{% url 'noticia.views.noticia_detalle' noticia.id %}">{{ noticia.titulo }}</a></h4>
-				<p>
-					{{ noticia.cuerpo_noticia|truncatechars:120|safe }}
-				</p>
-			</li>
+			{% if not noticias.0 == noticia %}
+				<div class="item full-wide" style="height:380px;background-image:url(/media/{{ noticia.imagen_banner }});background-size:cover;background-position:center;">
+
+					<!--<img src="/media/{{ noticia.imagen_banner }}" alt="" width="100%">-->
+					<div class="carousel-caption">
+					</div>
+				</div>
+			{% endif %}
 		{% endfor %}
-		
-	</ul>
-{% endblock historico_noticias %}
+	</div>
+
+{% endblock noticias_carousel %}
+
+{% block ultimos_eventos %}
+	{% for evento in eventos %}
+		<li>
+			<a href="#" data-toggle="modal" data-target="#modalEvento{{ evento.id }}">{{ evento.titulo }}</a>
+			<p class="text-left">
+				<b>Inicia: </b>{{ evento.fecha_inicio }}<br />
+				<b>Finaliza: </b>{{ evento.fecha_final }}<br />
+				<b>Invita: </b>{{ evento.institucion }}
+			</p>
+			<p>
+				{{ evento.descripcion|truncatechars:150 }} 
+			</p>
+		</li>
+
+		<div class="modal fade" id="modalEvento{{ evento.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">{{ evento.titulo }}</h4>
+					</div>
+					<div class="modal-body">
+						{{ evento.cuerpo_evento|safe }}
+					</div>
+					<div class="modal-footer text-left">
+						<p class="text-left">
+							<b>Inicia: </b>{{ evento.fecha_inicio }}<br />
+							<b>Finaliza: </b>{{ evento.fecha_final }}
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>	
+	{% endfor %}
+
+{% endblock ultimos_eventos %}
 
 <span style="display:none;">
 	{% block ondas_banner %}
@@ -76,3 +138,12 @@
 
 	
 {% endblock nucleos %}
+
+{% block imagenesOndas %}
+	{% for imagen in imagenes_ondas %}
+		<div class="col-md-3">
+			<div class="contenedor-imagen-ondas" style="background-image:url(/media/{{ imagen.imagen }});"></div>
+		</div>	
+	{% endfor %}
+	
+{% endblock imagenesOndas %}

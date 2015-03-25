@@ -609,6 +609,7 @@ p {
   border-radius: 4px;
   background-color: rgb(243, 247, 247);
   margin: 10px 0;
+  height: 425px;
 }
 .container-noticias-historicas article {
   margin: 15px 0;
@@ -678,6 +679,9 @@ p {
 .small-title {
   font-size: 20pt;
 }
+.xs-title {
+  font-size: 16px;
+}
 .title-no-margin {
   margin: 0;
 }
@@ -692,6 +696,19 @@ p {
 .menu-ondas li {
   list-style: none;
   margin: -25px 0;
+}
+
+.regular-jumbotron {
+  background-size: cover;
+  background-position: center;
+  height: 200px;
+}
+
+.contenedor-imagen-ondas {
+  background-position: center;
+  background-size: cover;
+  background-color: lightGray;
+  height: 150px;
 }
 
 

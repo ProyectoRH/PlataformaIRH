@@ -4,4 +4,5 @@ from .models import Pagina
 
 def pagina_detalle(request, pk):
 	pagina = Pagina.objects.get(pk = pk)
-	return render(request, 'pagina-detalle.html', {'pagina':pagina})
+	paginas = Pagina.objects.all()
+	return render(request, 'pagina-detalle.html', {'pagina':pagina, 'paginas':paginas})

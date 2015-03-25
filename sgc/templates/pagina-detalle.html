@@ -11,6 +11,13 @@
 	{% endblock img_logo %}
 </span>
 
+
+{% block menu_items %}
+	{% if not pagina.pagina_padre == None %}
+		<li><a href="{% url 'pagina.views.pagina_detalle' pagina.pagina_padre.id %}">{{ pagina.pagina_padre.titulo_menu }}</a></li>
+	{% endif %}
+{% endblock menu_items %}
+
 {% block cuerpo %}
 	<div class="container-fluid">
 		<div class="container">
@@ -18,9 +25,25 @@
 				<h2 class="regular-title block-title text-center">{{ pagina.titulo_pagina }}</h2>
 			</div>
 			<div class="col-lg-12">
-				<p class="text-justify">
-					{{ pagina.cuerpo_pagina|safe }}
-				</p>
+				<div class="col-md-8">
+					<p class="text-justify">
+						{{ pagina.cuerpo_pagina|safe }}
+					</p>
+				</div>
+				<div class="col-md-4">
+					<ul class="list-links text-right">
+						{% for paginaHijo in paginas %}
+							{% if paginaHijo.pagina_padre == pagina %}
+								<li>
+									<a href="{% url 'pagina.views.pagina_detalle' paginaHijo.id %}">{{ paginaHijo.titulo_menu }}</a>
+								</li>	
+							{% endif %}
+							
+						{% endfor %}
+						
+					</ul>
+				</div>
+				
 			</div>
 
 			<div class="col-lg-12">

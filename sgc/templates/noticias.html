@@ -11,6 +11,9 @@
 </span>
 
 {% block cuerpo %}
+	
+
+
 	<div class="container-fluid">
 		<div class="container">
 			<div class="col-lg-12">
@@ -20,110 +23,63 @@
 						{% for noticia in noticias %}
 							<div class="col-md-4">
 								<div class="container-noticia">
-									<img src="/media/{{ noticia.imagen_banner }}" class="full-wide" alt="">
-									<h3 class="text-center"><a href="{% url 'noticia.views.noticia_detalle' 1 %}">{{ noticia.titulo }}</a></h3>
-									<p class="text-justify">{{ noticia.cuerpo_noticia|truncatechars:200|safe }}</p>	
+									<div class="contenedor-imagen-ondas" style="background-image:url(/media/{{ noticia.imagen_banner }});"></div>
+									<h3 class="text-center xs-title"><a href="{% url 'noticia.views.noticia_detalle' noticia.id %}">{{ noticia.titulo }}</a></h3>
+									<p class="text-justify">
+										<div class="text-justify">
+											{{ noticia.descripcion|truncatechars:150|safe }}
+										</div>	
+									</p>
+									<p class="text-center">{{ noticia.institucion }}</p>
 								</div>
 								
 							</div>
 						{% endfor %}
 						
-						<div class="col-md-4">
-							<div class="container-noticia">
-								<img src="{% static 'sgc/img/other-images/index-2_img-3.jpg' %}" class="full-wide" alt="">
-								<h3 class="text-center"><a href="#">Tal</a></h3>
-								<p class="text-justify">Gamus at magna non nunc tristique rhoncuseri tym. Aliquam nibh ante, egestas id dictum aterert commodo re luctus libero. Praesent faucibus malesuada cibuste. Donec laoreet metus id laoreet malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>	
-							</div>
-							
-						</div>
-						<div class="col-md-4">
-							<div class="container-noticia">
-								<img src="{% static 'sgc/img/other-images/index-2_img-4.jpg' %}" class="full-wide" alt="">
-								<h3 class="text-center"><a href="#">Tal</a></h3>
-								<p class="text-justify">Gamus at magna non nunc tristique rhoncuseri tym. Aliquam nibh ante, egestas id dictum aterert commodo re luctus libero. Praesent faucibus malesuada cibuste. Donec laoreet metus id laoreet malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>	
-							</div>
-							
-						</div>
-						<div class="col-md-4">
-							<div class="container-noticia">
-								<img src="{% static 'sgc/img/other-images/index-2_img-2.jpg' %}" class="full-wide" alt="">
-								<h3 class="text-center"><a href="#">Tal</a></h3>
-								<p class="text-justify">Gamus at magna non nunc tristique rhoncuseri tym. Aliquam nibh ante, egestas id dictum aterert commodo re luctus libero. Praesent faucibus malesuada cibuste. Donec laoreet metus id laoreet malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>	
-							</div>
-							
-						</div>
-						<div class="col-md-4">
-							<div class="container-noticia">
-								<img src="{% static 'sgc/img/other-images/index-2_img-3.jpg' %}" class="full-wide" alt="">
-								<h3 class="text-center"><a href="#">Tal</a></h3>
-								<p class="text-justify">Gamus at magna non nunc tristique rhoncuseri tym. Aliquam nibh ante, egestas id dictum aterert commodo re luctus libero. Praesent faucibus malesuada cibuste. Donec laoreet metus id laoreet malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>	
-							</div>
-							
-						</div>
-						<div class="col-md-4">
-							<div class="container-noticia">
-								<img src="{% static 'sgc/img/other-images/index-2_img-4.jpg' %}" class="full-wide" alt="">
-								<h3 class="text-center"><a href="#">Tal</a></h3>
-								<p class="text-justify">Gamus at magna non nunc tristique rhoncuseri tym. Aliquam nibh ante, egestas id dictum aterert commodo re luctus libero. Praesent faucibus malesuada cibuste. Donec laoreet metus id laoreet malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>	
-							</div>
-							
-						</div>
+						
 					</div>
 				</div>
 				<div class="col-md-4">
 					<h2 class="block-title regular-title">Eventos</h2>
+					{% for evento in eventos %}
+						<a href="#" data-toggle="modal" data-target="#modalEvento{{ evento.id }}" class="full-wide">
+							
+								<div class="well well-sm">
+									<h4>{{ evento.titulo }}</h4>
+									<p>{{ evento.descripcion }}</p>
+									<p><b>Inicio:</b> {{ evento.fecha_inicio }}</p>
+									<p><b>Final:</b> {{ evento.fecha_final }}</p>
+									<p><b>Núcleo:</b> {{ evento.institucion }}</p>
+								</div>	
 
-					<a href="#" class="full-wide space"><img src="{% static 'sgc/img/other-images/eventos-01.jpg' %}" class="full-wide" alt=""></a>
-					<a href="#" class="full-wide space"><img src="{% static 'sgc/img/other-images/eventos-02.jpg' %}" class="full-wide" alt=""></a>
-					<a href="#" class="full-wide space"><img src="{% static 'sgc/img/other-images/eventos-03.jpg' %}" class="full-wide" alt=""></a>
-					<a href="#" class="full-wide space"><img src="{% static 'sgc/img/other-images/eventos-04.jpg' %}" class="full-wide" alt=""></a>
+								<!-- Modal -->
+						</a>
+
+						<div class="modal fade" id="modalEvento{{ evento.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="myModalLabel">{{ evento.titulo }}</h4>
+									</div>
+									<div class="modal-body">
+										{{ evento.cuerpo_evento|safe }}
+									</div>
+									<div class="modal-footer text-left">
+										<p class="text-left">
+											<b>Inicia: </b>{{ evento.fecha_inicio }}<br />
+											<b>Finaliza: </b>{{ evento.fecha_final }}
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
 				</div>
 			</div>
 
 			<div class="col-lg-12">
 				<div class="space"></div>	
-			</div>
-
-			<div class="col-lg-8">
-				<h2 class="regular-title">Más noticias</h2>
-				<div class="col-md-6">
-					<ul class="list">
-						<li>
-							<h4><a href="#">Noticia</a></h4>
-							<p>
-								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
-							</p>
-						</li>
-						<li>
-							<h4><a href="#">Noticia</a></h4>
-							<p>
-								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
-							</p>
-						</li>
-						<li>
-							<h4><a href="#">Noticia</a></h4>
-							<p>
-								Vivamus tincidunt, urna quis consectetur venenatis, quam urna tincidunt mi, quis convallis enim dolor sed elit. 
-							</p>
-						</li>
-					</ul>
-				</div>
-				<div class="col-md-6">
-					<ul class="list-links text-right">
-						<li>
-							<a href="#">Noticia 1</a>
-							
-						</li>
-						<li>
-							<a href="#">Noticia 2</a>
-							
-						</li>
-						<li>
-							<a href="#">Noticia 3</a>
-							
-						</li>
-					</ul>
-				</div>
 			</div>
 		</div>
 

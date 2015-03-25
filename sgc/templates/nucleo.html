@@ -14,25 +14,17 @@
 	{% endblock img_logo %}
 </span>
 
+{% block menu_items %}
+	{% for pagina in paginas %}
+		<li><a href="{% url 'pagina.views.pagina_detalle' pagina.id %}">{{ pagina.titulo_menu }}</a></li>
+	{% endfor %}
+
+{% endblock menu_items %}
+
 {% block cuerpo %}
 
 	<div class="container-fluid">
 		<div class="container">
-			{% if paginas %}
-				<ul class="nav nav-tabs">
-					<!--{% for paginas_arr in paginas %}
-						{% for pagina in paginas_arr %}							
-							{{ contador|count_for }}
-						{% endfor %}						
-					{% endfor %}-->
-
-					<!--{% for pagina in paginas %}
-						{{ contador|count_for }}
-						<li role="presentation"><a href="#">{{ pagina.0.titulo_menu }}</a></li>		
-						
-					{% endfor %}-->
-				</ul>
-			{% endif %}
 			<img src="/media/{{ nucleo.imagen_banner }}" alt="">
 
 			<div class="col-lg-12">
@@ -40,63 +32,60 @@
 					<h2 class="block-title regular-title">Noticias</h2>
 
 					<div class="container-noticias">
-						<div class="col-md-4">
-							<div class="container-noticia">
-								<img src="{% static 'sgc/img/other-images/index-2_img-2.jpg' %}" class="full-wide" alt="">
-								<h3 class="text-center"><a href="{% url 'noticia.views.noticia_detalle' 1 %}">Noticia 1</a></h3>
-								<p class="text-justify">Gamus at magna non nunc tristique rhoncuseri tym. Aliquam nibh ante, egestas id dictum aterert commodo re luctus libero. Praesent faucibus malesuada cibuste. Donec laoreet metus id laoreet malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>	
+						{% for noticia in noticias %}
+							<div class="col-md-4">
+								<div class="container-noticia">
+									<div class="contenedor-imagen-ondas" style="background-image:url(/media/{{ noticia.imagen_banner }});"></div>
+									<h3 class="text-center xs-title"><a href="{% url 'noticia.views.noticia_detalle' noticia.id %}">{{ noticia.titulo }}</a></h3>
+									<p class="text-justify">
+										<div class="text-justify">
+											{{ noticia.descripcion|truncatechars:150|safe }}
+										</div>	
+									</p>
+									<p class="text-center">{{ noticia.institucion }}</p>
+								</div>
+								
 							</div>
-							
-						</div>
-						<div class="col-md-4">
-							<div class="container-noticia">
-								<img src="{% static 'sgc/img/other-images/index-2_img-3.jpg' %}" class="full-wide" alt="">
-								<h3 class="text-center"><a href="#">Tal</a></h3>
-								<p class="text-justify">Gamus at magna non nunc tristique rhoncuseri tym. Aliquam nibh ante, egestas id dictum aterert commodo re luctus libero. Praesent faucibus malesuada cibuste. Donec laoreet metus id laoreet malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>	
-							</div>
-							
-						</div>
-						<div class="col-md-4">
-							<div class="container-noticia">
-								<img src="{% static 'sgc/img/other-images/index-2_img-4.jpg' %}" class="full-wide" alt="">
-								<h3 class="text-center"><a href="#">Tal</a></h3>
-								<p class="text-justify">Gamus at magna non nunc tristique rhoncuseri tym. Aliquam nibh ante, egestas id dictum aterert commodo re luctus libero. Praesent faucibus malesuada cibuste. Donec laoreet metus id laoreet malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>	
-							</div>
-							
-						</div>
-						<div class="col-md-4">
-							<div class="container-noticia">
-								<img src="{% static 'sgc/img/other-images/index-2_img-2.jpg' %}" class="full-wide" alt="">
-								<h3 class="text-center"><a href="#">Tal</a></h3>
-								<p class="text-justify">Gamus at magna non nunc tristique rhoncuseri tym. Aliquam nibh ante, egestas id dictum aterert commodo re luctus libero. Praesent faucibus malesuada cibuste. Donec laoreet metus id laoreet malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>	
-							</div>
-							
-						</div>
-						<div class="col-md-4">
-							<div class="container-noticia">
-								<img src="{% static 'sgc/img/other-images/index-2_img-3.jpg' %}" class="full-wide" alt="">
-								<h3 class="text-center"><a href="#">Tal</a></h3>
-								<p class="text-justify">Gamus at magna non nunc tristique rhoncuseri tym. Aliquam nibh ante, egestas id dictum aterert commodo re luctus libero. Praesent faucibus malesuada cibuste. Donec laoreet metus id laoreet malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>	
-							</div>
-							
-						</div>
-						<div class="col-md-4">
-							<div class="container-noticia">
-								<img src="{% static 'sgc/img/other-images/index-2_img-4.jpg' %}" class="full-wide" alt="">
-								<h3 class="text-center"><a href="#">Tal</a></h3>
-								<p class="text-justify">Gamus at magna non nunc tristique rhoncuseri tym. Aliquam nibh ante, egestas id dictum aterert commodo re luctus libero. Praesent faucibus malesuada cibuste. Donec laoreet metus id laoreet malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>	
-							</div>
-							
-						</div>
+						{% endfor %}
 					</div>
 				</div>
 				<div class="col-md-4">
 					<h2 class="block-title regular-title">Eventos</h2>
 
-					<a href="#" class="full-wide space"><img src="{% static 'sgc/img/other-images/eventos-01.jpg' %}" class="full-wide" alt=""></a>
-					<a href="#" class="full-wide space"><img src="{% static 'sgc/img/other-images/eventos-02.jpg' %}" class="full-wide" alt=""></a>
-					<a href="#" class="full-wide space"><img src="{% static 'sgc/img/other-images/eventos-03.jpg' %}" class="full-wide" alt=""></a>
-					<a href="#" class="full-wide space"><img src="{% static 'sgc/img/other-images/eventos-04.jpg' %}" class="full-wide" alt=""></a>
+					{% for evento in eventos %}
+						<a href="#" data-toggle="modal" data-target="#modalEvento{{ evento.id }}" class="full-wide">
+							
+								<div class="well well-sm">
+									<h4>{{ evento.titulo }}</h4>
+									<p>{{ evento.descripcion }}</p>
+									<p><b>Inicio:</b> {{ evento.fecha_inicio }}</p>
+									<p><b>Final:</b> {{ evento.fecha_final }}</p>
+									<p><b>Núcleo:</b> {{ evento.institucion }}</p>
+								</div>	
+
+								<!-- Modal -->
+						</a>
+
+						<div class="modal fade" id="modalEvento{{ evento.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="myModalLabel">{{ evento.titulo }}</h4>
+									</div>
+									<div class="modal-body">
+										{{ evento.cuerpo_evento|safe }}
+									</div>
+									<div class="modal-footer text-left">
+										<p class="text-left">
+											<b>Inicia: </b>{{ evento.fecha_inicio }}<br />
+											<b>Finaliza: </b>{{ evento.fecha_final }}
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
 				</div>
 			</div>
 		</div>

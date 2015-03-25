@@ -10,20 +10,28 @@ from NoticiasOndas.models import NoticiaOndas
 from PaginasOndas.models import PaginaOndas
 from VideosOndas.models import VideosOndas
 from ImagenesOndas.models import ImagenesOndas
+from PaginasOndas.models import PaginaOndas
+from eventos.models import Evento
 from django.contrib.auth.models import User
 # Create your views here.
 
 register = template.Library()
 
 def home(request):
-	paginas = None
-	# if request.user.username != None:
-	# 	if request.user.is_superuser:
-	nucleos = Institucion.objects.all()
-	noticias = Noticia.objects.all()[:3]
-	print noticias
-	
-	return render_to_response('index.html', {'paginas':paginas, 'nucleos': nucleos, 'noticias':noticias}, context_instance = RequestContext(request))
+	paginas = []
+	paginas_user = Pagina.objects.all()
+
+	for pagina in paginas_user:
+		if pagina.usuario.is_superuser and pagina.institucion == None:
+			paginas.append(pagina)
+
+	print paginas
+	nucleos = Institucion.objects.all()[:4]
+	noticias = Noticia.objects.all().order_by('-pk')[:3]
+	paginas_ondas = PaginaOndas.objects.all()
+	imagenes_ondas = ImagenesOndas.objects.all().order_by('-pk')[:4]
+	eventos = Evento.objects.all().order_by('-pk')[:3]
+	return render_to_response('index.html', {'paginas':paginas, 'nucleos': nucleos, 'noticias':noticias, 'paginas_ondas':paginas_ondas, 'eventos':eventos, 'imagenes_ondas':imagenes_ondas}, context_instance = RequestContext(request))
 
 def login_sgc(request):
 	return render(request, 'login-sgc.html', {})
@@ -40,14 +48,16 @@ def nucleo(request, pk):
 	nucleo_data = Institucion.objects.get(pk = pk)
 	usuarios_profiles = UserProfile.objects.filter(institucion = nucleo_data)
 	
-	contador = 0
-
 	paginas = []
-	for usuario in usuarios_profiles:
-		pagina = Pagina.objects.filter(usuario = usuario.usuario)	
-		paginas.append(pagina)
+	paginas_nucleo = Pagina.objects.filter(institucion = nucleo_data)
+	for pagina in paginas_nucleo:
+		if pagina.pagina_padre == None:
+			paginas.append(pagina)
 
-	
+	contador = 0
+		
+	noticias = Noticia.objects.filter(institucion = nucleo_data).order_by('-pk')[:12]
+	eventos = Evento.objects.filter(institucion = nucleo_data).order_by('-fecha_inicio')[:4]
 
 	#print usuarios_profiles.usuario
 	
@@ -55,12 +65,12 @@ def nucleo(request, pk):
 	print paginas
 	#paginas.append(pagina)
 
-	return render(request, 'nucleo.html', {'nucleo':nucleo_data, 'paginas':paginas, 'contador':contador})
+	return render(request, 'nucleo.html', {'nucleo':nucleo_data, 'paginas':paginas, 'contador':contador, 'noticias':noticias, 'eventos':eventos})
 
 def ondas(request):
-	documentos = Documento.objects.all()[:9]
+	documentos = Documento.objects.all().order_by('-pk')[:3]
 	noticias = NoticiaOndas.objects.all()[:3]
-	paginas = PaginaOndas.objects.all()[:4]
+	paginas = PaginaOndas.objects.all()
 	videos = VideosOndas.objects.all()[:1]
 	imagenes = ImagenesOndas.objects.all()[:1]
 

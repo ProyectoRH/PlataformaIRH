@@ -2,7 +2,7 @@
 
 {% load staticfiles %}
 
-{% block page_title %} Noticia {% endblock %}
+{% block page_title %}Galería de Imágenes | Programa Ondas {% endblock %}
 
 <span style="display:none;">	
 	{% block img_logo %}
@@ -17,14 +17,15 @@
 		<div class="container">
 
 			<div class="col-md-12">
-				<h2 class="regular-title block-title text-center">{{ noticia.titulo }}</h2>
-
-				<div class="space"></div>
-				
-				<div class="jumbotron regular-jumbotron" style="background-image: url(/media/{{ noticia.imagen_banner }});"></div>
-				<p>{{ noticia.fecha_creacion }}</p>
-				<div class="text-justify col-lg-12">
-					{{ noticia.cuerpo_noticia|safe }}
+				<h2 class="regular-title block-title text-center">Galeria de Imágenes</h2>
+	
+				<div class="col-md-12">
+					{% for imagen in imagenes %}
+						<div class="col-xs-3">
+						 	<div class="contenedor-imagen-ondas" style="background-image:url(/media/{{ imagen.imagen }});"></div>
+						 	
+						</div>
+					{% endfor %}
 				</div>
 			</div>
 
