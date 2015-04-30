@@ -28,6 +28,8 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2_provider.Application'
+
 DBNAME= os.environ.get('dbname')
 USNAME= os.environ.get('usname')
 USCONTRA= os.environ.get('uscontra')
@@ -115,6 +117,10 @@ POSTGIS_VERSION = (2, 0, 3)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
+MIGRATION_MODULES = {
+   # key: app name, value: a fully qualified package name, not the usual `app_label.something_else`
+  'oauth2_provider': 'yourproject.migrations.oauth2_provider',
+}
 
 LANGUAGE_CODE = 'es-co'
 
