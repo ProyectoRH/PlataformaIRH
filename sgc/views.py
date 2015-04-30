@@ -89,8 +89,8 @@ def busqueda(request):
 		documentos = DocumentoDigital.objects.filter(titulo__contains = valor_busqueda) or DocumentoDigital.objects.filter(resumen__contains = valor_busqueda)
 		
 		response = ""
+		comboDoc = []
 		if len(documentos) > 0:
-			comboDoc = []
 			for documento in documentos:
 				dictDoc = {}
 				dictDoc['id'] = documento.pk
