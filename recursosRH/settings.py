@@ -28,13 +28,13 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2_provider.Application'
+# OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2_provider.Application'
 
-DBNAME= os.environ.get('dbname')
-USNAME= os.environ.get('usname')
-USCONTRA= os.environ.get('uscontra')
-IPDIR= os.environ.get('ipdir')
-# Application definition
+# DBNAME= os.environ.get('dbname')
+# USNAME= os.environ.get('usname')
+# USCONTRA= os.environ.get('uscontra')
+# IPDIR= os.environ.get('ipdir')
+# # Application definition
 
 INSTALLED_APPS = (
     'suit',
@@ -104,11 +104,11 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP+(
 DATABASES = {
         'default': {
             'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': DBNAME,                      # Or path to database file if using sqlite3.
+            'NAME': 'recursosdb',                      # Or path to database file if using sqlite3.
             # The following settings are not used with sqlite3:
-            'USER': USNAME,
-            'PASSWORD': USCONTRA,
-            'HOST': IPDIR,                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
+            'USER': 'recursosuser',
+            'PASSWORD': 'recursosrrhh',
+            'HOST': 'localhost',                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
             'PORT': '',                               # Set to empty string for default.
         }
     }
@@ -117,10 +117,10 @@ POSTGIS_VERSION = (2, 0, 3)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
-MIGRATION_MODULES = {
-   # key: app name, value: a fully qualified package name, not the usual `app_label.something_else`
-  'oauth2_provider': 'yourproject.migrations.oauth2_provider',
-}
+# MIGRATION_MODULES = {
+#    # key: app name, value: a fully qualified package name, not the usual `app_label.something_else`
+#   'oauth2_provider': 'yourproject.migrations.oauth2_provider',
+# }
 
 LANGUAGE_CODE = 'es-co'
 
