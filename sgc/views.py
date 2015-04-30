@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse, JsonResponse
 from django import template
 from pagina.models import Pagina
 from noticia.models import Noticia
@@ -11,11 +13,13 @@ from PaginasOndas.models import PaginaOndas
 from VideosOndas.models import VideosOndas
 from ImagenesOndas.models import ImagenesOndas
 from PaginasOndas.models import PaginaOndas
+
+from areatematicas.models import Areatematica
+from documentos_digitales.models import DocumentoDigital
+
 from eventos.models import Evento
 from django.contrib.auth.models import User
 # Create your views here.
-
-register = template.Library()
 
 def home(request):
 	paginas = []
@@ -38,11 +42,6 @@ def login_sgc(request):
 
 def nosotros(request):
 	return render(request,'nosotros.html',{})
-
-@register.filter(name="lower")
-def lower(value):
-    """Removes all values of arg from the given string"""
-    return value.lower()
 
 def nucleo(request, pk):
 	nucleo_data = Institucion.objects.get(pk = pk)
@@ -76,11 +75,43 @@ def ondas(request):
 
 	return render(request,'ondas.html',{'documentos':documentos, 'noticias':noticias, 'paginas':paginas, 'imagen':imagenes, 'video':videos})
 
-# def nucleo_hidroBiologico(request):
-# 	return render(request,'nucleorecursoshidrobiologico.html',{})
-# def nucleo_socioEconomico(request):
-# 	return render(request,'nucleosocioeconomico.html',{})
-
 
 def mapas(request):
-    return render(request,'index-mapa.html',{})
+	areas = Areatematica.objects.all()
+	
+	return render(request,'index-mapa.html',{'areasTematicas': areas})
+	
+@csrf_exempt
+def busqueda(request):
+	if request.method == 'POST':
+		valor_busqueda = request.POST.get("busqueda_valor")
+
+		documentos = DocumentoDigital.objects.filter(titulo__contains = valor_busqueda) or DocumentoDigital.objects.filter(resumen__contains = valor_busqueda)
+		
+		response = ""
+		if len(documentos) > 0:
+			comboDoc = []
+			for documento in documentos:
+				dictDoc = {}
+				dictDoc['id'] = documento.pk
+				dictDoc['titulo'] = documento.titulo
+				dictDoc['resumen'] = documento.resumen
+				dictDoc['archivo'] = str(documento.archivo)
+				dictDoc['geometria'] = documento.localizacion.geom
+
+				comboDoc.append(dictDoc)
+				
+
+		return JsonResponse(comboDoc, safe=False)
+	else:
+		return HttpResponse(0)
+
+
+
+
+
+
+
+
+
+

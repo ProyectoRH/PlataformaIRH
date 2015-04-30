@@ -11,9 +11,9 @@ from djgeojson.fields import GeometryField
 class Localizacion(models.Model):
     titulo = models.CharField(max_length=200)
     area_tematica = models.ForeignKey(Areatematica)
-    representacion = models.ForeignKey(Representacion)
-    zona = models.ManyToManyField(Zona)
-    sub_zona = models.ManyToManyField(SubZona)
+    # representacion = models.ForeignKey(Representacion)
+    # zona = models.ManyToManyField(Zona)
+    # sub_zona = models.ManyToManyField(SubZona)
     geom = GeometryField(verbose_name='Especifique ubicación')
 
     def __unicode__(self):

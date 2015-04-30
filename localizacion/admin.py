@@ -19,7 +19,6 @@ class DocumentoShapeInline(admin.StackedInline):
 
 class LocalizacionAdmin(LeafletGeoAdmin):
     model = Localizacion
-    filter_horizontal = ('zona', 'sub_zona',)
     inlines = [DocumentoDigitalInline, DocumentoShapeInline]
 
 
