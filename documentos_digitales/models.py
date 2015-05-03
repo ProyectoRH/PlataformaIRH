@@ -34,6 +34,7 @@ class DocumentoDigital(models.Model):
 	institucion = models.ForeignKey(Institucion)
 	archivo = models.FileField(upload_to = "static/documentos_digitales/")
 	localizacion = models.ForeignKey(Localizacion, null=True)
+	privado = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return self.titulo

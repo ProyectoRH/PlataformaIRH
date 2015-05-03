@@ -14,7 +14,7 @@ class DocumentoShape(models.Model):
 	archivo = models.FileField(upload_to = "static/documentos_shape")
 	usuario = models.ForeignKey(User)
 	localizacion = models.ForeignKey(Localizacion, null=True)
-
+	privado = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return self.nombre

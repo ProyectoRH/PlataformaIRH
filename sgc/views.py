@@ -16,9 +16,14 @@ from PaginasOndas.models import PaginaOndas
 
 from areatematicas.models import Areatematica
 from documentos_digitales.models import DocumentoDigital
+from documentos_shape.models import DocumentoShape
+from localizacion.models import Localizacion
 
 from eventos.models import Evento
 from django.contrib.auth.models import User
+
+import re
+from django.db.models import Q
 # Create your views here.
 
 def home(request):
@@ -86,7 +91,7 @@ def busqueda(request):
 	if request.method == 'POST':
 		valor_busqueda = request.POST.get("busqueda_valor")
 
-		documentos = DocumentoDigital.objects.filter(titulo__contains = valor_busqueda) or DocumentoDigital.objects.filter(resumen__contains = valor_busqueda)
+		documentos = DocumentoDigital.objects.filter(titulo__contains = valor_busqueda).filter(resumen__contains = valor_busqueda)
 		
 		response = ""
 		comboDoc = []
@@ -107,7 +112,111 @@ def busqueda(request):
 		return HttpResponse(0)
 
 
+def normalize_query(query_string,findterms=re.compile(r'"([^"]+)"|(\S+)').findall,normspace=re.compile(r'\s{2,}').sub):
+    ''' Splits the query string in invidual keywords, getting rid of unecessary spaces
+        and grouping quoted words together.
+        Example:
+        
+        >>> normalize_query('  some random  words "with   quotes  " and   spaces')
+        ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
+    
+    '''
+    return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(query_string)] 
 
+def get_query(query_string, search_fields):
+    ''' Returns a query, that is a combination of Q objects. That combination
+        aims to search keywords within a model by testing the given search fields.
+    
+    '''
+    query = None # Query to search for every search term        
+    terms = normalize_query(query_string)
+    for term in terms:
+        or_query = None # Query to search for a given term in each field
+        for field_name in search_fields:
+            q = Q(**{"%s__icontains" % field_name: term})
+            if or_query is None:
+                or_query = q
+            else:
+                or_query = or_query | q
+        if query is None:
+            query = or_query
+        else:
+            query = query & or_query
+    return query
+
+@csrf_exempt
+def search(request):
+	query_string = ''
+	documentos = None
+
+	if ('busqueda_valor' in request.POST) and request.POST['busqueda_valor'].strip():
+		query_string = request.POST['busqueda_valor']
+
+		entry_query = get_query(query_string, ['titulo', 'resumen',])
+		shape_query = get_query(query_string, ['nombre',])
+
+		documentos = DocumentoDigital.objects.filter(entry_query, privado=False)
+		localizaciones = Localizacion.objects.filter(entry_query, privado=False)
+		doc_shapes = DocumentoShape.objects.filter(shape_query, privado=False)
+
+		doc_shapes_all = DocumentoShape.objects.all()
+		documentos_all = DocumentoDigital.objects.all()
+
+		
+		comboLoc = []
+		comboDoc = []
+		comboDocShp = []
+
+
+		
+		if len(localizaciones) > 0:
+			for localizacion in localizaciones:
+				dictLoc = {}
+				dictLoc['id'] = localizacion.pk
+				dictLoc['titulo'] = localizacion.titulo
+				dictLoc['resumen'] = localizacion.resumen
+				dictLoc['geometria'] = localizacion.geom
+				dictLoc['locDoc'] = []
+				for doc in DocumentoDigital.objects.filter(localizacion = localizacion):
+					dictLoc['locDoc'].append(str(doc.archivo))
+
+				dictLoc['locDocShp'] = []
+				for doc in DocumentoShape.objects.filter(localizacion = localizacion):
+					dictLoc['locDocShp'].append(str(doc.archivo))
+
+				comboLoc.append(dictLoc)
+
+
+			for documento in documentos:
+				if not documento.localizacion in localizaciones:
+					dictDoc = {}
+					dictDoc['id'] = documento.localizacion.pk
+					dictDoc['titulo'] = documento.localizacion.titulo
+					dictDoc['resumen'] = documento.localizacion.resumen
+					dictDoc['geometria'] = documento.localizacion.geom
+					dictDoc['archivo'] = str(documento.archivo)
+
+					comboDoc.append(dictDoc)
+
+			for documento in doc_shapes:
+				if not documento.localizacion in localizaciones:
+					dictShp = {}
+					dictShp['id'] = documento.localizacion.pk
+					dictShp['titulo'] = documento.localizacion.titulo
+					dictShp['resumen'] = documento.localizacion.resumen
+					dictShp['geometria'] = documento.localizacion.geom
+					dictShp['archivo'] = str(documento.archivo)
+
+					comboDocShp.append(dictShp)
+
+			conjuntoArrays = []
+			conjuntoArrays.append(comboLoc)
+			conjuntoArrays.append(comboDoc)
+			conjuntoArrays.append(comboDocShp)
+
+			return JsonResponse(conjuntoArrays, safe=False)
+		else:
+			return HttpResponse(0)
 
 
 
