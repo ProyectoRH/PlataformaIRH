@@ -194,8 +194,6 @@
 							map.removeLayer(mark);
 							$('#accordionlista_resultados').empty();
 							$('#listaResultados').empty();
-							$('.botonSearch').css('visibility', 'initial');
-
 							$.each(response[0], function(key, value){
 								var id = "", titulo = "", resumen = "", geometria = "", puntos = "", documentos = [], documentos_shp = [];
 								$.each(value, function(k,v){
@@ -287,6 +285,7 @@
 
 
 							$.each(response[1], function(key, value){
+								$('.botonSearch').css('visibility', 'initial');
 								$('#accordionDocumentos_resultados').empty();
 								var id = "", titulo = "", resumen = "", geometria = "", archivo = "";
 								$.each(value, function(k,v){
@@ -329,10 +328,17 @@
 									htmlAccordion += '</div>';
 									htmlAccordion += '</div>';
 
+								if(!$('#accordionlista_resultados').html() != "" || $('#accordionlista_resultados').html() != "undefined" || $('#accordionlista_resultados').html() != null){
+
+								}else{
+									$('#accordionlista_resultados').append(htmlAccordion);
+								}
 								$('#accordionDocumentos_resultados').append(htmlAccordion);
+								
 							});
 
 							$.each(response[2], function(key, value){
+								$('.botonSearch').css('visibility', 'initial');
 								$('#accordionShapes_resultados').empty();
 								var id = "", titulo = "", resumen = "", geometria = "", archivo = "";
 								$.each(value, function(k,v){
@@ -375,7 +381,14 @@
 									htmlAccordion += '</div>';
 									htmlAccordion += '</div>';
 
+
+								if(!$('#accordionlista_resultados').html() != "" || $('#accordionlista_resultados').html() != "undefined" || $('#accordionlista_resultados').html() != null){
+
+								}else{
+									$('#accordionlista_resultados').append(htmlAccordion);
+								}
 								$('#accordionShapes_resultados').append(htmlAccordion);
+								
 							});
 						
 							
