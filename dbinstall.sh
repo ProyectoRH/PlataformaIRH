@@ -10,5 +10,3 @@ echo "*********************************************************************"
 #psql -d recursosdb -c "CREATE EXTENSION postgis_topology;"
 #psql -d recursosdb -c "CREATE EXTENSION fuzzystrmatch;"
 #psql -d recursosdb -c "CREATE EXTENSION postgis_tiger_geocoder;"
-#^D
-
