@@ -3,10 +3,8 @@ from django.db import models
 from django.conf import settings
 
 from redactor.fields import RedactorField
-from usuarios.models import Institucion
 
 from nucleo.models import Nucleo
-
 from django.contrib.auth.models import User
 
 # Create your models here.

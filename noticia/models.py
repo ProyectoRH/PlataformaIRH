@@ -2,9 +2,7 @@
 from django.db import models
 from django.conf import settings
 
-from usuarios.models import Institucion
 from nucleo.models import Nucleo
-
 from redactor.fields import RedactorField
 
 # Create your models here.

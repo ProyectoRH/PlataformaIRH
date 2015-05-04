@@ -4,7 +4,6 @@ from django.conf import settings
 
 # Create your models here.
 from redactor.fields import RedactorField
-from usuarios.models import Institucion
 from nucleo.models import Nucleo
 
 class Evento(models.Model):

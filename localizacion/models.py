@@ -1,9 +1,11 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
+from django.conf import settings
 
 from areatematicas.models import Areatematica
 from representacion.models import Representacion
 from zona.models import Zona, SubZona
+from nucleo.models import Nucleo
 
 from djgeojson.fields import GeometryField
 
@@ -17,6 +19,8 @@ class Localizacion(models.Model):
     # sub_zona = models.ManyToManyField(SubZona)
     geom = GeometryField(verbose_name='Especifique ubicación')
     privado = models.BooleanField(default=False)
+    nucleo = models.ForeignKey(Nucleo, blank=True, null=True)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     def __unicode__(self):
         return self.titulo

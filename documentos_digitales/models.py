@@ -2,7 +2,6 @@
 from django.db import models
 from django.conf import settings
 from localizacion.models import Localizacion
-from usuarios.models import Institucion
 from nucleo.models import Nucleo
 
 
