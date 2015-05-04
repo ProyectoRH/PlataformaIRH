@@ -1,3 +1,4 @@
+#-*- encoding: utf-8 -*-
 from django.db import models
 
 from django.contrib.auth.models import User
@@ -50,3 +51,14 @@ class UserProfile(models.Model):
 
 	def __unicode__(self):
 		return "%s %s - %s" % (self.usuario.first_name, self.usuario.last_name, self.usuario.username)
+
+
+
+# No borrar, señal que guarda el perfil de usuario una vez creado
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+
+@receiver(post_save, sender=User)
+def crear_perfil_inexistente(sender, **kwargs):
+	if kwargs.get('created', False):
+		UserProfile.objects.get_or_create(usuario=kwargs.get('instance'))

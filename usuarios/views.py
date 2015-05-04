@@ -38,6 +38,7 @@ def crearUsuario(request):
 
 		perfil.usuario = usuario
 		perfil.save()
+		return HttpResponseRedirect('/')
 
 	return render(request, 'registro-sgc.html', {
 		'crear_usuario': crear_usuario,
