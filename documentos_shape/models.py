@@ -12,7 +12,6 @@ class DocumentoShape(models.Model):
 	version = models.CharField(max_length=200)
 	direccion_online = models.URLField(max_length=255)
 	archivo = models.FileField(upload_to = "static/documentos_shape")
-	usuario = models.ForeignKey(User)
 	localizacion = models.ForeignKey(Localizacion, null=True)
 	privado = models.BooleanField(default=False)
 

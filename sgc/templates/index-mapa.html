@@ -171,6 +171,11 @@
 	<script>
 		var map = L.map('map').setView([11.0129931, -74.8334623], 13);
 		var mark = "";
+
+		var array1 = 0;
+		var array2 = 0;
+		var array3 = 0;
+
 		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
 			maxZoom: 18,
 			attribution: '',
@@ -194,7 +199,6 @@
 							map.removeLayer(mark);
 							$('#accordionlista_resultados').empty();
 							$('#listaResultados').empty();
-							$('.botonSearch').css('visibility', 'initial');
 
 							$.each(response[0], function(key, value){
 								var id = "", titulo = "", resumen = "", geometria = "", puntos = "", documentos = [], documentos_shp = [];
@@ -279,14 +283,14 @@
 									htmlMarkerPopup += '</div>';
 
 
-									mark = L.marker(puntos).addTo(map).bindPopup(htmlMarkerPopup);
-
+								mark = L.marker(puntos).addTo(map).bindPopup(htmlMarkerPopup);
 								$('#accordionlista_resultados').append(htmlAccordion);
 							});
 
 
 
 							$.each(response[1], function(key, value){
+								$('.botonSearch').css('visibility', 'initial');
 								$('#accordionDocumentos_resultados').empty();
 								var id = "", titulo = "", resumen = "", geometria = "", archivo = "";
 								$.each(value, function(k,v){
@@ -324,15 +328,34 @@
 									htmlAccordion += '<div class="panel-body">';
 									htmlAccordion += '<p>'+resumen+'</p>';
 									htmlAccordion += '<hr />';
-									htmlAccordion += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-file"></i> '+archivo+'</a></p>'
+									htmlAccordion += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-file"></i> '+archivo+'</a></p>';
 									htmlAccordion += '</div>';
 									htmlAccordion += '</div>';
 									htmlAccordion += '</div>';
 
+
+								var htmlMarkerPopup = '<div class="panel panel-default">';
+									htmlMarkerPopup += '<div class="panel-heading" role="tab" id="heading'+id+'">';
+									htmlMarkerPopup += '<h4 class="panel-title">';
+									htmlMarkerPopup += titulo;
+									htmlMarkerPopup += '</h4>';
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '<div class="panel-body">';
+									htmlMarkerPopup += '<p>'+resumen+'</p>';
+									htmlMarkerPopup += '<hr />';
+									htmlMarkerPopup += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-file"></i> '+archivo+'</a></p>';								
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '</div>';
+
+
+								mark = L.marker(puntos).addTo(map).bindPopup(htmlMarkerPopup);
 								$('#accordionDocumentos_resultados').append(htmlAccordion);
+								
 							});
 
 							$.each(response[2], function(key, value){
+								$('.botonSearch').css('visibility', 'initial');
 								$('#accordionShapes_resultados').empty();
 								var id = "", titulo = "", resumen = "", geometria = "", archivo = "";
 								$.each(value, function(k,v){
@@ -370,25 +393,54 @@
 									htmlAccordion += '<div class="panel-body">';
 									htmlAccordion += '<p>'+resumen+'</p>';
 									htmlAccordion += '<hr />';
-									htmlAccordion += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-globe"></i> '+archivo+'</a></p>'
+									htmlAccordion += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-globe"></i> '+archivo+'</a></p>';
 									htmlAccordion += '</div>';
 									htmlAccordion += '</div>';
 									htmlAccordion += '</div>';
 
+								var htmlMarkerPopup = '<div class="panel panel-default">';
+									htmlMarkerPopup += '<div class="panel-heading" role="tab" id="heading'+id+'">';
+									htmlMarkerPopup += '<h4 class="panel-title">';
+									htmlMarkerPopup += titulo;
+									htmlMarkerPopup += '</h4>';
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '<div class="panel-body">';
+									htmlMarkerPopup += '<p>'+resumen+'</p>';
+									htmlMarkerPopup += '<hr />';
+									htmlMarkerPopup += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-globe"></i> '+archivo+'</a></p>';								
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '</div>';
+
+								mark = L.marker(puntos).addTo(map).bindPopup(htmlMarkerPopup);
 								$('#accordionShapes_resultados').append(htmlAccordion);
+								
 							});
 						
-							
+							if(response[0].length > 0){
+								$('#resultadosBusquedaModal').modal('show');
+							}else if(response[1].length > 0 && response[0].length == 0){
+								$('#documentosBusquedaModal').modal('show');
+							}else if(response[2].length > 0 && response[0].length == 0 && response[1].length == 0){
+								$('#shapesBusquedaModal').modal('show');
+							}else{
+								$('#listaResultados').append('<p>No hay resultados.</p>');
+								$('#accordionlista_resultados').empty();
+								$('#accordionlista_resultados').append('<p>No hay resultados</p>');
+								$('#resultadosBusquedaModal').modal('show');
+							}
 
 						}else{
 							$('#listaResultados').append('<p>No hay resultados.</p>');
 							$('#accordionlista_resultados').empty();
 							$('#accordionlista_resultados').append('<p>No hay resultados</p>');
-
+							$('#resultadosBusquedaModal').modal('show');
 						}
 					});
 					
-					$('#resultadosBusquedaModal').modal('show');
+					
+
+
 				}else{
 					alert("Debe escribir algo para realizar una búsqueda");
 				}

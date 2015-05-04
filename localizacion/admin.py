@@ -11,17 +11,24 @@ class DocumentoDigitalInline(admin.StackedInline):
     model = DocumentoDigital
     extra = 1
 
-    exclude = ('institucion', )
+  #   exclude = ('institucion', )
 
-    def save_model(self, request, obj, form, change):
-		perfil = UserProfile.objects.get(usuario = request.user)
-		obj.institucion = perfil.institucion
-		obj.save()
+  #   def save_model(self, request, obj, form, change):
+		# perfil = UserProfile.objects.get(usuario = request.user)
+		# obj.institucion = perfil.institucion
+		# obj.save()
 
 
 class DocumentoShapeInline(admin.StackedInline):
     model = DocumentoShape
     extra = 1
+
+  #   exclude = ('institucion', )
+
+  #   def save_model(self, request, obj, form, change):
+		# perfil = UserProfile.objects.get(usuario = request.user)
+		# obj.institucion = perfil.institucion
+		# obj.save()
 
 
 class LocalizacionAdmin(LeafletGeoAdmin):

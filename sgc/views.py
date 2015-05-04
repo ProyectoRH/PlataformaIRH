@@ -174,7 +174,7 @@ def search(request):
 
 
 		
-		if len(localizaciones) > 0:
+		if len(localizaciones) >= 0:
 			for localizacion in localizaciones:
 				dictLoc = {}
 				dictLoc['id'] = localizacion.pk
