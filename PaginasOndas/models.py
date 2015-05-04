@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
+from django.conf import settings
 
 from redactor.fields import RedactorField
 from usuarios.models import Institucion
@@ -28,8 +29,8 @@ class PaginaOndas(models.Model):
 	peso = models.IntegerField(default=0)
 	target = models.CharField(max_length=140, blank=True, null=True, choices=TARGET_CHOICES, default=1)
 	url = models.TextField(default=None, blank=True, null=True)
-	#institucion = models.ForeignKey(Institucion, blank=True, null=True)
-	usuario = models.ForeignKey(User)
+	nucleo = models.ForeignKey(Nucleo, blank=True, null=True)
+	usuario = models.ForeignKey(settings.AUTH_USER_MODEL)
 
 	def __unicode__(self):
 		return self.titulo_pagina

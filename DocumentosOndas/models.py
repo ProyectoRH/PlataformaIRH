@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
+from django.conf import settings
 from redactor.fields import RedactorField
 from django.contrib.auth.models import User
 # Create your models here.
@@ -13,7 +14,7 @@ class Documento (models.Model):
 	archivo = models.FileField(upload_to='static/uploads_ondas/documentos')
 	imagen_portada = models.FileField(upload_to='static/uploads_ondas/documentos')
 	fecha_subida = models.DateField(auto_now_add=True)
-	usuario = models.ForeignKey(User)
+	usuario = models.ForeignKey(settings.AUTH_USER_MODEL)
 
 	def __unicode__(self):
 		return self.titulo
