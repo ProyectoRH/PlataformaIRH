@@ -333,6 +333,22 @@
 									htmlAccordion += '</div>';
 									htmlAccordion += '</div>';
 
+
+								var htmlMarkerPopup = '<div class="panel panel-default">';
+									htmlMarkerPopup += '<div class="panel-heading" role="tab" id="heading'+id+'">';
+									htmlMarkerPopup += '<h4 class="panel-title">';
+									htmlMarkerPopup += titulo;
+									htmlMarkerPopup += '</h4>';
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '<div class="panel-body">';
+									htmlMarkerPopup += '<p>'+resumen+'</p>';
+									htmlMarkerPopup += '<hr />';
+									htmlAccordion += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-file"></i> '+archivo+'</a></p>';								
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '</div>';
+
+
 								mark = L.marker(puntos).addTo(map).bindPopup(htmlMarkerPopup);
 								$('#accordionDocumentos_resultados').append(htmlAccordion);
 								
@@ -381,6 +397,20 @@
 									htmlAccordion += '</div>';
 									htmlAccordion += '</div>';
 									htmlAccordion += '</div>';
+
+								var htmlMarkerPopup = '<div class="panel panel-default">';
+									htmlMarkerPopup += '<div class="panel-heading" role="tab" id="heading'+id+'">';
+									htmlMarkerPopup += '<h4 class="panel-title">';
+									htmlMarkerPopup += titulo;
+									htmlMarkerPopup += '</h4>';
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '<div class="panel-body">';
+									htmlMarkerPopup += '<p>'+resumen+'</p>';
+									htmlMarkerPopup += '<hr />';
+									htmlAccordion += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-globe"></i> '+archivo+'</a></p>';								
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '</div>';
 
 								mark = L.marker(puntos).addTo(map).bindPopup(htmlMarkerPopup);
 								$('#accordionShapes_resultados').append(htmlAccordion);
