@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
 
+from django.contrib.auth.models import User
 from localizacion.models import Localizacion
-from usuarios.models import Institucion
 
 
 class DocumentoShape(models.Model):
@@ -12,7 +12,6 @@ class DocumentoShape(models.Model):
 	version = models.CharField(max_length=200)
 	direccion_online = models.URLField(max_length=255)
 	archivo = models.FileField(upload_to = "static/documentos_shape")
-	institucion = models.ForeignKey(Institucion)	
 	localizacion = models.ForeignKey(Localizacion, null=True)
 	privado = models.BooleanField(default=False)
 
