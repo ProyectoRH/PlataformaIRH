@@ -74,6 +74,9 @@ INSTALLED_APPS = (
     'institucion',
     'nucleo',
 )
+AUTHENTICATION_BACKENDS = (
+    'usuarios.auth_backends.CustomUserModelBackend',
+)
 
 AUTH_USER_MODEL = 'usuarios.Usuario'
 
