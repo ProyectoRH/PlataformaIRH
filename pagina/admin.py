@@ -7,7 +7,7 @@ from usuarios.models import UserProfile
 from django.contrib.auth.models import User
 
 class PaginaAdmin(admin.ModelAdmin):
-	exclude = ('usuario',)
+	exclude = ('usuario', 'institucion')
 
 	def save_model(self, request, obj, form, change):
 		obj.usuario = request.user
