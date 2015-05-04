@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
+from django.conf import settings
 
 from redactor.fields import RedactorField
 from usuarios.models import Institucion
