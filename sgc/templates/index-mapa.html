@@ -111,6 +111,12 @@
 						<input type="submit" name="submit" id="submitAreaTematica" class="btn btn-success form-control" value="Buscar" />
 					</div>
 				</form>
+				<hr />
+				<select class="form-control">
+					<option value="centroide">Centroide</option>
+					<option value="interseccion">Intersección</option>
+					<option value="punto">Punto</option>
+				</select>
 			</div>
 		</div>
 	</div>
@@ -181,6 +187,10 @@
 			attribution: '',
 			id: 'examples.map-i875mjb7'
 		}).addTo(map);
+
+		map.on('click', function(e) {
+		    alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+		});
 
 		$('.desplegable').click(function(e){
 			e.preventDefault();

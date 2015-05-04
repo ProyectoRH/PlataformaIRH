@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from django import template
 from pagina.models import Pagina
 from noticia.models import Noticia
-from institucion.models import Institucion
+from nucleo.models import Nucleo
 from DocumentosOndas.models import Documento
 from NoticiasOndas.models import NoticiaOndas
 from PaginasOndas.models import PaginaOndas
@@ -34,8 +34,9 @@ def home(request):
 		if pagina.usuario.is_superuser and pagina.institucion == None:
 			paginas.append(pagina)
 
-	print paginas
-	nucleos = Institucion.objects.all()[:4]
+	nucleos = Nucleo.objects.all()[:4]
+	print nucleos
+
 	noticias = Noticia.objects.all().order_by('-pk')[:3]
 	paginas_ondas = PaginaOndas.objects.all()
 	imagenes_ondas = ImagenesOndas.objects.all().order_by('-pk')[:4]
@@ -49,24 +50,18 @@ def nosotros(request):
 	return render(request,'nosotros.html',{})
 
 def nucleo(request, pk):
-	nucleo_data = Institucion.objects.get(pk = pk)
+	nucleo_data = Nucleo.objects.get(pk = pk)
 	
 	paginas = []
-	paginas_nucleo = Pagina.objects.filter(institucion = nucleo_data)
+	paginas_nucleo = Pagina.objects.filter(nucleo = nucleo_data)
 	for pagina in paginas_nucleo:
 		if pagina.pagina_padre == None:
 			paginas.append(pagina)
 
 	contador = 0
 		
-	noticias = Noticia.objects.filter(institucion = nucleo_data).order_by('-pk')[:12]
-	eventos = Evento.objects.filter(institucion = nucleo_data).order_by('-fecha_inicio')[:4]
-
-	#print usuarios_profiles.usuario
-	
-	print "print de pagina"
-	print paginas
-	#paginas.append(pagina)
+	noticias = Noticia.objects.filter(nucleo = nucleo_data).order_by('-pk')[:12]
+	eventos = Evento.objects.filter(nucleo = nucleo_data).order_by('-fecha_inicio')[:4]
 
 	return render(request, 'nucleo.html', {'nucleo':nucleo_data, 'paginas':paginas, 'contador':contador, 'noticias':noticias, 'eventos':eventos})
 
@@ -221,9 +216,6 @@ def search(request):
 			return JsonResponse(conjuntoArrays, safe=False)
 		else:
 			return HttpResponse(0)
-
-
-
 
 
 
