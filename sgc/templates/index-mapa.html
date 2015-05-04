@@ -395,6 +395,11 @@
 								$('#documentosBusquedaModal').modal('show');
 							}else if(response[2].length > 0 && response[0].length == 0 && response[1].length == 0){
 								$('#shapesBusquedaModal').modal('show');
+							}else{
+								$('#listaResultados').append('<p>No hay resultados.</p>');
+								$('#accordionlista_resultados').empty();
+								$('#accordionlista_resultados').append('<p>No hay resultados</p>');
+								$('#resultadosBusquedaModal').modal('show');
 							}
 
 						}else{
