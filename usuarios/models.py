@@ -11,7 +11,7 @@ from django.contrib.auth import models as auth_models
 
 class Usuario(AbstractUser):
     """User with app settings."""
-    institucion = models.ForeignKey(Institucion)
+    institucion = models.ForeignKey(Institucion, null=True)
 
     # Use UserManager to get the create_user method, etc.
     objects = UserManager()
