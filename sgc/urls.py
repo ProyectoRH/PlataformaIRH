@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     url(r'^videosOndas/', include('VideosOndas.urls')),
 
     # Mapa
-    url(r'^busqueda/', 'sgc.views.search'),    
+    url(r'^busqueda/', 'sgc.views.search'),
+    url(r'^busquedaArea/', 'sgc.views.busqueda'),
 
 )

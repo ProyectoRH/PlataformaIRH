@@ -97,7 +97,8 @@
 	<div class="desplegable-window" style="display:none;">
 		<div class="panel panel-default bg-dark-blue">
 			<div class="panel-body bg-dark-blue">
-				<form action="">
+				<form action="" method="post">
+					{% csrf_token %}
 					<div class="form-group">
 						<label for="combo1">Área temática</label>
 						<select name="combo1" id="combo1" class="form-control">
@@ -107,7 +108,7 @@
 						</select>
 					</div>
 					<div class="form-group">
-						<input type="submit" name="submit" id="submit" class="btn btn-success form-control" value="Buscar" />
+						<input type="submit" name="submit" id="submitAreaTematica" class="btn btn-success form-control" value="Buscar" />
 					</div>
 				</form>
 			</div>
@@ -169,7 +170,7 @@
 
 	<script>
 		var map = L.map('map').setView([11.0129931, -74.8334623], 13);
-
+		var mark = "";
 		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
 			maxZoom: 18,
 			attribution: '',
@@ -185,23 +186,226 @@
 			$('#formularioBusqueda').submit(function(e){
 				e.preventDefault();
 
-				$.post('{% url "sgc.views.search" %}', {'busqueda_valor': $('#busqueda').val()}, function(response){
-					if(response != 0 && response != null && response != "null"){
-						$('#accordionlista_resultados').empty();
-						$('#listaResultados').empty();
-						$('.botonSearch').css('visibility', 'initial');
+				var valor_busqueda = $('#busqueda').val();
 
-						$.each(response[0], function(key, value){
-							var id = "", titulo = "", resumen = "", geometria = "", puntos = "", documentos = [], documentos_shp = [];
-							$.each(value, function(k,v){
+				if(valor_busqueda != null && valor_busqueda != "null" && valor_busqueda != ""){
+					$.post('{% url "sgc.views.search" %}', {'busqueda_valor': valor_busqueda}, function(response){
+						if(response != 0 && response != null && response != "null"){
+							map.removeLayer(mark);
+							$('#accordionlista_resultados').empty();
+							$('#listaResultados').empty();
+							$('.botonSearch').css('visibility', 'initial');
+
+							$.each(response[0], function(key, value){
+								var id = "", titulo = "", resumen = "", geometria = "", puntos = "", documentos = [], documentos_shp = [];
+								$.each(value, function(k,v){
+									if(k == "id"){
+										id = v;
+									}
+									if(k == "titulo"){
+										titulo = v;
+									}
+									if(k == "resumen"){
+										resumen = v.substring(0, 150) + "...";
+									}
+									if(k == "geometria"){
+										geometria = v;
+										$.each(geometria, function(k1, v1){
+											if(k1 == "coordinates"){
+												puntos = v1.reverse();
+											}
+										});
+									}
+									if(k == "locDoc"){
+										$.each(v, function(k1, v1){
+											documentos.push(v1);
+										});
+									}
+									if(k == "locDocShp"){
+										$.each(v, function(k1, v1){
+											documentos_shp.push(v1);
+										});
+									}
+								});
+
+								var htmlAccordion = '<div class="panel panel-default">';
+									htmlAccordion += '<div class="panel-heading" role="tab" id="heading'+id+'">';
+									htmlAccordion += '<h4 class="panel-title">';
+									htmlAccordion += '<a data-toggle="collapse" data-parent="#accordionlista_resultados" href="#collapse'+id+'" aria-expanded="true" aria-controls="collapse'+id+'">';
+									htmlAccordion += titulo;
+									htmlAccordion += '</a>';
+									htmlAccordion += '</h4>';
+									htmlAccordion += '</div>';
+									htmlAccordion += '<div id="collapse'+id+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading'+id+'">';
+									htmlAccordion += '<div class="panel-body">';
+									htmlAccordion += '<p>'+resumen+'</p>';
+									htmlAccordion += '<hr />';
+									htmlAccordion += '<h4><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Documentos digitales</h4>';
+									for (var i = 0; i < documentos.length; i++) {
+										htmlAccordion += '<p><a href="/media/'+documentos[i]+'"><i class="glyphicon glyphicon-file"></i> '+documentos[i]+'</a></p>';
+									};
+									htmlAccordion += '<hr />';
+									htmlAccordion += '<h4><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Archivos geográficos</h4>';
+									for (var i = 0; i < documentos_shp.length; i++) {
+										htmlAccordion += '<p><a href="/media/'+documentos_shp[i]+'"><i class="glyphicon glyphicon-globe"></i> '+documentos_shp[i]+'</a></p>';
+									};
+
+									htmlAccordion += '</div>';
+									htmlAccordion += '</div>';
+									htmlAccordion += '</div>';
+
+
+
+								var htmlMarkerPopup = '<div class="panel panel-default">';
+									htmlMarkerPopup += '<div class="panel-heading" role="tab" id="heading'+id+'">';
+									htmlMarkerPopup += '<h4 class="panel-title">';
+									htmlMarkerPopup += titulo;
+									htmlMarkerPopup += '</h4>';
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '<div class="panel-body">';
+									htmlMarkerPopup += '<p>'+resumen+'</p>';
+									htmlMarkerPopup += '<hr />';
+									htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Documentos digitales</h5>';
+									for (var i = 0; i < documentos.length; i++) {
+										htmlMarkerPopup += '<p><a href="/media/'+documentos[i]+'"><i class="glyphicon glyphicon-file"></i> '+documentos[i]+'</a></p>';
+									};
+									htmlMarkerPopup += '<hr />';
+									htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Archivos geográficos</h5>';
+									for (var i = 0; i < documentos_shp.length; i++) {
+										htmlMarkerPopup += '<p><a href="/media/'+documentos_shp[i]+'"><i class="glyphicon glyphicon-globe"></i> '+documentos_shp[i]+'</a></p>';
+									};
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '</div>';
+
+
+									mark = L.marker(puntos).addTo(map).bindPopup(htmlMarkerPopup);
+
+								$('#accordionlista_resultados').append(htmlAccordion);
+							});
+
+
+
+							$.each(response[1], function(key, value){
+								$('#accordionDocumentos_resultados').empty();
+								var id = "", titulo = "", resumen = "", geometria = "", archivo = "";
+								$.each(value, function(k,v){
+									if(k == "id"){
+										id = v;
+									}
+									if(k == "titulo"){
+										titulo = v;
+									}
+									if(k == "resumen"){
+										resumen = v.substring(0, 150) + "...";
+									}
+									if(k == "geometria"){
+										geometria = v;
+										$.each(geometria, function(k1, v1){
+											if(k1 == "coordinates"){
+												puntos = v1.reverse();
+											}
+										});
+									}
+									if(k == "archivo"){
+										archivo = v;
+									}
+								});
+
+								var htmlAccordion = '<div class="panel panel-default">';
+									htmlAccordion += '<div class="panel-heading" role="tab" id="heading'+id+'">';
+									htmlAccordion += '<h4 class="panel-title">';
+									htmlAccordion += '<a data-toggle="collapse" data-parent="#accordionDocumentos_resultados" href="#collapse'+id+'" aria-expanded="true" aria-controls="collapse'+id+'">';
+									htmlAccordion += titulo;
+									htmlAccordion += '</a>';
+									htmlAccordion += '</h4>';
+									htmlAccordion += '</div>';
+									htmlAccordion += '<div id="collapse'+id+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading'+id+'">';
+									htmlAccordion += '<div class="panel-body">';
+									htmlAccordion += '<p>'+resumen+'</p>';
+									htmlAccordion += '<hr />';
+									htmlAccordion += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-file"></i> '+archivo+'</a></p>'
+									htmlAccordion += '</div>';
+									htmlAccordion += '</div>';
+									htmlAccordion += '</div>';
+
+								$('#accordionDocumentos_resultados').append(htmlAccordion);
+							});
+
+							$.each(response[2], function(key, value){
+								$('#accordionShapes_resultados').empty();
+								var id = "", titulo = "", resumen = "", geometria = "", archivo = "";
+								$.each(value, function(k,v){
+									if(k == "id"){
+										id = v;
+									}
+									if(k == "titulo"){
+										titulo = v;
+									}
+									if(k == "resumen"){
+										resumen = v.substring(0, 150) + "...";
+									}
+									if(k == "geometria"){
+										geometria = v;
+										$.each(geometria, function(k1, v1){
+											if(k1 == "coordinates"){
+												puntos = v1.reverse();
+											}
+										});
+									}
+									if(k == "archivo"){
+										archivo = v;
+									}
+								});
+
+								var htmlAccordion = '<div class="panel panel-default">';
+									htmlAccordion += '<div class="panel-heading" role="tab" id="heading2'+id+'">';
+									htmlAccordion += '<h4 class="panel-title">';
+									htmlAccordion += '<a data-toggle="collapse" data-parent="#accordionShapes_resultados" href="#collapse2'+id+'" aria-expanded="true" aria-controls="collapse2'+id+'">';
+									htmlAccordion += titulo;
+									htmlAccordion += '</a>';
+									htmlAccordion += '</h4>';
+									htmlAccordion += '</div>';
+									htmlAccordion += '<div id="collapse2'+id+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2'+id+'">';
+									htmlAccordion += '<div class="panel-body">';
+									htmlAccordion += '<p>'+resumen+'</p>';
+									htmlAccordion += '<hr />';
+									htmlAccordion += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-globe"></i> '+archivo+'</a></p>'
+									htmlAccordion += '</div>';
+									htmlAccordion += '</div>';
+									htmlAccordion += '</div>';
+
+								$('#accordionShapes_resultados').append(htmlAccordion);
+							});
+						
+							
+
+						}else{
+							$('#listaResultados').append('<p>No hay resultados.</p>');
+							$('#accordionlista_resultados').empty();
+							$('#accordionlista_resultados').append('<p>No hay resultados</p>');
+
+						}
+					});
+					
+					$('#resultadosBusquedaModal').modal('show');
+				}else{
+					alert("Debe escribir algo para realizar una búsqueda");
+				}
+
+			});
+
+			
+			$('#submitAreaTematica').click(function(e){
+				e.preventDefault();
+				$.post("{% url 'sgc.views.busqueda' %}", {'area_busqueda': $('#combo1').val()}, function(response){
+					if(response != "" && response != null && response != "null"){
+						map.removeLayer(mark);
+						$.each(response, function(key, value){
+							var id="", geometria = [], titulo = "", resumen = "", puntos = "", locDocArr = [], locDocShpArr = [];
+							$.each(value, function(k, v){
 								if(k == "id"){
 									id = v;
-								}
-								if(k == "titulo"){
-									titulo = v;
-								}
-								if(k == "resumen"){
-									resumen = v.substring(0, 150) + "...";
 								}
 								if(k == "geometria"){
 									geometria = v;
@@ -211,179 +415,48 @@
 										}
 									});
 								}
+								if(k == "titulo"){
+									titulo = v;
+								}
+								if(k == "resumen"){
+									resumen = v.substring(0,150) + "...";
+								}
 								if(k == "locDoc"){
-									$.each(v, function(k1, v1){
-										documentos.push(v1);
-									});
+									locDocArr = v;
 								}
 								if(k == "locDocShp"){
-									$.each(v, function(k1, v1){
-										documentos_shp.push(v1);
-									});
+									locDocShpArr = v;
 								}
 							});
-
-							var htmlAccordion = '<div class="panel panel-default">';
-								htmlAccordion += '<div class="panel-heading" role="tab" id="heading'+id+'">';
-								htmlAccordion += '<h4 class="panel-title">';
-								htmlAccordion += '<a data-toggle="collapse" data-parent="#accordionlista_resultados" href="#collapse'+id+'" aria-expanded="true" aria-controls="collapse'+id+'">';
-								htmlAccordion += titulo;
-								htmlAccordion += '</a>';
-								htmlAccordion += '</h4>';
-								htmlAccordion += '</div>';
-								htmlAccordion += '<div id="collapse'+id+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading'+id+'">';
-								htmlAccordion += '<div class="panel-body">';
-								htmlAccordion += '<p>'+resumen+'</p>';
-								htmlAccordion += '<hr />';
-								htmlAccordion += '<h4><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Documentos digitales</h4>';
-								for (var i = 0; i < documentos.length; i++) {
-									htmlAccordion += '<p><a href="/media/'+documentos[i]+'"><i class="glyphicon glyphicon-file"></i> '+documentos[i]+'</a></p>';
-								};
-								htmlAccordion += '<hr />';
-								htmlAccordion += '<h4><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Archivos geográficos</h4>';
-								for (var i = 0; i < documentos_shp.length; i++) {
-									htmlAccordion += '<p><a href="/media/'+documentos_shp[i]+'"><i class="glyphicon glyphicon-globe"></i> '+documentos_shp[i]+'</a></p>';
-								};
-
-								htmlAccordion += '</div>';
-								htmlAccordion += '</div>';
-								htmlAccordion += '</div>';
-
 
 
 							var htmlMarkerPopup = '<div class="panel panel-default">';
-								htmlMarkerPopup += '<div class="panel-heading" role="tab" id="heading'+id+'">';
-								htmlMarkerPopup += '<h4 class="panel-title">';
-								htmlMarkerPopup += titulo;
-								htmlMarkerPopup += '</h4>';
-								htmlMarkerPopup += '</div>';
-								htmlMarkerPopup += '<div class="panel-body">';
-								htmlMarkerPopup += '<p>'+resumen+'</p>';
-								htmlMarkerPopup += '<hr />';
-								htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Documentos digitales</h5>';
-								for (var i = 0; i < documentos.length; i++) {
-									htmlMarkerPopup += '<p><a href="/media/'+documentos[i]+'"><i class="glyphicon glyphicon-file"></i> '+documentos[i]+'</a></p>';
-								};
-								htmlMarkerPopup += '<hr />';
-								htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Archivos geográficos</h5>';
-								for (var i = 0; i < documentos_shp.length; i++) {
-									htmlMarkerPopup += '<p><a href="/media/'+documentos_shp[i]+'"><i class="glyphicon glyphicon-globe"></i> '+documentos_shp[i]+'</a></p>';
-								};
-								htmlMarkerPopup += '</div>';
-								htmlMarkerPopup += '</div>';
-								htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '<div class="panel-heading" role="tab" id="heading'+id+'">';
+									htmlMarkerPopup += '<h4 class="panel-title">';
+									htmlMarkerPopup += titulo;
+									htmlMarkerPopup += '</h4>';
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '<div class="panel-body">';
+									htmlMarkerPopup += '<p>'+resumen+'</p>';
+									htmlMarkerPopup += '<hr />';
+									htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Documentos digitales</h5>';
+									for (var i = 0; i < locDocArr.length; i++) {
+										htmlMarkerPopup += '<p><a href="/media/'+locDocArr[i]+'"><i class="glyphicon glyphicon-file"></i> '+locDocArr[i]+'</a></p>';
+									};
+									htmlMarkerPopup += '<hr />';
+									htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Archivos geográficos</h5>';
+									for (var i = 0; i < locDocShpArr.length; i++) {
+										htmlMarkerPopup += '<p><a href="/media/'+locDocShpArr[i]+'"><i class="glyphicon glyphicon-globe"></i> '+locDocShpArr[i]+'</a></p>';
+									};
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '</div>';
+									htmlMarkerPopup += '</div>';
 
 
-							var mark = L.marker(puntos).addTo(map).bindPopup(htmlMarkerPopup);
-
-							$('#accordionlista_resultados').append(htmlAccordion);
+							mark = L.marker(puntos).addTo(map).bindPopup(htmlMarkerPopup);
 						});
-
-
-
-						$.each(response[1], function(key, value){
-							$('#accordionDocumentos_resultados').empty();
-							var id = "", titulo = "", resumen = "", geometria = "", archivo = "";
-							$.each(value, function(k,v){
-								if(k == "id"){
-									id = v;
-								}
-								if(k == "titulo"){
-									titulo = v;
-								}
-								if(k == "resumen"){
-									resumen = v.substring(0, 150) + "...";
-								}
-								if(k == "geometria"){
-									geometria = v;
-									$.each(geometria, function(k1, v1){
-										if(k1 == "coordinates"){
-											puntos = v1.reverse();
-										}
-									});
-								}
-								if(k == "archivo"){
-									archivo = v;
-								}
-							});
-
-							var htmlAccordion = '<div class="panel panel-default">';
-								htmlAccordion += '<div class="panel-heading" role="tab" id="heading'+id+'">';
-								htmlAccordion += '<h4 class="panel-title">';
-								htmlAccordion += '<a data-toggle="collapse" data-parent="#accordionDocumentos_resultados" href="#collapse'+id+'" aria-expanded="true" aria-controls="collapse'+id+'">';
-								htmlAccordion += titulo;
-								htmlAccordion += '</a>';
-								htmlAccordion += '</h4>';
-								htmlAccordion += '</div>';
-								htmlAccordion += '<div id="collapse'+id+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading'+id+'">';
-								htmlAccordion += '<div class="panel-body">';
-								htmlAccordion += '<p>'+resumen+'</p>';
-								htmlAccordion += '<hr />';
-								htmlAccordion += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-file"></i> '+archivo+'</a></p>'
-								htmlAccordion += '</div>';
-								htmlAccordion += '</div>';
-								htmlAccordion += '</div>';
-
-							$('#accordionDocumentos_resultados').append(htmlAccordion);
-						});
-
-						$.each(response[2], function(key, value){
-							$('#accordionShapes_resultados').empty();
-							var id = "", titulo = "", resumen = "", geometria = "", archivo = "";
-							$.each(value, function(k,v){
-								if(k == "id"){
-									id = v;
-								}
-								if(k == "titulo"){
-									titulo = v;
-								}
-								if(k == "resumen"){
-									resumen = v.substring(0, 150) + "...";
-								}
-								if(k == "geometria"){
-									geometria = v;
-									$.each(geometria, function(k1, v1){
-										if(k1 == "coordinates"){
-											puntos = v1.reverse();
-										}
-									});
-								}
-								if(k == "archivo"){
-									archivo = v;
-								}
-							});
-
-							var htmlAccordion = '<div class="panel panel-default">';
-								htmlAccordion += '<div class="panel-heading" role="tab" id="heading2'+id+'">';
-								htmlAccordion += '<h4 class="panel-title">';
-								htmlAccordion += '<a data-toggle="collapse" data-parent="#accordionShapes_resultados" href="#collapse2'+id+'" aria-expanded="true" aria-controls="collapse2'+id+'">';
-								htmlAccordion += titulo;
-								htmlAccordion += '</a>';
-								htmlAccordion += '</h4>';
-								htmlAccordion += '</div>';
-								htmlAccordion += '<div id="collapse2'+id+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2'+id+'">';
-								htmlAccordion += '<div class="panel-body">';
-								htmlAccordion += '<p>'+resumen+'</p>';
-								htmlAccordion += '<hr />';
-								htmlAccordion += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-globe"></i> '+archivo+'</a></p>'
-								htmlAccordion += '</div>';
-								htmlAccordion += '</div>';
-								htmlAccordion += '</div>';
-
-							$('#accordionShapes_resultados').append(htmlAccordion);
-						});
-					
-						
-
-					}else{
-						$('#listaResultados').append('<p>No hay resultados.</p>');
-						$('#accordionlista_resultados').empty();
-						$('#accordionlista_resultados').append('<p>No hay resultados</p>');
-
 					}
 				});
-
-				$('#resultadosBusquedaModal').modal('show');
 			});
 		});
 	</script>

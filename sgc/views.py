@@ -89,25 +89,30 @@ def mapas(request):
 @csrf_exempt
 def busqueda(request):
 	if request.method == 'POST':
-		valor_busqueda = request.POST.get("busqueda_valor")
+		area_busqueda = request.POST.get("area_busqueda")
 
-		documentos = DocumentoDigital.objects.filter(titulo__contains = valor_busqueda).filter(resumen__contains = valor_busqueda)
+		area_tematica = Areatematica.objects.get(pk = area_busqueda)
+
+		localizaciones = Localizacion.objects.filter(area_tematica = area_tematica)
 		
-		response = ""
-		comboDoc = []
-		if len(documentos) > 0:
-			for documento in documentos:
-				dictDoc = {}
-				dictDoc['id'] = documento.pk
-				dictDoc['titulo'] = documento.titulo
-				dictDoc['resumen'] = documento.resumen
-				dictDoc['archivo'] = str(documento.archivo)
-				dictDoc['geometria'] = documento.localizacion.geom
+		comboLocal = []
+		for localizacion in localizaciones:
+			dictLoc = {}
+			dictLoc['id'] = localizacion.id
+			dictLoc['titulo'] = localizacion.titulo
+			dictLoc['resumen'] = localizacion.resumen
+			dictLoc['geometria'] = localizacion.geom
+			dictLoc['locDoc'] = []
+			for doc in DocumentoDigital.objects.filter(localizacion = localizacion):
+				dictLoc['locDoc'].append(str(doc.archivo))
 
-				comboDoc.append(dictDoc)
-				
+			dictLoc['locDocShp'] = []
+			for doc in DocumentoShape.objects.filter(localizacion = localizacion):
+				dictLoc['locDocShp'].append(str(doc.archivo))
 
-		return JsonResponse(comboDoc, safe=False)
+			comboLocal.append(dictLoc)
+
+		return JsonResponse(comboLocal, safe=False)
 	else:
 		return HttpResponse(0)
 
