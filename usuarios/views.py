@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import IniciarSesion, CrearUsuario, CrearPerfil
+from .forms import IniciarSesion, CrearUsuario
 from django.http import HttpResponseRedirect
 
 from django.contrib.auth import login, authenticate
@@ -29,18 +29,12 @@ def iniciarSesion(request):
 
 def crearUsuario(request):
 	crear_usuario = CrearUsuario(request.POST or None, prefix = "usuario")
-	crear_perfil = CrearPerfil(request.POST or None, prefix = "perfil")
 
-	if crear_usuario.is_valid() and crear_perfil.is_valid():
+	if crear_usuario.is_valid():
 		usuario = crear_usuario.save()
 
-		perfil = crear_perfil.save(commit = False)
-
-		perfil.usuario = usuario
-		perfil.save()
 		return HttpResponseRedirect('/')
 
 	return render(request, 'registro-sgc.html', {
 		'crear_usuario': crear_usuario,
-		'crear_perfil': crear_perfil,
 	})

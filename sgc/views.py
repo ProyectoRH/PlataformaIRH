@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from django import template
 from pagina.models import Pagina
 from noticia.models import Noticia
-from usuarios.models import Institucion, UserProfile
+from institucion.models import Institucion
 from DocumentosOndas.models import Documento
 from NoticiasOndas.models import NoticiaOndas
 from PaginasOndas.models import PaginaOndas
@@ -50,7 +50,6 @@ def nosotros(request):
 
 def nucleo(request, pk):
 	nucleo_data = Institucion.objects.get(pk = pk)
-	usuarios_profiles = UserProfile.objects.filter(institucion = nucleo_data)
 	
 	paginas = []
 	paginas_nucleo = Pagina.objects.filter(institucion = nucleo_data)

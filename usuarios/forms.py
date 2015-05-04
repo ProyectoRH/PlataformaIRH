@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth.models import User
-from .models import UserProfile, Institucion
+from institucion.models import Institucion
 
 
 
@@ -33,13 +33,6 @@ class IniciarSesion(forms.Form):
 
 	def getUser(self):
 		return self.user_cache
-
-
-
-class CrearPerfil(ModelForm):
-	class Meta:
-		model = UserProfile
-		exclude = ('usuario', 'institucion', 'tipo_usuario', 'funcion', 'pais', 'ciudad', )
 
 
 

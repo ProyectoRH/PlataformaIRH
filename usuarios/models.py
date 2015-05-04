@@ -2,13 +2,14 @@
 from django.db import models
 from django.conf import settings
 
-from django.contrib.auth.models import User, UserManager
+from django.contrib.auth.models import AbstractUser, UserManager
 
 from institucion.models import Institucion
 from nucleo.models import Nucleo
+from django.contrib.auth import models as auth_models
 
 
-class Usuario(User):
+class Usuario(AbstractUser):
     """User with app settings."""
     institucion = models.ForeignKey(Institucion)
 
