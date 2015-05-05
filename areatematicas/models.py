@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-
+from nucleo.models import Nucleo
 # Create your models here.
 
 class Areatematica(models.Model):
 
+	nucleo = models.ForeignKey(Nucleo, blank=True, null=True)
 	nombreArea = models.CharField('Nombre del Área',max_length = 100)
 	descripcion = models.TextField('Descripción', max_length = 150)
 	
