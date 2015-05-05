@@ -32,8 +32,6 @@ class DocumentoDigital(models.Model):
 	norte = models.CharField(max_length=140)
 	sur = models.CharField(max_length=140)
 	nivel = models.ForeignKey(Nivel)
-	nucleo = models.ForeignKey(Nucleo, blank=True, null=True)
-	usuario = models.ForeignKey(settings.AUTH_USER_MODEL)
 	archivo = models.FileField(upload_to = "static/documentos_digitales/")
 	localizacion = models.ForeignKey(Localizacion, null=True)
 	privado = models.BooleanField(default=False)
