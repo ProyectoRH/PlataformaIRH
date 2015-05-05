@@ -31,11 +31,10 @@ def home(request):
 	paginas_user = Pagina.objects.all()
 
 	for pagina in paginas_user:
-		if pagina.usuario.is_superuser and pagina.institucion == None:
+		if pagina.usuario.is_superuser and pagina.nucleo == None:
 			paginas.append(pagina)
 
 	nucleos = Nucleo.objects.all()[:4]
-	print nucleos
 
 	noticias = Noticia.objects.all().order_by('-pk')[:3]
 	paginas_ondas = PaginaOndas.objects.all()
