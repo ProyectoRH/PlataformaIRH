@@ -44,6 +44,13 @@
 			visibility: hidden;
 		}
 	</style>
+	<!--###########################################################################################-->
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+		<!--[if lte IE 8]>
+			<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+		<![endif]-->
+
+	<!--###########################################################################################-->
 </head>
 <body>
 	
@@ -111,12 +118,7 @@
 						<input type="submit" name="submit" id="submitAreaTematica" class="btn btn-success form-control" value="Buscar" />
 					</div>
 				</form>
-				<hr />
-				<select class="form-control">
-					<option value="centroide">Centroide</option>
-					<option value="interseccion">Intersección</option>
-					<option value="punto">Punto</option>
-				</select>
+				
 			</div>
 		</div>
 	</div>
@@ -166,14 +168,15 @@
 	</nav>
 
 	<div id="map" style="width: 100%px; min-height: 100%"></div>
-
-	<script src="http://leafletjs.com/dist/leaflet.js"></script>
 	<!-- Jquery Library -->
 	<script src="{% static 'sgc/js/jquery-2.1.3.js' %}"></script>
 
 	<!-- Bootstrap Library -->
 	<script src="{% static 'sgc/js/bootstrap.js' %}"></script>
-
+	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+    <script src="{% static 'mapas/js/shp.js' %}"></script>
+    <script src="{% static 'mapas/js/catiline.js' %}"></script>
+    <script src="{% static 'mapas/js/leaflet.shpfile.js' %}"></script>
 	<script>
 	   
 		//var map = L.map('map').setView([11.0129931, -74.8334623], 13);
@@ -193,7 +196,7 @@
 		    //alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
 		});*/
 var cities = new L.LayerGroup();
-
+var shapese = new L.LayerGroup();
 
 
 	    var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -205,9 +208,9 @@ var cities = new L.LayerGroup();
 		    streets  = L.tileLayer(mbUrl, {id: 'examples.map-i875mjb7',   attribution: mbAttr});
 
 		var map = L.map('map', {
-			center: [39.73, -104.99],
+			center: [11.0129931, -74.8334623],
 			zoom: 10,
-			layers: [grayscale, cities]
+			layers: [grayscale, cities, shapese]
 		});
 
 		var baseLayers = {
@@ -216,15 +219,26 @@ var cities = new L.LayerGroup();
 		};
 
 		var overlays = {
-			"Cities": cities
+			"Marcadores": cities,
+			"Shapes": shapese
 		};
-
-		L.control.layers(baseLayers, overlays).addTo(map);
+		var lc = L.control.layers(baseLayers, overlays).addTo(map);
 
 		$('.desplegable').click(function(e){
 			e.preventDefault();
 			$('.desplegable-window').toggle();
 		});
+	//<!--#################################################################{% static 'congress.zip' %}"##########################-->
+function loadshp(rutaArchivo){
+		rutaArchivo = "/media/"+rutaArchivo;
+		console.log(rutaArchivo);
+		rutaArr = rutaArchivo.split('/');
+		shp(rutaArchivo).then(function(geojson){
+	        console.log(geojson);
+	        lc.addOverlay(L.geoJson(geojson).addTo(shapese), rutaArr[rutaArr.length - 1]);
+	    });
+}
+//<!--###########################################################################################-->
 
 		$(document).ready(function(){
 			$('#formularioBusqueda').submit(function(e){
@@ -235,10 +249,9 @@ var cities = new L.LayerGroup();
 				if(valor_busqueda != null && valor_busqueda != "null" && valor_busqueda != ""){
 					$.post('{% url "sgc.views.search" %}', {'busqueda_valor': valor_busqueda}, function(response){
 						if(response != 0 && response != null && response != "null"){
-							map.removeLayer(mark);
 							$('#accordionlista_resultados').empty();
 							$('#listaResultados').empty();
-
+							
 							$.each(response[0], function(key, value){
 								var id = "", titulo = "", resumen = "", geometria = "", puntos = "", documentos = [], documentos_shp = [];
 								$.each(value, function(k,v){
@@ -290,7 +303,7 @@ var cities = new L.LayerGroup();
 									htmlAccordion += '<hr />';
 									htmlAccordion += '<h4><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Archivos geográficos</h4>';
 									for (var i = 0; i < documentos_shp.length; i++) {
-										htmlAccordion += '<p><a href="/media/'+documentos_shp[i]+'"><i class="glyphicon glyphicon-globe"></i> '+documentos_shp[i]+'</a></p>';
+										htmlAccordion += '<p><a href="#" onclick="loadshp(\''+documentos_shp[i]+'\');"><i class="glyphicon glyphicon-globe"></i> '+documentos_shp[i]+'</a></p>';
 									};
 
 									htmlAccordion += '</div>';
@@ -315,7 +328,7 @@ var cities = new L.LayerGroup();
 									htmlMarkerPopup += '<hr />';
 									htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Archivos geográficos</h5>';
 									for (var i = 0; i < documentos_shp.length; i++) {
-										htmlMarkerPopup += '<p><a href="/media/'+documentos_shp[i]+'"><i class="glyphicon glyphicon-globe"></i> '+documentos_shp[i]+'</a></p>';
+										htmlMarkerPopup += '<p><a href="#" onclick="loadshp(\''+documentos_shp[i]+'\');"><i class="glyphicon glyphicon-globe"></i> '+documentos_shp[i]+'</a></p>';
 									};
 									htmlMarkerPopup += '</div>';
 									htmlMarkerPopup += '</div>';
@@ -433,7 +446,7 @@ var cities = new L.LayerGroup();
 									htmlAccordion += '<div class="panel-body">';
 									htmlAccordion += '<p>'+resumen+'</p>';
 									htmlAccordion += '<hr />';
-									htmlAccordion += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-globe"></i> '+archivo+'</a></p>';
+									htmlAccordion += '<p><a href="#" onclick="loadshp(\''+archivo+'\');"><i class="glyphicon glyphicon-globe"></i> '+archivo+'</a></p>';
 									htmlAccordion += '</div>';
 									htmlAccordion += '</div>';
 									htmlAccordion += '</div>';
@@ -447,7 +460,7 @@ var cities = new L.LayerGroup();
 									htmlMarkerPopup += '<div class="panel-body">';
 									htmlMarkerPopup += '<p>'+resumen+'</p>';
 									htmlMarkerPopup += '<hr />';
-									htmlMarkerPopup += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-globe"></i> '+archivo+'</a></p>';								
+									htmlMarkerPopup += '<p><a href="#" onclick="loadshp(\''+archivo+'\');"><i class="glyphicon glyphicon-globe"></i> '+archivo+'</a></p>';								
 									htmlMarkerPopup += '</div>';
 									htmlMarkerPopup += '</div>';
 									htmlMarkerPopup += '</div>';
@@ -551,14 +564,7 @@ var cities = new L.LayerGroup();
 				});
 			});
 		});
-var baseLayers = {
-			"Grayscale": grayscale,
-			"Streets": streets
-		};
 
-		var overlays = {
-			"Cities": cities
-		};
 
 		
 	</script>
