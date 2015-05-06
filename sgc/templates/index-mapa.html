@@ -209,7 +209,7 @@ var shapese = new L.LayerGroup();
 
 		var map = L.map('map', {
 			center: [11.0129931, -74.8334623],
-			zoom: 10,
+			zoom: 8,
 			layers: [grayscale, cities, shapese]
 		});
 
@@ -219,8 +219,7 @@ var shapese = new L.LayerGroup();
 		};
 
 		var overlays = {
-			"Marcadores": cities,
-			"Shapes": shapese
+			"Marcadores": cities
 		};
 		var lc = L.control.layers(baseLayers, overlays).addTo(map);
 
@@ -230,12 +229,45 @@ var shapese = new L.LayerGroup();
 		});
 	//<!--#################################################################{% static 'congress.zip' %}"##########################-->
 function loadshp(rutaArchivo){
+
+	var options = {
+        onEachFeature: function(feature, layer) {
+            if (feature.properties) {
+                layer.bindPopup(Object.keys(feature.properties).map(function(k) {
+                    if(k === '__color__'){
+                        return;
+                    }
+                    return k + ": " + feature.properties[k];
+                }).join("<br />"), {
+                    maxHeight: 200
+                });
+            }
+        },
+        style: function(feature) {
+            return {
+                opacity: 1,
+                fillOpacity: 0.7,
+                radius: 6
+            }
+        },
+        pointToLayer: function(feature, latlng) {
+            return L.circleMarker(latlng, {
+                opacity: 1,
+                fillOpacity: 0.7,
+                color: feature.properties.__color__
+            });
+        }
+    };
+
+
 		rutaArchivo = "/media/"+rutaArchivo;
 		console.log(rutaArchivo);
+		
 		rutaArr = rutaArchivo.split('/');
+
 		shp(rutaArchivo).then(function(geojson){
 	        console.log(geojson);
-	        lc.addOverlay(L.geoJson(geojson).addTo(shapese), rutaArr[rutaArr.length - 1]);
+	        lc.addOverlay(L.geoJson(geojson, options).addTo(map), rutaArr[rutaArr.length - 1]);
 	    });
 }
 //<!--###########################################################################################-->
