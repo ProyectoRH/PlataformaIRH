@@ -59,7 +59,7 @@ INSTALLED_APPS = (
     'portada',
     'representacion',
     'smart_selects',
-    'zona',
+    #'zona',
     'localizacion',
     'documentos_digitales',
     'documentos_shape',
