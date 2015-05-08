@@ -65,7 +65,10 @@ class UsuarioAdmin(UserAdmin):
     # that reference specific fields on auth.User.
     list_display = ('username', 'email', 'institucion', )
     fieldsets = (
-        (None, {'fields': ('username', 'email', 'password', 'is_active', 'institucion', 'is_staff')}),
+        (None, {'fields': ('username', 'email', 'institucion', 
+                        'password', 'user_permissions', 'groups',
+                        'is_active', 'is_staff', 'is_superuser', 'last_login', 
+                        'date_joined')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
@@ -73,7 +76,7 @@ class UsuarioAdmin(UserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': ('username', 'email', 'institucion', 
-                        'password1', 'password2', 'user_permissions', 
+                        'password1', 'password2', 'user_permissions', 'groups',
                         'is_active', 'is_staff', 'is_superuser', 'last_login', 
                         'date_joined')}
         ),
