@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from django import template
 from pagina.models import Pagina
 from noticia.models import Noticia
-from institucion.models import Institucion
+from nucleo.models import Nucleo
 from DocumentosOndas.models import Documento
 from NoticiasOndas.models import NoticiaOndas
 from PaginasOndas.models import PaginaOndas
@@ -24,6 +24,10 @@ from django.contrib.auth.models import User
 
 import re
 from django.db.models import Q
+
+from django.contrib.gis.geos import *
+from django.contrib.gis.measure import D
+
 # Create your views here.
 
 def home(request):
@@ -31,11 +35,11 @@ def home(request):
 	paginas_user = Pagina.objects.all()
 
 	for pagina in paginas_user:
-		if pagina.usuario.is_superuser and pagina.institucion == None:
+		if pagina.usuario.is_superuser and pagina.nucleo == None:
 			paginas.append(pagina)
 
-	print paginas
-	nucleos = Institucion.objects.all()[:4]
+	nucleos = Nucleo.objects.all()[:4]
+
 	noticias = Noticia.objects.all().order_by('-pk')[:3]
 	paginas_ondas = PaginaOndas.objects.all()
 	imagenes_ondas = ImagenesOndas.objects.all().order_by('-pk')[:4]
@@ -49,24 +53,18 @@ def nosotros(request):
 	return render(request,'nosotros.html',{})
 
 def nucleo(request, pk):
-	nucleo_data = Institucion.objects.get(pk = pk)
+	nucleo_data = Nucleo.objects.get(pk = pk)
 	
 	paginas = []
-	paginas_nucleo = Pagina.objects.filter(institucion = nucleo_data)
+	paginas_nucleo = Pagina.objects.filter(nucleo = nucleo_data)
 	for pagina in paginas_nucleo:
 		if pagina.pagina_padre == None:
 			paginas.append(pagina)
 
 	contador = 0
 		
-	noticias = Noticia.objects.filter(institucion = nucleo_data).order_by('-pk')[:12]
-	eventos = Evento.objects.filter(institucion = nucleo_data).order_by('-fecha_inicio')[:4]
-
-	#print usuarios_profiles.usuario
-	
-	print "print de pagina"
-	print paginas
-	#paginas.append(pagina)
+	noticias = Noticia.objects.filter(nucleo = nucleo_data).order_by('-pk')[:12]
+	eventos = Evento.objects.filter(nucleo = nucleo_data).order_by('-fecha_inicio')[:4]
 
 	return render(request, 'nucleo.html', {'nucleo':nucleo_data, 'paginas':paginas, 'contador':contador, 'noticias':noticias, 'eventos':eventos})
 
@@ -100,7 +98,7 @@ def busqueda(request):
 			dictLoc['id'] = localizacion.id
 			dictLoc['titulo'] = localizacion.titulo
 			dictLoc['resumen'] = localizacion.resumen
-			dictLoc['geometria'] = localizacion.geom
+			dictLoc['geometria'] = str(localizacion.geom)
 			dictLoc['locDoc'] = []
 			for doc in DocumentoDigital.objects.filter(localizacion = localizacion):
 				dictLoc['locDoc'].append(str(doc.archivo))
@@ -171,15 +169,14 @@ def search(request):
 		comboDoc = []
 		comboDocShp = []
 
-
-		
 		if len(localizaciones) >= 0:
 			for localizacion in localizaciones:
+				print localizacion.geom
 				dictLoc = {}
 				dictLoc['id'] = localizacion.pk
 				dictLoc['titulo'] = localizacion.titulo
 				dictLoc['resumen'] = localizacion.resumen
-				dictLoc['geometria'] = localizacion.geom
+				dictLoc['geometria'] = str(localizacion.geom)
 				dictLoc['locDoc'] = []
 				for doc in DocumentoDigital.objects.filter(localizacion = localizacion):
 					dictLoc['locDoc'].append(str(doc.archivo))
@@ -197,7 +194,7 @@ def search(request):
 					dictDoc['id'] = documento.localizacion.pk
 					dictDoc['titulo'] = documento.localizacion.titulo
 					dictDoc['resumen'] = documento.localizacion.resumen
-					dictDoc['geometria'] = documento.localizacion.geom
+					dictDoc['geometria'] = str(documento.localizacion.geom)
 					dictDoc['archivo'] = str(documento.archivo)
 
 					comboDoc.append(dictDoc)
@@ -208,7 +205,7 @@ def search(request):
 					dictShp['id'] = documento.localizacion.pk
 					dictShp['titulo'] = documento.localizacion.titulo
 					dictShp['resumen'] = documento.localizacion.resumen
-					dictShp['geometria'] = documento.localizacion.geom
+					dictShp['geometria'] = str(documento.localizacion.geom)
 					dictShp['archivo'] = str(documento.archivo)
 
 					comboDocShp.append(dictShp)
@@ -222,9 +219,98 @@ def search(request):
 		else:
 			return HttpResponse(0)
 
+@csrf_exempt
+def search_point(request):
+	query_string = ''
+	documentos = None
 
+	if ('busqueda_valor' in request.POST) and request.POST['busqueda_valor'].strip():
+		query_string = request.POST['busqueda_valor']
+		kilometro = request.POST['rango_busqueda']
+		string_busqueda = request.POST['string_busqueda']
+		try:
+			kilometro = int(kilometro)
+		except:
+			kilometro = 50
+		#POINT(-104.590948 38.319914)
+		print query_string
 
+		pnt = GEOSGeometry('SRID=4326;%s' % (query_string))
+		#qs = Localizacion.objects.filter(geom__contains=pnt)
+		#qs = Localizacion.objects.distance(pnt)
+		documentos = ""
+		doc_shapes = ""
+		entry_query = ""
+		shape_query = ""
+		if string_busqueda != "" and string_busqueda != None and string_busqueda != " ":
+			entry_query = get_query(string_busqueda, ['titulo', 'resumen',])
+			qs = Localizacion.objects.filter(entry_query, privado=False, geom__distance_lte=(pnt, D(km=kilometro)))
+			
+			shape_query = get_query(string_busqueda, ['nombre',])
 
+			documentos = DocumentoDigital.objects.filter(entry_query, privado=False)
+			doc_shapes = DocumentoShape.objects.filter(shape_query, privado=False)
+		else:
+			qs = Localizacion.objects.filter(geom__distance_lte=(pnt, D(km=kilometro)))
 
+		
 
+		print qs
+		print documentos
+		print doc_shapes
+		comboLoc = []
+		if len(qs) > 0:
+			comboLoc = []
+			comboDoc = []
+			comboDocShp = []
+
+			for localizacion in qs:
+				dictLoc = {}
+				dictLoc['id'] = localizacion.pk
+				dictLoc['titulo'] = localizacion.titulo
+				dictLoc['resumen'] = localizacion.resumen
+				dictLoc['geometria'] = str(localizacion.geom)
+				dictLoc['locDoc'] = []
+				
+				for doc in DocumentoDigital.objects.filter(localizacion = localizacion):
+					dictLoc['locDoc'].append(str(doc.archivo))
+
+				dictLoc['locDocShp'] = []
+				for doc in DocumentoShape.objects.filter(localizacion = localizacion):
+					dictLoc['locDocShp'].append(str(doc.archivo))
+
+				comboLoc.append(dictLoc)
+
+			if len(documentos) > 0:
+				for documento in documentos:
+					if not documento.localizacion in qs:
+						dictDoc = {}
+						dictDoc['id'] = documento.localizacion.pk
+						dictDoc['titulo'] = documento.localizacion.titulo
+						dictDoc['resumen'] = documento.localizacion.resumen
+						dictDoc['geometria'] = str(documento.localizacion.geom)
+						dictDoc['archivo'] = str(documento.archivo)
+
+						comboDoc.append(dictDoc)
+
+			if len(doc_shapes) > 0:
+				for documento in doc_shapes:
+					if not documento.localizacion in qs:
+						dictShp = {}
+						dictShp['id'] = documento.localizacion.pk
+						dictShp['titulo'] = documento.localizacion.titulo
+						dictShp['resumen'] = documento.localizacion.resumen
+						dictShp['geometria'] = str(documento.localizacion.geom)
+						dictShp['archivo'] = str(documento.archivo)
+
+						comboDocShp.append(dictShp)
+
+			conjuntoArrays = []
+			conjuntoArrays.append(comboLoc)
+			conjuntoArrays.append(comboDoc)
+			conjuntoArrays.append(comboDocShp)
+
+			return JsonResponse(conjuntoArrays, safe=False)
+		else:
+			return HttpResponse(0)
 

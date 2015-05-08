@@ -41,7 +41,7 @@
 		{% for noticia in noticias %}
 			<li>
 				<h4><a href="{% url 'noticia.views.noticia_detalle' noticia.id %}">{{ noticia.titulo }}</a></h4>
-				<p>{{ noticia.fecha_creacion }} por {{ noticia.institucion }}</p>
+				<p>{{ noticia.fecha_creacion }} por {{ noticia.nucleo }}</p>
 				<p>
 					{{ noticia.cuerpo_noticia|truncatechars:120|safe }}
 				</p>
@@ -66,6 +66,7 @@
 		<div class="item active full-wide" style="height:380px;background-image:url(/media/{{ noticias.0.imagen_banner }});background-size:cover;background-position:center;">
 			<!--<img src="/media/{{ noticias.0.imagen_banner }}" alt="" width="100%" height="380px">-->
 			<div class="carousel-caption">
+				<p style="color:white;background-color:black;">{{ noticias.0.descripcion }}</p>
 			</div>
 		</div>
 		{% for noticia in noticias %}
@@ -74,6 +75,7 @@
 
 					<!--<img src="/media/{{ noticia.imagen_banner }}" alt="" width="100%">-->
 					<div class="carousel-caption">
+						<p style="color:white;background-color:black;">{{ noticia.descripcion }}</p>
 					</div>
 				</div>
 			{% endif %}
@@ -89,7 +91,7 @@
 			<p class="text-left">
 				<b>Inicia: </b>{{ evento.fecha_inicio }}<br />
 				<b>Finaliza: </b>{{ evento.fecha_final }}<br />
-				<b>Invita: </b>{{ evento.institucion }}
+				<b>Invita: </b>{{ evento.nucleo }}
 			</p>
 			<p>
 				{{ evento.descripcion|truncatechars:150 }} 
@@ -129,9 +131,9 @@
 	
 	{% for nucleo in nucleos %}
 		<div class="col-sm-3 text-center">
-			<a href="{% url 'sgc.views.nucleo' nucleo.id %}"><img src="media/{{ nucleo.logo_institucion }}" alt=""></a>
-			<h4 class="text-center"><a href="{% url 'sgc.views.nucleo' nucleo.id %}">{{ nucleo.nombre_nucleo }}</a></h4>
-			<p class="text-center">{{ nucleo.descripcion_nucleo }}</p>
+			<a href="{% url 'sgc.views.nucleo' nucleo.id %}"><img src="media/{{ nucleo.imagen_logo }}" alt=""></a>
+			<h4 class="text-center"><a href="{% url 'sgc.views.nucleo' nucleo.id %}">{{ nucleo.nucleo }}</a></h4>
+			<p class="text-center">{{ nucleo.descripcion }}</p>
 
 		</div>
 	{% endfor %}

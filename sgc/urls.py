@@ -23,5 +23,6 @@ urlpatterns = patterns('',
     # Mapa
     url(r'^busqueda/', 'sgc.views.search'),
     url(r'^busquedaArea/', 'sgc.views.busqueda'),
+    url(r'^busquedaPoint/', 'sgc.views.search_point'),
 
 )

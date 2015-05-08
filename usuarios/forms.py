@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth.models import User
+from .models import Usuario
 from institucion.models import Institucion
 
 
@@ -39,12 +40,12 @@ class IniciarSesion(forms.Form):
 class CrearUsuario(UserCreationForm):
 	email = forms.EmailField(max_length=255)
 	class Meta:
-		model = User
+		model = Usuario
 		fields = ('first_name', 'last_name', 'username', 'email', )
 
 	def clean_email(self):
 		email = self.cleaned_data.get('email')
 		username = self.cleaned_data.get('username')
-		if email and User.objects.filter(email=email).exclude(username=username).count():
+		if email and Usuario.objects.filter(email=email).exclude(username=username).count():
 			raise forms.ValidationError(u'Este email ya se encuentra registrado.')
 		return email
