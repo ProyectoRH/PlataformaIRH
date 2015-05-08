@@ -46,4 +46,4 @@ class Usuario(AbstractUser):
     institucion = models.ForeignKey(Institucion, null=True)
 
     # Use UserManager to get the create_user method, etc.
-    objects = UserManager()
+    objects = MyUserManager()
