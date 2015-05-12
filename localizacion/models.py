@@ -3,8 +3,8 @@ from django.db import models
 from django.conf import settings
 
 from areatematicas.models import Areatematica
-from representacion.models import Representacion
-from zona.models import Zona, SubZona
+#from representacion.models import Representacion
+#from zona.models import Zona, SubZona
 from nucleo.models import Nucleo
 
 from djgeojson.fields import GeometryField
