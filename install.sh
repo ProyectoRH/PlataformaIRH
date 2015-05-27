@@ -6,7 +6,6 @@ echo " |   _/| |___ |     ||_|  |_||     ||  |_  |  O  ||      / |  \_/  ||     
 echo " |  |  |     ||  _  |  |  |  |  _  ||   _] |     ||      \ |   |   ||  _  |     |  | |    \ |  |  |"
 echo " |  |  |     ||  |  |  |  |  |  |  ||  |   |     ||   /\  \|   |   ||  |  |     |  | |  .  \|  |  |"
 echo " |__|  |_____||__|__|  |__|  |__|__||__|    \___/ |__|  \_||___|___||__|__|    |____||__|\_||__|__|"
-cd ~/
 echo "**************************************************************************************************"
 echo "*********************************"
 echo "Actualizando el sistema...      *"
@@ -18,7 +17,7 @@ echo "Instalando ambiente virtual para Django   *"
 echo "*******************************************"
 sudo apt-get install python-virtualenv
 sudo virtualenv platformenv
-cd ~/platforenv
+cd platformenv
 echo "**********************************"
 echo "* Activando ambiente virtual...  *"
 echo "**********************************"
@@ -81,5 +80,3 @@ echo "*********************************************"
 echo "* Corriendo servidor de prueba en localhost *"
 echo "*********************************************"
 python manage.py runserver 0.0.0.0:8000
-
-
