@@ -19,6 +19,8 @@ from documentos_digitales.models import DocumentoDigital
 from documentos_shape.models import DocumentoShape
 from localizacion.models import Localizacion
 
+from Mediciones.models import Medicion, Valores
+
 from eventos.models import Evento
 from django.contrib.auth.models import User
 
@@ -27,6 +29,7 @@ from django.db.models import Q
 
 from django.contrib.gis.geos import *
 from django.contrib.gis.measure import D
+import datetime
 
 # Create your views here.
 
@@ -51,6 +54,11 @@ def login_sgc(request):
 
 def nosotros(request):
 	return render(request,'nosotros.html',{})
+
+def listarMediciones(request, localId):
+
+	mediciones = Medicion.objects.filter(localizacion = Localizacion.objects.get(pk = localId))
+	return render(request, 'listar-medicionesAdmin.html', {'mediciones':mediciones, 'localizacionId':localId})
 
 def nucleo(request, pk):
 	nucleo_data = Nucleo.objects.get(pk = pk)
@@ -156,6 +164,7 @@ def search(request):
 
 		entry_query = get_query(query_string, ['titulo', 'resumen',])
 		shape_query = get_query(query_string, ['nombre',])
+		mediciones_query = get_query(query_string, ['titulo',])
 
 		documentos = DocumentoDigital.objects.filter(entry_query, privado=False)
 		localizaciones = Localizacion.objects.filter(entry_query, privado=False)
@@ -164,6 +173,7 @@ def search(request):
 		doc_shapes_all = DocumentoShape.objects.all()
 		documentos_all = DocumentoDigital.objects.all()
 
+		mediciones = Medicion.objects.filter(mediciones_query, privado=False)
 		
 		comboLoc = []
 		comboDoc = []
@@ -184,6 +194,10 @@ def search(request):
 				dictLoc['locDocShp'] = []
 				for doc in DocumentoShape.objects.filter(localizacion = localizacion):
 					dictLoc['locDocShp'].append(str(doc.archivo))
+
+				dictLoc['locMed'] = []
+				for med in Medicion.objects.filter(localizacion = localizacion):
+					dictLoc['locMed'].append("%s ~ %s" % (med.id, med.titulo))
 
 				comboLoc.append(dictLoc)
 
@@ -247,9 +261,11 @@ def search_point(request):
 			qs = Localizacion.objects.filter(entry_query, privado=False, geom__distance_lte=(pnt, D(km=kilometro)))
 			
 			shape_query = get_query(string_busqueda, ['nombre',])
+			mediciones_query = get_query(string_busqueda, ['titulo',])
 
 			documentos = DocumentoDigital.objects.filter(entry_query, privado=False)
 			doc_shapes = DocumentoShape.objects.filter(shape_query, privado=False)
+			mediciones = Medicion.objects.filter(mediciones_query, privado=False)
 		else:
 			qs = Localizacion.objects.filter(geom__distance_lte=(pnt, D(km=kilometro)))
 
@@ -263,6 +279,7 @@ def search_point(request):
 			comboLoc = []
 			comboDoc = []
 			comboDocShp = []
+			comboMediciones = []
 
 			for localizacion in qs:
 				dictLoc = {}
@@ -278,6 +295,10 @@ def search_point(request):
 				dictLoc['locDocShp'] = []
 				for doc in DocumentoShape.objects.filter(localizacion = localizacion):
 					dictLoc['locDocShp'].append(str(doc.archivo))
+
+				dictLoc['locMed'] = []
+				for med in Medicion.objects.filter(localizacion = localizacion):
+					dictLoc['locMed'].append("%s ~ %s" % (med.id, med.titulo))
 
 				comboLoc.append(dictLoc)
 
@@ -313,4 +334,32 @@ def search_point(request):
 			return JsonResponse(conjuntoArrays, safe=False)
 		else:
 			return HttpResponse(0)
+
+@csrf_exempt
+def getValoresMedicion(request):
+	if request.method == 'POST':
+		idValor = request.POST["idMedicion"]
+
+		medicionObj = Medicion.objects.get(pk = idValor)
+		valoresMedicion = Valores.objects.filter(medicion = medicionObj).order_by('pk')
+
+		comboValores = []
+
+		for valor in valoresMedicion:
+			dictValores = {}
+			dictValores["valor"] = valor.valor_medido
+			if medicionObj.periodo == "anio":
+				dictValores["fecha"] = valor.fecha.strftime('%Y')
+			elif medicionObj.periodo == "mes":
+				dictValores["fecha"] = valor.fecha.strftime('%m')
+			elif medicionObj.periodo == "dia":
+				dictValores["fecha"] = valor.fecha.strftime('%d')
+
+			comboValores.append(dictValores)
+
+		return JsonResponse(comboValores, safe=False)
+
+
+
+
 

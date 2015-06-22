@@ -4,4 +4,7 @@ from django.contrib import admin
 from .models import Nucleo
 
 
-admin.site.register(Nucleo)
+class NucleoAdmin(admin.ModelAdmin):
+	list_display = ('nucleo', 'institucion',)
+
+admin.site.register(Nucleo, NucleoAdmin)

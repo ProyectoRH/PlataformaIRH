@@ -48,10 +48,6 @@ INSTALLED_APPS = (
     'django.contrib.gis',
     'sgc',
     'areatematicas',
-    #'componentes',
-    #'subcomponentes',
-    #'factor',
-    #'categorias',
     'usuarios',
     'pagina',
     'eventos',
@@ -59,7 +55,6 @@ INSTALLED_APPS = (
     'portada',
     'representacion',
     'smart_selects',
-    #'zona',
     'localizacion',
     'documentos_digitales',
     'documentos_shape',
@@ -73,6 +68,7 @@ INSTALLED_APPS = (
     'ImagenesOndas',
     'institucion',
     'nucleo',
+    'Mediciones',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -166,14 +162,15 @@ TEMPLATE_DIRS = ('templates',)
 
 
 SUIT_CONFIG={
-	'ADMIN_NAME': 'PLATAFORMA DE INFORMACIÓN DE RECURSOS HIDRICOS DEL ATLANTICO',
-#	'MENU':(
-#		'sites',
-#		{'label': u'Gestión de Usuarios', 'icon': 'icon-user','models':('auth.user','auth.group')},
-#		{'label': u'Gestión de Filtros', 'icon': 'icon-search','models':({'label':'Area Tematica','url':'/admin/areatematicas/'},{'label':'Componentes','url':'/admin/componentes/'},{'label':'Sub-Componentes','url':'/admin/subcomponentes/'},{'label':'Factores','url':'/admin/factor/'},{'label':'Documentos Digitales','url':'/admin/documentos_digitales/'},{'label':'Localización','url':'/admin/localizacion/'},{'label':'Zona','url':'/admin/zona/'},{'label':'Representacion','url':'/admin/representacion/'},)},
-#		{'label': u'Gestión de Contenidos', 'icon': 'icon-book','models':({'label':'Crear páginas','url':'/admin/pagina/'},{'label':'Crear Noticias','url':'/admin/noticia/'},{'label':'Crear Eventos','url':'/admin/eventos/'},)},
-#		{'label': u'Ondas', 'icon': 'icon-volume-up','models':({'label':'Documentos','url':'/admin/DocumentosOndas/'}, {'label':'Noticias','url':'/admin/NoticiasOndas/'},{'label':'Eventos','url':'/admin/EventosOndas/'},{'label':'Paginas','url':'/admin/PaginasOndas/'},{'label':'Videos','url':'/admin/VideosOndas/'}, {'label':'Imágenes','url':'/admin/ImagenesOndas/'})},
-#		
-#	)
+	'ADMIN_NAME': 'P.I.R.H.A',
+	'MENU':(
+		'sites',
+		{'label': u'Gestión de Usuarios', 'icon': 'icon-user','models':('auth.group', {'label':'Usuarios' ,'url':'/admin/usuarios/usuario/'}, {'label':'Instituciones', 'url':'/admin/institucion/institucion/'}, {'label':'Núcleos', 'url':'/admin/nucleo/nucleo/'})},
+		{'label': u'Gestión de Filtros', 'icon': 'icon-search','models':({'label':'Área Temática','url':'/admin/areatematicas/areatematica/'},{'label':'Documentos Digitales','url':'/admin/documentos_digitales/documentodigital/'}, {'label':'Documentos Shapes','url':'/admin/documentos_shape/documentoshape/'}, {'label':'Localización','url':'/admin/localizacion/milocalizacion/'},{'label':'Representación','url':'/admin/representacion/'},)},
+		{'label': u'Gestión de Contenidos', 'icon': 'icon-book','models':({'label':'Páginas','url':'/admin/pagina/'},{'label':'Noticias','url':'/admin/noticia/'},{'label':'Eventos','url':'/admin/eventos/'},)},
+		{'label': u'Ondas', 'icon': 'icon-volume-up','models':({'label':'Documentos','url':'/admin/DocumentosOndas/'}, {'label':'Noticias','url':'/admin/NoticiasOndas/'},{'label':'Eventos','url':'/admin/EventosOndas/'},{'label':'Páginas','url':'/admin/PaginasOndas/'},{'label':'Vídeos','url':'/admin/VideosOndas/'}, {'label':'Imágenes','url':'/admin/ImagenesOndas/'})},
+		
+	),
+    'SEARCH_URL': ''
 
 }

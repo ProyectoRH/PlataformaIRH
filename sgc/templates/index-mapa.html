@@ -15,6 +15,8 @@
 	<!-- Bootstrap theme  -->
 	<link rel="stylesheet" href="{% static 'sgc/css/bootstrap-theme.css' %}" />
 
+
+
 	<style>
 		html { padding-top: 50px; height: 100%; }
 		body { height: 100%; position: relative; }
@@ -65,6 +67,20 @@
 				<div class="modal-body">
 					<div class="panel-group" id="accordionlista_resultados" role="tablist" aria-multiselectable="true">
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Mediciones</h4>
+				</div>
+				<div class="modal-body">
+					<div id="curve_chart" style="width: 900px; height: 500px"></div>
 				</div>
 			</div>
 		</div>
@@ -193,9 +209,61 @@
     <script src="{% static 'mapas/js/catiline.js' %}"></script>
     <script src="{% static 'mapas/js/leaflet.shpfile.js' %}"></script>
     <script src="{% static 'mapas/js/bootstrap.touchspin.js' %}"></script>
+    <script type="text/javascript"
+          src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+              'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]
+          }"></script>
 	<script>
-	   
-		//var map = L.map('map').setView([11.0129931, -74.8334623], 13);
+
+	     function viewChart(id){
+	     	$.post("{% url 'sgc.views.getValoresMedicion' %}", {'idMedicion':id}, function(response){
+	     		if(response != "" && response != "null" && response != null){
+	     			var arrayData = [];
+	     			$.each(response, function(key, value){
+	     				var mes = "", medicion = 0, periodo = "";
+	     				$.each(value, function(k,v){
+	     					if(k == "fecha"){
+	     						mes = v;
+	     					}
+	     					if(k == "valor"){
+	     						medicion = v;
+	     					}
+	     				});
+	     				arrayData.push([mes,medicion]);
+	     			});	
+
+	     			arrayData = [response];
+	     			
+	     			alert(arrayData);
+	     			var data = new google.visualization.DataTable();
+	     			data.addColumn('number', 'Período');
+	     			data.addColumn('number', 'Medicion');
+			        	
+	     			data.addRows([
+	     				
+	     			]);
+
+			        var options = {
+			          title: 'Mediciones',
+			          curveType: 'function',
+			          legend: { position: 'bottom' },
+			          width: 550,
+		        	  height: 500
+			        };
+
+			        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+			        chart.draw(data, options);
+	     		}
+	     	});
+
+	     	$('#chartModal').modal('show');
+	     }
+
 		var mark = "";
 
 		var array1 = 0;
@@ -239,7 +307,7 @@
 						$('#listaResultados').empty();
 
 						$.each(response[0], function(key, value){
-							var id = "", titulo = "", resumen = "", geometria = "", puntos = "", documentos = [], documentos_shp = [];
+							var id = "", titulo = "", resumen = "", geometria = "", puntos = "", documentos = [], documentos_shp = [], mediciones = [];
 							$.each(value, function(k,v){
 								if(k == "id"){
 									id = v;
@@ -252,10 +320,12 @@
 								}
 								if(k == "geometria"){
 									geometria = v;
-									geometriaArr = geometria.split(" ");
-									valorLat = geometriaArr[1].substring(1, geometriaArr[1].length);
-									valorLon = geometriaArr[2].substring(0, geometriaArr[2].length-1);
-									puntos = [valorLon, valorLat, null];
+									if(geometria != "None" && geometria != ""){
+										geometriaArr = geometria.split(" ");
+										valorLat = geometriaArr[1].substring(1, geometriaArr[1].length);
+										valorLon = geometriaArr[2].substring(0, geometriaArr[2].length-1);
+										puntos = [valorLon, valorLat, null];
+									}
 
 								}
 								if(k == "locDoc"){
@@ -266,6 +336,11 @@
 								if(k == "locDocShp"){
 									$.each(v, function(k1, v1){
 										documentos_shp.push(v1);
+									});
+								}
+								if(k == "locMed"){
+									$.each(v, function(k1, v1){
+										mediciones.push(v1);
 									});
 								}
 							});
@@ -291,6 +366,11 @@
 								for (var i = 0; i < documentos_shp.length; i++) {
 									htmlAccordion += '<p><a href="#" onclick="loadshp(\''+documentos_shp[i]+'\');"><i class="glyphicon glyphicon-globe"></i> '+documentos_shp[i]+'</a></p>';
 								};
+								htmlAccordion += '<hr />';
+								htmlAccordion += '<h4><i class="glyphicon glyphicon-scale"></i> &nbsp; Mediciones</h4>';
+								for (var i = 0; i < mediciones.length; i++) {
+									htmlAccordion += '<p><a href="#" onclick="viewChart();"><i class="glyphicon glyphicon-globe"></i> '+mediciones[i]+'</a></p>';
+								};
 
 								htmlAccordion += '</div>';
 								htmlAccordion += '</div>';
@@ -309,12 +389,18 @@
 								htmlMarkerPopup += '<hr />';
 								htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Documentos digitales</h5>';
 								for (var i = 0; i < documentos.length; i++) {
-									htmlMarkerPopup += '<p><a href="/media/'+documentos[i]+'"><i class="glyphicon glyphicon-file"></i> '+documentos[i]+'</a></p>';
+									htmlMarkerPopup += '<p><a href="/media/'+documentos[i]+'"><i class="glyphicon glyphicon-file"></i> '+cortarString(documentos[i])+'</a></p>';
 								};
 								htmlMarkerPopup += '<hr />';
 								htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Archivos geográficos</h5>';
 								for (var i = 0; i < documentos_shp.length; i++) {
-									htmlMarkerPopup += '<p><a href="#" onclick="loadshp(\''+documentos_shp[i]+'\');"><i class="glyphicon glyphicon-globe"></i> '+documentos_shp[i]+'</a></p>';
+									htmlMarkerPopup += '<p><a href="#" onclick="loadshp(\''+documentos_shp[i]+'\');"><i class="glyphicon glyphicon-globe"></i> '+cortarString(documentos_shp[i])+'</a></p>';
+								};
+								htmlMarkerPopup += '<hr />';
+								htmlMarkerPopup += '<h4><i class="glyphicon glyphicon-scale"></i> &nbsp; Mediciones</h4>';
+								for (var i = 0; i < mediciones.length; i++) {
+									var medicionArr = mediciones[i].split('~');
+									htmlMarkerPopup += '<p><a href="#" onclick="viewChart('+medicionArr[0]+');"><i class="glyphicon glyphicon-globe"></i> '+medicionArr[1]+'</a></p>';
 								};
 								htmlMarkerPopup += '</div>';
 								htmlMarkerPopup += '</div>';
@@ -379,7 +465,7 @@
 								htmlMarkerPopup += '<div class="panel-body">';
 								htmlMarkerPopup += '<p>'+resumen+'</p>';
 								htmlMarkerPopup += '<hr />';
-								htmlMarkerPopup += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-file"></i> '+archivo+'</a></p>';								
+								htmlMarkerPopup += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-file"></i> '+cortarString(archivo)+'</a></p>';								
 								htmlMarkerPopup += '</div>';
 								htmlMarkerPopup += '</div>';
 								htmlMarkerPopup += '</div>';
@@ -406,10 +492,12 @@
 								}
 								if(k == "geometria"){
 									geometria = v;
-									geometriaArr = geometria.split(" ");
-									valorLat = geometriaArr[1].substring(1, geometriaArr[1].length);
-									valorLon = geometriaArr[2].substring(0, geometriaArr[2].length-1);
-									puntos = [valorLon, valorLat, null];
+									if(geometria != "None" && geometria != ""){
+										geometriaArr = geometria.split(" ");
+										valorLat = geometriaArr[1].substring(1, geometriaArr[1].length);
+										valorLon = geometriaArr[2].substring(0, geometriaArr[2].length-1);
+										puntos = [valorLon, valorLat, null];
+									}
 								}
 								if(k == "archivo"){
 									archivo = v;
@@ -442,7 +530,7 @@
 								htmlMarkerPopup += '<div class="panel-body">';
 								htmlMarkerPopup += '<p>'+resumen+'</p>';
 								htmlMarkerPopup += '<hr />';
-								htmlMarkerPopup += '<p><a href="#" onclick="loadshp(\''+archivo+'\');"><i class="glyphicon glyphicon-globe"></i> '+archivo+'</a></p>';								
+								htmlMarkerPopup += '<p><a href="#" onclick="loadshp(\''+archivo+'\');"><i class="glyphicon glyphicon-globe"></i> '+cortarString(archivo)+'</a></p>';								
 								htmlMarkerPopup += '</div>';
 								htmlMarkerPopup += '</div>';
 								htmlMarkerPopup += '</div>';
@@ -451,7 +539,6 @@
 							$('#accordionShapes_resultados').append(htmlAccordion);
 							
 						});
-						//{
 							if(response[0].length > 0){
 								$('#resultadosBusquedaModal').modal('show');
 							}else if(response[1].length > 0 && response[0].length == 0){
@@ -464,7 +551,6 @@
 								$('#accordionlista_resultados').append('<p>No hay resultados</p>');
 								$('#resultadosBusquedaModal').modal('show');
 							}
-						//}
 
 					}else{
 						$('#listaResultados').append('<p>No hay resultados.</p>');
@@ -561,7 +647,7 @@ function loadshp(rutaArchivo){
 							$('#listaResultados').empty();
 							
 							$.each(response[0], function(key, value){
-								var id = "", titulo = "", resumen = "", geometria = "", puntos = "", documentos = [], documentos_shp = [];
+								var id = "", titulo = "", resumen = "", geometria = "", puntos = "", documentos = [], documentos_shp = [], mediciones = [];
 								$.each(value, function(k,v){
 									if(k == "id"){
 										id = v;
@@ -574,10 +660,12 @@ function loadshp(rutaArchivo){
 									}
 									if(k == "geometria"){
 										geometria = v;
-										geometriaArr = geometria.split(" ");
-										valorLat = geometriaArr[1].substring(1, geometriaArr[1].length);
-										valorLon = geometriaArr[2].substring(0, geometriaArr[2].length-1);
-										puntos = [valorLon, valorLat, null];
+										if(geometria != "None" && geometria != ""){
+											geometriaArr = geometria.split(" ");
+											valorLat = geometriaArr[1].substring(1, geometriaArr[1].length);
+											valorLon = geometriaArr[2].substring(0, geometriaArr[2].length-1);
+											puntos = [valorLon, valorLat, null];
+										}
 
 									}
 									if(k == "locDoc"){
@@ -588,6 +676,11 @@ function loadshp(rutaArchivo){
 									if(k == "locDocShp"){
 										$.each(v, function(k1, v1){
 											documentos_shp.push(v1);
+										});
+									}
+									if(k == "locMed"){
+										$.each(v, function(k1, v1){
+											mediciones.push(v1);
 										});
 									}
 								});
@@ -613,6 +706,12 @@ function loadshp(rutaArchivo){
 									for (var i = 0; i < documentos_shp.length; i++) {
 										htmlAccordion += '<p><a href="#" onclick="loadshp(\''+documentos_shp[i]+'\');"><i class="glyphicon glyphicon-globe"></i> '+documentos_shp[i]+'</a></p>';
 									};
+									htmlAccordion += '<hr />';
+									htmlAccordion += '<h4><i class="glyphicon glyphicon-scale"></i> &nbsp; Mediciones</h4>';
+									for (var i = 0; i < mediciones.length; i++) {
+										var medicionArr = mediciones[i].split('~');
+										htmlAccordion += '<p><a href="#" onclick="viewChart('+medicionArr[0]+');"><i class="glyphicon glyphicon-stats"></i> '+medicionArr[1]+'</a></p>';
+									};
 
 									htmlAccordion += '</div>';
 									htmlAccordion += '</div>';
@@ -631,19 +730,26 @@ function loadshp(rutaArchivo){
 									htmlMarkerPopup += '<hr />';
 									htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Documentos digitales</h5>';
 									for (var i = 0; i < documentos.length; i++) {
-										htmlMarkerPopup += '<p><a href="/media/'+documentos[i]+'"><i class="glyphicon glyphicon-file"></i> '+documentos[i]+'</a></p>';
+										htmlMarkerPopup += '<p><a href="/media/'+documentos[i]+'"><i class="glyphicon glyphicon-file"></i> '+cortarString(documentos[i])+'</a></p>';
 									};
 									htmlMarkerPopup += '<hr />';
 									htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Archivos geográficos</h5>';
 									for (var i = 0; i < documentos_shp.length; i++) {
-										htmlMarkerPopup += '<p><a href="#" onclick="loadshp(\''+documentos_shp[i]+'\');"><i class="glyphicon glyphicon-globe"></i> '+documentos_shp[i]+'</a></p>';
+										htmlMarkerPopup += '<p><a href="#" onclick="loadshp(\''+documentos_shp[i]+'\');"><i class="glyphicon glyphicon-globe"></i> '+cortarString(documentos_shp[i])+'</a></p>';
+									};
+									htmlMarkerPopup += '<hr />';
+									htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-scale"></i> &nbsp; Mediciones</h5>';
+									for (var i = 0; i < mediciones.length; i++) {
+										var medicionArr = mediciones[i].split('~');
+										htmlMarkerPopup += '<p><a href="#" onclick="viewChart('+medicionArr[0]+');"><i class="glyphicon glyphicon-stats"></i> '+medicionArr[1]+'</a></p>';
 									};
 									htmlMarkerPopup += '</div>';
 									htmlMarkerPopup += '</div>';
 									htmlMarkerPopup += '</div>';
 
-
-								mark = L.marker(puntos).addTo(cities).bindPopup(htmlMarkerPopup);
+								if(puntos != ""){
+									mark = L.marker(puntos).addTo(cities).bindPopup(htmlMarkerPopup);
+								}
 
 								$('#accordionlista_resultados').append(htmlAccordion);
 							});
@@ -703,7 +809,7 @@ function loadshp(rutaArchivo){
 									htmlMarkerPopup += '<div class="panel-body">';
 									htmlMarkerPopup += '<p>'+resumen+'</p>';
 									htmlMarkerPopup += '<hr />';
-									htmlMarkerPopup += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-file"></i> '+archivo+'</a></p>';								
+									htmlMarkerPopup += '<p><a href="/media/'+archivo+'"><i class="glyphicon glyphicon-file"></i> '+cortarString(archivo)+'</a></p>';								
 									htmlMarkerPopup += '</div>';
 									htmlMarkerPopup += '</div>';
 									htmlMarkerPopup += '</div>';
@@ -766,7 +872,7 @@ function loadshp(rutaArchivo){
 									htmlMarkerPopup += '<div class="panel-body">';
 									htmlMarkerPopup += '<p>'+resumen+'</p>';
 									htmlMarkerPopup += '<hr />';
-									htmlMarkerPopup += '<p><a href="#" onclick="loadshp(\''+archivo+'\');"><i class="glyphicon glyphicon-globe"></i> '+archivo+'</a></p>';								
+									htmlMarkerPopup += '<p><a href="#" onclick="loadshp(\''+archivo+'\');"><i class="glyphicon glyphicon-globe"></i> '+cortarString(archivo)+'</a></p>';								
 									htmlMarkerPopup += '</div>';
 									htmlMarkerPopup += '</div>';
 									htmlMarkerPopup += '</div>';
@@ -820,10 +926,12 @@ function loadshp(rutaArchivo){
 								}
 								if(k == "geometria"){
 									geometria = v;
-									geometriaArr = geometria.split(" ");
-									valorLat = geometriaArr[1].substring(1, geometriaArr[1].length);
-									valorLon = geometriaArr[2].substring(0, geometriaArr[2].length-1);
-									puntos = [valorLon, valorLat, null];
+									if(geometria != "None" && geometria != ""){
+										geometriaArr = geometria.split(" ");
+										valorLat = geometriaArr[1].substring(1, geometriaArr[1].length);
+										valorLon = geometriaArr[2].substring(0, geometriaArr[2].length-1);
+										puntos = [valorLon, valorLat, null];
+									}
 								}
 								if(k == "titulo"){
 									titulo = v;
@@ -851,12 +959,12 @@ function loadshp(rutaArchivo){
 									htmlMarkerPopup += '<hr />';
 									htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Documentos digitales</h5>';
 									for (var i = 0; i < locDocArr.length; i++) {
-										htmlMarkerPopup += '<p><a href="/media/'+locDocArr[i]+'"><i class="glyphicon glyphicon-file"></i> '+locDocArr[i]+'</a></p>';
+										htmlMarkerPopup += '<p><a href="/media/'+locDocArr[i]+'"><i class="glyphicon glyphicon-file"></i> '+cortarString(locDocArr[i])+'</a></p>';
 									};
 									htmlMarkerPopup += '<hr />';
 									htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Archivos geográficos</h5>';
 									for (var i = 0; i < locDocShpArr.length; i++) {
-										htmlMarkerPopup += '<p><a href="/media/'+locDocShpArr[i]+'"><i class="glyphicon glyphicon-globe"></i> '+locDocShpArr[i]+'</a></p>';
+										htmlMarkerPopup += '<p><a href="/media/'+locDocShpArr[i]+'"><i class="glyphicon glyphicon-globe"></i> '+cortarString(locDocShpArr[i])+'</a></p>';
 									};
 									htmlMarkerPopup += '</div>';
 									htmlMarkerPopup += '</div>';
@@ -870,7 +978,14 @@ function loadshp(rutaArchivo){
 			});
 		});
 
-
+	
+		function cortarString(cadenaStr){
+			if(cadenaStr.length > 35){
+				return cadenaStr.substring(0, 35) + '...';
+			}else{
+				return cadenaStr;
+			}
+		}
 		
 	</script>
 </body>

@@ -17,7 +17,7 @@ class Localizacion(models.Model):
     # representacion = models.ForeignKey(Representacion)
     # zona = models.ManyToManyField(Zona)
     # sub_zona = models.ManyToManyField(SubZona)
-    geom = models.PointField(verbose_name='Especifique ubicación')
+    geom = models.PointField(verbose_name='Especifique ubicación', null=True, blank=True)
     privado = models.BooleanField(default=False)
     nucleo = models.ForeignKey(Nucleo, blank=True, null=True)
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL)

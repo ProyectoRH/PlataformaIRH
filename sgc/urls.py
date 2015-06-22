@@ -24,5 +24,8 @@ urlpatterns = patterns('',
     url(r'^busqueda/', 'sgc.views.search'),
     url(r'^busquedaArea/', 'sgc.views.busqueda'),
     url(r'^busquedaPoint/', 'sgc.views.search_point'),
+    url(r'^listarMediciones/(?P<localId>[\d]+)', 'sgc.views.listarMediciones'),
+
+    url(r'^getValoresMedicion/', 'sgc.views.getValoresMedicion'),    
 
 )

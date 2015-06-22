@@ -1,0 +1,39 @@
+{% load admin_static %}{% load suit_tags %}{% load url from future %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+	
+	<head>
+		<link rel="stylesheet" type="text/css" href="{% static 'suit/bootstrap/css/bootstrap.min.css' %}" media="all"/>
+		<link rel="stylesheet" type="text/css" href="{% static 'suit/css/suit.css' %}" media="all">
+
+		<style>
+			body {
+				min-width: 800px;
+			}
+			#container {
+				width: 90%;
+				margin: 10px auto;
+			}
+		</style>
+	</head>
+
+	<body>
+			<div id="container">	              
+		              			<a href="/admin/Mediciones/medicion/add/?_to_field=id&_popup=1&localizacion={{ localizacionId }}" class="btn btn-success" style="margin:8px 0;">Agregar medición</a>
+		  						<table class="table">
+									<thead>
+										<tr>
+											<th>Mediciones</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for medicion in mediciones %}
+											<tr>
+												<td><a data-href-template="/admin/Mediciones/medicion/__fk__/?_to_field=id&_popup=1" href="/admin/Mediciones/medicion/{{ medicion.id }}/?_to_field=id&_popup=1" class="related-widget-wrapper-link">{{ medicion.titulo }}</a></td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+				</div>
+	</body>
+
+</html>
