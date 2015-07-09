@@ -16,7 +16,7 @@ echo "*******************************************"
 echo "Instalando ambiente virtual para Django   *"
 echo "*******************************************"
 sudo apt-get install python-virtualenv
-sudo virtualenv platformenv
+virtualenv platformenv
 cd platformenv
 echo "**********************************"
 echo "* Activando ambiente virtual...  *"
