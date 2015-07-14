@@ -12,6 +12,7 @@ echo "Actualizando el sistema...      *"
 echo "*********************************"
 sudo apt-get update -y
 sudo apt-get upgrade -y
+sudo apt-get install nginx -y
 echo "*******************************************"
 echo "Instalando ambiente virtual para Django   *"
 echo "*******************************************"
