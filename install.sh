@@ -10,8 +10,8 @@ echo "**************************************************************************
 echo "*********************************"
 echo "Actualizando el sistema...      *"
 echo "*********************************"
-sudo apt-get update
-sudo apt-get upgrade
+sudo apt-get update -y
+sudo apt-get upgrade -y
 echo "*******************************************"
 echo "Instalando ambiente virtual para Django   *"
 echo "*******************************************"
@@ -51,5 +51,6 @@ pip install jsonfield
 pip install psycopg2
 pip install six
 pip install wsgiref
+pip install gunicorn
 echo "*************************************************************************"
 cd PlataformaIRH
