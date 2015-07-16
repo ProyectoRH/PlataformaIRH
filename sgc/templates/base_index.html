@@ -15,26 +15,13 @@
 </head>
 <body>
 	<div class="container-fluid before-header">
-		<div class="form-search">
-
-			<div class="col-md-5 col-md-offset-7">
-				<div class="col-md-4 text-right">
-					<a href="{% url 'usuarios.views.iniciarSesion' %}">
-						<img src="{% static 'sgc/img/other-icons/iconologin.png' %}" alt="" height="42px">
-					</a>
-					<a href="{% url 'usuarios.views.crearUsuario' %}"><img src="{% static 'sgc/img/other-icons/iconoregistrarse.png' %}" alt="" height="42px"></a>
-				</div>
-				<div class="col-md-8">
-					<form action="">
-						
-						<input type="text" class="form-control" placeholder="Buscar" />
-						<button type="submit" class="btn-search">
-							<i class="glyphicon glyphicon-search"></i>
-						</button>
-					</form>	
-				</div>
-				
-			</div>
+		<div class="col-md-4 pull-right" style="padding:3px 40px 3px 0;">
+			<div class="col-md-4 text-right pull-right">
+				<a href="{% url 'usuarios.views.iniciarSesion' %}">
+					<img src="{% static 'sgc/img/other-icons/iconologin.png' %}" alt="" height="42px">
+				</a>
+				<a href="{% url 'usuarios.views.crearUsuario' %}"><img src="{% static 'sgc/img/other-icons/iconoregistrarse.png' %}" alt="" height="42px"></a>
+			</div>				
 		</div>
 	</div>
 	<nav class="navbar navbar-default">
@@ -48,7 +35,7 @@
 					<span class="icon-bar"></span>
 				</button>
 				
-				<a href="{% url 'sgc.views.home' %}"><img src="{% block img_logo %}{% endblock %}" alt="" class="navbar-brand" /></a>
+				<a href="{% url 'sgc.views.home' %}"><img src="{% block img_logo %}{% endblock %}" alt="" style="padding:5px 15px;" class="navbar-brand" /></a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
