@@ -108,11 +108,11 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP+(
 DATABASES = {
         'default': {
             'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': DBNAME,                      # Or path to database file if using sqlite3.
+            'NAME': "recursosrh_db",                      # Or path to database file if using sqlite3.
             # The following settings are not used with sqlite3:
-            'USER': USNAME,
-            'PASSWORD': USCONTRA,
-            'HOST': IPDIR,                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
+            'USER': "recursos_user",
+            'PASSWORD': "mES9Zg0r",
+            'HOST': "localhost",                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
             'PORT': '',                               # Set to empty string for default.
         }
     }
@@ -151,9 +151,10 @@ REDACTOR_UPLOAD = '/static/uploads/'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2] + ['media'])
-STATIC_ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2] + ['content'])
-
+#MEDIA_ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2] + ['media'])
+MEDIA_ROOT = "/home/plataformaenv/PlataformaIRH/media/"
+#STATIC_ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2] + ['content'])
+STATIC_ROOT = "/home/plataformaenv/PlataformaIRH/static/"
 STATICFILES_DIRS = (
    os.path.join(BASE_DIR, 'static'),
 )
