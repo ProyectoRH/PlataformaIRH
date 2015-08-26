@@ -159,8 +159,7 @@ STATICFILES_DIRS = (
    os.path.join(BASE_DIR, 'static'),
 )
 
-TEMPLATE_DIRS = ('templates',)
-
+TEMPLATE_DIRS = ('/home/plataformaenv/PlataformaIRH/templates/',)
 
 SUIT_CONFIG={
 	'ADMIN_NAME': 'P.I.R.H.A',
