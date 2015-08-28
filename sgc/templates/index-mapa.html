@@ -719,7 +719,7 @@ function loadshp(rutaArchivo){
 									htmlMarkerPopup += '<hr />';
 									htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Documentos digitales</h5>';
 									for (var i = 0; i < documentos.length; i++) {
-										htmlMarkerPopup += '<p><a href="/media/'+documentos[i]+'" target="_blank�"><i class="glyphicon glyphicon-file"></i> '+cortarString(documentos[i])+'</a></p>';
+										htmlMarkerPopup += '<p><a href="/media/'+documentos[i]+'" target="_blank"><i class="glyphicon glyphicon-file"></i> '+cortarString(documentos[i])+'</a></p>';
 									};
 									htmlMarkerPopup += '<hr />';
 									htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Archivos geográficos</h5>';
@@ -953,7 +953,7 @@ function loadshp(rutaArchivo){
 									htmlMarkerPopup += '<hr />';
 									htmlMarkerPopup += '<h5><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Archivos geográficos</h5>';
 									for (var i = 0; i < locDocShpArr.length; i++) {
-										htmlMarkerPopup += '<p><a href="#" onclick="loadShp('\'+locDocShpArr[i]+\'')"><i class="glyphicon glyphicon-globe"></i> '+cortarString(locDocShpArr[i])+'</a></p>';
+										htmlMarkerPopup += '<p><a href="#" onclick="loadShp(\''+locDocShpArr[i]+'\')"><i class="glyphicon glyphicon-globe"></i> '+cortarString(locDocShpArr[i])+'</a></p>';
 									};
 									htmlMarkerPopup += '</div>';
 									htmlMarkerPopup += '</div>';
